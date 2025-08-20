@@ -1,12 +1,16 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"main/config"
+	"main/dto"
 	"main/models"
 	"net/http"
 	"strings"
+
+	"github.com/joho/godotenv"
 )
 
 func expensesHandler(w http.ResponseWriter, r *http.Request) {
@@ -14,15 +18,33 @@ func expensesHandler(w http.ResponseWriter, r *http.Request) {
 
     switch r.Method {
     case http.MethodGet:
-        // Handle GET request
         fmt.Fprint(w, `{"message": "All the expenses"}`)
 
     case http.MethodPost:
-        // Handle POST request
-        fmt.Fprint(w, `{"message": "New expense created"}`)
+    
+    var input dto.ExpenseInput
+
+    err := json.NewDecoder(r.Body).Decode(&input)
+    if err != nil {
+        http.Error(w, "Invalid JSON body", http.StatusBadRequest)
+        return
+    }
+
+    expense := models.Expense{
+        Amount: input.Amount, 
+        Category: input.Category,
+        Description: input.Description, 
+        Date: input.Date,
+    }
+
+    result := config.DB.Create(&expense)
+    if result.Error != nil {
+        http.Error(w, result.Error.Error(), http.StatusInternalServerError)
+        return
+    }
+    fmt.Fprintf(w, `{"message": "Expense created with ID %d"}`, expense.ID)
 
     case http.MethodPut, http.MethodDelete:
-        // Handle PUT or DELETE request
         parts := strings.Split(r.URL.Path, "/")
         if len(parts) < 3 {
             http.Error(w, "Missing ID", http.StatusBadRequest)
@@ -44,6 +66,7 @@ func expensesHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+    godotenv.Load() 
 
     config.ConnectDatabase()
     fmt.Println("Database connection established!")

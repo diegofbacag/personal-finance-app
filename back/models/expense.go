@@ -2,7 +2,7 @@ package models
 
 import "time"
 
-type Expenses struct {
+type Expense struct {
 	ID          uint
 	UserID      uint
 	Amount      float64

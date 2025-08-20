@@ -2,6 +2,9 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"main/config"
+	"main/models"
 	"net/http"
 	"strings"
 )
@@ -41,10 +44,19 @@ func expensesHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+
+    config.ConnectDatabase()
+    fmt.Println("Database connection established!")
+
+    err := config.DB.AutoMigrate(&models.User{}, &models.Expense{})
+    if err != nil {
+        log.Fatal("Failed to migrate: ", err)
+    }
+
     http.HandleFunc("/expenses/", expensesHandler)
 
     fmt.Println("Server running on http://localhost:3000")
-    err:= http.ListenAndServe(":3000", nil)
+    err = http.ListenAndServe(":3000", nil)
     if err != nil{
         fmt.Println("Error starting server:", err)
     }

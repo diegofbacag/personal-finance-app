@@ -21,7 +21,7 @@ func ExpensesHandler(w http.ResponseWriter, r *http.Request) {
 		var expenses []model.Expense
 		result := config.DB.Find(&expenses)
 		if result.Error != nil {
-			http.Error(w, "Error finding expenses", http.StatusInternalServerError)
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
 
@@ -62,6 +62,23 @@ func ExpensesHandler(w http.ResponseWriter, r *http.Request) {
 		id := parts[2]
 
 		if r.Method == http.MethodPut {
+
+			var input dto.ExpenseInput
+
+			err := json.NewDecoder(r.Body).Decode(&input)
+			if err != nil {
+				http.Error(w, "Invalid JSON body", http.StatusBadRequest)
+				return
+			}
+
+    		result := config.DB.Model(&model.Expense{}).Where("id = ?", id).Updates(model.Expense{
+				Amount:      input.Amount,
+				Category:    input.Category,
+				Description: input.Description,
+				Date:        input.Date,
+			})
+
+
 			fmt.Fprintf(w, `{"message": "Expense %s modified"}`, id)
 		} else {
 			fmt.Fprintf(w, `{"message": "Expense %s deleted"}`, id)

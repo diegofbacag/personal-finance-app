@@ -1,4 +1,4 @@
-package models
+package model
 
 import (
 	"time"
@@ -6,8 +6,6 @@ import (
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
-
-
 
 type Expense struct {
 	ID          uuid.UUID `gorm:"type:uuid;primaryKey"`

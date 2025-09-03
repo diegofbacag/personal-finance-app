@@ -3,6 +3,7 @@ package auth
 import (
 	"time"
 
+	"github.com/diegofbacag/personal-finance-app/back/internal/expense"
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
@@ -13,6 +14,8 @@ type User struct {
 	LastName string `gorm:"size=50"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
+	Credentials []Credential
+	Expenses []expense.Expense
 }
 
 type Credential struct {
@@ -28,6 +31,13 @@ type Credential struct {
 func (e *User) BeforeCreate(tx *gorm.DB) (err error) {
     if e.ID == uuid.Nil {
         e.ID = uuid.New()
+    }
+    return
+}
+
+func (c *Credential) BeforeCreate(tx *gorm.DB) (err error) {
+    if c.ID == uuid.Nil {
+        c.ID = uuid.New()
     }
     return
 }

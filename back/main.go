@@ -22,7 +22,7 @@ func main() {
 	config.ConnectDatabase()
 	fmt.Println("Database connection established!")
 
-	err := config.DB.AutoMigrate(&auth.User{}, &auth.Credential{})
+	err := config.DB.AutoMigrate(&auth.User{}, &auth.Credential{}, &expense.Expense{})
     if err != nil {
         log.Fatal("Failed to migrate: ", err)
     }

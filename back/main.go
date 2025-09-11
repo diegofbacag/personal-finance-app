@@ -16,6 +16,7 @@ import (
 	"github.com/diegofbacag/personal-finance-app/back/internal/summary"
 )
 
+
 func main() {
     godotenv.Load() 
 
@@ -27,11 +28,13 @@ func main() {
         log.Fatal("Failed to migrate: ", err)
     }
 
+	//router
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Use(middleware.StripSlashes)
 
-	r.Get("/auth/register", auth.RegisterUser)
+	//route (method + path + call handler)
+	r.Post("/auth/register", auth.RegisterUser)
 	r.Get("/expense", expense.ExpenseHandler)
 	r.Get("/summary", summary.SummaryHandler)
 

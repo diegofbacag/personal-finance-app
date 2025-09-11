@@ -31,10 +31,9 @@ func main() {
 	r.Use(middleware.Logger)
 	r.Use(middleware.StripSlashes)
 
-	r.Get("/auth", auth.AuthHandler)
+	r.Get("/auth/register", auth.RegisterUser)
 	r.Get("/expense", expense.ExpenseHandler)
 	r.Get("/summary", summary.SummaryHandler)
-
 
 	port := os.Getenv("PORT")
 	if port == "" {

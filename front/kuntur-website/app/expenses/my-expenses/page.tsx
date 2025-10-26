@@ -40,7 +40,9 @@ export default function MyExpensesPage() {
   })
   const [expenseHistory, setExpenseHistory] = useState<Expense[]>(expenses)
 
-  const handleExpenseFormInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleExpenseFormInput = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target
     setExpenseFormData((prev) => ({ ...prev, [name]: value }))
   }
@@ -85,7 +87,7 @@ export default function MyExpensesPage() {
             <div>{e.amount}</div>
             <div>{e.category}</div>
             <div>{e.description}</div>
-            <div>{e.description}</div>
+            <div>{e.date.toISOString().split('T')[0]}</div>
           </div>
         ))}
       </section>
@@ -111,13 +113,18 @@ export default function MyExpensesPage() {
             </div>
             <div>
               <p>Categoria</p>
-              <input
-                type="string"
+              <select
                 name="category"
                 value={expenseFormData.category}
-                placeholder="100"
                 onChange={handleExpenseFormInput}
-              ></input>
+                className="border rounded px-2 py-1"
+              >
+                <option value="">Selecciona una categoría</option>
+                <option value="Comida">Comida</option>
+                <option value="Transporte">Transporte</option>
+                <option value="Vivienda">Vivienda</option>
+                <option value="Ocio">Ocio</option>
+              </select>
             </div>
             <div>
               <p>Descripcion</p>
@@ -125,7 +132,7 @@ export default function MyExpensesPage() {
                 type="string"
                 name="description"
                 value={expenseFormData.description}
-                placeholder="100"
+                placeholder="Cena con amigos"
                 onChange={handleExpenseFormInput}
               ></input>
             </div>
@@ -135,7 +142,6 @@ export default function MyExpensesPage() {
                 type="date"
                 name="date"
                 value={expenseFormData.date}
-                placeholder="100"
                 onChange={handleExpenseFormInput}
               ></input>
             </div>

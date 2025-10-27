@@ -1,13 +1,7 @@
 'use client'
 
+import ExpensesTable from '@/src/features/expenses/ExpensesTable'
 import { useState } from 'react'
-
-interface Expense {
-  amount: number
-  category?: string
-  description?: string
-  date: Date
-}
 
 interface ExpenseForm {
   amount: string
@@ -15,21 +9,6 @@ interface ExpenseForm {
   description?: string
   date: string
 }
-
-const expenses: Expense[] = [
-  {
-    amount: 45.5,
-    category: 'Transporte',
-    description: 'Taxi al trabajo',
-    date: new Date('2025-10-25'),
-  },
-  {
-    amount: 120.0,
-    category: 'Comida',
-    description: 'Cena con amigos',
-    date: new Date('2025-10-24'),
-  },
-]
 
 export default function MyExpensesPage() {
   const [expenseFormData, setExpenseFormData] = useState<ExpenseForm>({
@@ -66,43 +45,43 @@ export default function MyExpensesPage() {
   }
 
   return (
-    <main className="p-4 font-poppins">
-      <header>
-        <h1 className="text-3xl font-bold">Mis gastos</h1>
-      </header>
-      <section aria-label="Expenses list">
-        <div className="grid grid-cols-4 bg-white">
-          <div>Gasto</div>
-          <div>Categoria</div>
-          <div>Descripcion</div>
-          <div>Fecha</div>
+    <main className="flex flex-col p-8 font-poppins bg-[#f1f1f1] h-screen justify-start">
+      <header className="flex flex-col mb-4">
+        <h1 className="text-base leading-[1.4em]">Mis gastos</h1>
+
+        <h2 className="text-lg font-bold leading-[1.4em]">5000 $</h2>
+        <div className="flex flex-row gap-6 items-center leading-[1.4em] text-sm text-[hsl(0,0%,30%)]">
+          <p className="bg-white rounded-2xl p-1 ">Anio</p>
+          <p>Mes</p>
+          <p>Custom</p>
         </div>
-        {expenseHistory.map((e, index) => (
-          <div
-            key={index}
-            className={`grid grid-cols-4  ${
-              index % 2 === 0 ? 'bg-white' : 'bg-[#edede9]'
-            }`}
-          >
-            <div>{e.amount}</div>
-            <div>{e.category}</div>
-            <div>{e.description}</div>
-            <div>{e.date.toISOString().split('T')[0]}</div>
-          </div>
-        ))}
+      </header>
+      <section
+        aria-label="Expenses list"
+        className="bg-white rounded-xl py-4 h-auto"
+      >
+        <ExpensesTable />
       </section>
       <section
         aria-label="Add expenses"
-        className="fixed bottom-10 min-w-[80vw] left-1/2 transform -translate-x-1/2 "
+        className="fixed bottom-10 min-w-[80vw] left-1/2 transform -translate-x-1/2"
       >
         <div
-          className="grid grid-cols-[auto_1fr_auto] items-center border rounded-full border-gray-900/5
- p-2 shadow-md"
+          className="grid grid-cols-[auto_1fr_auto] items-center border rounded-full bg-white border-gray-900/5
+ p-3 shadow-md gap-3"
         >
-          <div>+</div>
-          <div className="grid grid-cols-4 items-start text-sm text-gray">
+          <div className="flex flex-col items-center">
+            {/* <p className="text-xs bg-black text-white rounded-full p-1">
+              Manual
+            </p>
+            <p className="text-xs bg-white text-black rounded-full p-1">IA</p>
+            <p className="text-xs bg-white text-black rounded-full p-1">
+              Upload
+            </p> */}
+          </div>
+          <div className="grid grid-cols-4 items-start ">
             <div>
-              <p>Monto S/.</p>
+              <p className="flex justify-center">Monto S/.</p>
               <input
                 type="number"
                 name="amount"
@@ -112,7 +91,7 @@ export default function MyExpensesPage() {
               ></input>
             </div>
             <div>
-              <p>Categoria</p>
+              <p className="flex justify-center">Categoria</p>
               <select
                 name="category"
                 value={expenseFormData.category}
@@ -127,7 +106,7 @@ export default function MyExpensesPage() {
               </select>
             </div>
             <div>
-              <p>Descripcion</p>
+              <p className="flex justify-center">Descripcion</p>
               <input
                 type="string"
                 name="description"
@@ -137,7 +116,7 @@ export default function MyExpensesPage() {
               ></input>
             </div>
             <div>
-              <p>Fecha</p>
+              <p className="flex justify-center">Fecha</p>
               <input
                 type="date"
                 name="date"
@@ -148,7 +127,7 @@ export default function MyExpensesPage() {
           </div>
 
           <button
-            className="flex items-center justify-center bg-black rounded-full text-white h-10 w-10"
+            className="flex items-center justify-center bg-[#0E8F53] rounded-full text-white h-10 w-10 cursor-pointer"
             onClick={submitExpenseFormData}
           >
             i

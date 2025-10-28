@@ -17,7 +17,7 @@ export default function MyExpensesPage() {
     description: '',
     date: new Date().toISOString().split('T')[0],
   })
-  const [expenseHistory, setExpenseHistory] = useState<Expense[]>(expenses)
+  const [expenseHistory, setExpenseHistory] = useState(true)
 
   const handleExpenseFormInput = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>

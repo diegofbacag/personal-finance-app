@@ -1,11 +1,13 @@
 'use client'
 
+import { useState } from 'react'
+
 import {
   createColumnHelper,
   getCoreRowModel,
   useReactTable,
+  flexRender,
 } from '@tanstack/react-table'
-import { useState } from 'react'
 
 //TData
 type Expense = {
@@ -20,7 +22,7 @@ const columnHelper = createColumnHelper<Expense>()
 const columns = [
   columnHelper.accessor('amount', {
     header: 'Amount',
-    cell: (info) => `$${info.getValue()}`,
+    cell: (info) => info.getValue(),
   }),
   columnHelper.accessor('category', {
     header: 'Category',

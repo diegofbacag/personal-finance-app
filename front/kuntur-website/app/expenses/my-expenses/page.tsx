@@ -1,7 +1,13 @@
 'use client'
 
-import ExpensesTable from '@/src/features/expenses/ExpensesTable'
 import { useState } from 'react'
+
+interface Expense {
+  amount: number
+  category?: string
+  description?: string
+  date: Date
+}
 
 interface ExpenseForm {
   amount: string
@@ -10,6 +16,21 @@ interface ExpenseForm {
   date: string
 }
 
+const expenses: Expense[] = [
+  {
+    amount: 45.5,
+    category: 'Transporte',
+    description: 'Taxi al trabajo',
+    date: new Date('2025-10-25'),
+  },
+  {
+    amount: 120.0,
+    category: 'Comida',
+    description: 'Cena con amigos',
+    date: new Date('2025-10-24'),
+  },
+]
+
 export default function MyExpensesPage() {
   const [expenseFormData, setExpenseFormData] = useState<ExpenseForm>({
     amount: '',
@@ -17,11 +38,9 @@ export default function MyExpensesPage() {
     description: '',
     date: new Date().toISOString().split('T')[0],
   })
-  const [expenseHistory, setExpenseHistory] = useState(true)
+  const [expenseHistory, setExpenseHistory] = useState<Expense[]>(expenses)
 
-  const handleExpenseFormInput = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const handleExpenseFormInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setExpenseFormData((prev) => ({ ...prev, [name]: value }))
   }
@@ -45,43 +64,45 @@ export default function MyExpensesPage() {
   }
 
   return (
-    <main className="flex flex-col p-8 font-poppins bg-[#f1f1f1] h-screen justify-start">
-      <header className="flex flex-col mb-4">
-        <h1 className="text-base leading-[1.4em]">Mis gastos</h1>
-
-        <h2 className="text-lg font-bold leading-[1.4em]">5000 $</h2>
-        <div className="flex flex-row gap-6 items-center leading-[1.4em] text-sm text-[hsl(0,0%,30%)]">
-          <p className="bg-white rounded-2xl p-1 ">Anio</p>
-          <p>Mes</p>
-          <p>Custom</p>
-        </div>
+    <main className="p-4 font-poppins bg-[#edede9] min-h-screen pb-30">
+      <header>
+        <h1 className="text-3xl font-bold">Mis gastos</h1>
       </header>
-      <section
-        aria-label="Expenses list"
-        className="bg-white rounded-xl py-4 h-auto"
-      >
-        <ExpensesTable />
+      <section aria-label="Expenses table" className="w-full">
+        <table className="w-full rounded-2xl overflow-hidden">
+          <tr className="grid grid-cols-4 h-14 items-center justify-center bg-white">
+            <th>Monto</th>
+            <th>Categoria</th>
+            <th>Descripcion</th>
+            <th>Fecha</th>
+          </tr>
+          {expenseHistory.map((e, index) => (
+            <tr
+              key={index}
+              className={`grid grid-cols-4 text-center items-center h-14 ${
+                index % 2 === 0 ? 'bg-[#edede9]' : 'bg-white'
+              }`}
+            >
+              <td>{e.amount}</td>
+              <td>{e.category}</td>
+              <td>{e.description}</td>
+              <td>{e.date.toLocaleDateString('pe-PE')}</td>
+            </tr>
+          ))}
+        </table>
       </section>
       <section
-        aria-label="Add expenses"
-        className="fixed bottom-10 min-w-[80vw] left-1/2 transform -translate-x-1/2"
+        aria-label="Expenses input bar"
+        className="fixed bottom-10 min-w-[80vw] left-1/2 transform -translate-x-1/2 "
       >
         <div
-          className="grid grid-cols-[auto_1fr_auto] items-center border rounded-full bg-white border-gray-900/5
- p-3 shadow-md gap-3"
+          className="grid grid-cols-[auto_1fr_auto] bg-white items-center border rounded-full border-gray-900/5
+ p-2 shadow-md"
         >
-          <div className="flex flex-col items-center">
-            {/* <p className="text-xs bg-black text-white rounded-full p-1">
-              Manual
-            </p>
-            <p className="text-xs bg-white text-black rounded-full p-1">IA</p>
-            <p className="text-xs bg-white text-black rounded-full p-1">
-              Upload
-            </p> */}
-          </div>
-          <div className="grid grid-cols-4 items-start ">
+          <div>+</div>
+          <div className="grid grid-cols-4 items-start text-sm text-gray">
             <div>
-              <p className="flex justify-center">Monto S/.</p>
+              <p>Monto S/.</p>
               <input
                 type="number"
                 name="amount"
@@ -91,43 +112,39 @@ export default function MyExpensesPage() {
               ></input>
             </div>
             <div>
-              <p className="flex justify-center">Categoria</p>
-              <select
-                name="category"
-                value={expenseFormData.category}
-                onChange={handleExpenseFormInput}
-                className="border rounded px-2 py-1"
-              >
-                <option value="">Selecciona una categoría</option>
-                <option value="Comida">Comida</option>
-                <option value="Transporte">Transporte</option>
-                <option value="Vivienda">Vivienda</option>
-                <option value="Ocio">Ocio</option>
-              </select>
-            </div>
-            <div>
-              <p className="flex justify-center">Descripcion</p>
+              <p>Categoria</p>
               <input
                 type="string"
-                name="description"
-                value={expenseFormData.description}
-                placeholder="Cena con amigos"
+                name="category"
+                value={expenseFormData.category}
+                placeholder="100"
                 onChange={handleExpenseFormInput}
               ></input>
             </div>
             <div>
-              <p className="flex justify-center">Fecha</p>
+              <p>Descripcion</p>
+              <input
+                type="string"
+                name="description"
+                value={expenseFormData.description}
+                placeholder="100"
+                onChange={handleExpenseFormInput}
+              ></input>
+            </div>
+            <div>
+              <p>Fecha</p>
               <input
                 type="date"
                 name="date"
                 value={expenseFormData.date}
+                placeholder="100"
                 onChange={handleExpenseFormInput}
               ></input>
             </div>
           </div>
 
           <button
-            className="flex items-center justify-center bg-[#0E8F53] rounded-full text-white h-10 w-10 cursor-pointer"
+            className="flex items-center justify-center bg-black rounded-full text-white h-10 w-10"
             onClick={submitExpenseFormData}
           >
             i

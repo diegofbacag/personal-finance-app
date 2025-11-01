@@ -33,9 +33,9 @@ const expenses: Expense[] = [
 
 export default function MyExpensesPage() {
   const [expenseFormData, setExpenseFormData] = useState<ExpenseForm>({
-    amount: '-',
-    category: '-',
-    description: '-',
+    amount: '',
+    category: '',
+    description: '',
     date: new Date().toISOString().split('T')[0],
   })
   const [expenseHistory, setExpenseHistory] = useState<Expense[]>(expenses)
@@ -56,15 +56,15 @@ export default function MyExpensesPage() {
     setExpenseHistory((prev) => [...prev, newExpense])
 
     setExpenseFormData({
-      amount: '-',
-      category: '-',
-      description: '-',
+      amount: '',
+      category: '',
+      description: '',
       date: new Date().toISOString().split('T')[0],
     })
   }
 
   return (
-    <main className="py-10 px-100 font-poppins bg-[#e9ecef] min-h-screen pb-30">
+    <main className="py-10 px-50 font-poppins bg-[#f5f5f5] min-h-screen pb-30">
       <header className="mb-5">
         <h1 className="text-2xl font-bold">Mis gastos</h1>
       </header>
@@ -109,7 +109,7 @@ export default function MyExpensesPage() {
                     })}
                   </td>
                   <td className="truncate max-w-[200px]">
-                    {!e.description || (
+                    {e.description || (
                       <span className="text-gray-400 italic">
                         Sin descripción
                       </span>

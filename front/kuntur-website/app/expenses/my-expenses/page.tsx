@@ -174,7 +174,7 @@ export default function MyExpensesPage() {
                 type="number"
                 name="amount"
                 value={expenseFormData.amount}
-                placeholder="100"
+                placeholder="Ej. 100"
                 min="1"
                 onChange={handleExpenseFormInput}
                 className="
@@ -262,11 +262,11 @@ export default function MyExpensesPage() {
           </div>
 
           <button
-            className="flex items-center justify-center bg-black rounded-full text-white h-10 w-10 cursor-pointer"
+            className="flex items-center justify-center bg-[#0e8f53] rounded-full text-white h-10 w-10 cursor-pointer"
             onClick={submitExpenseFormData}
           >
             <Image
-              src="/svg/icons/up-arrow.svg"
+              src="/svg/icons/plus-bold.svg"
               height={20}
               width={20}
               alt="send icon"

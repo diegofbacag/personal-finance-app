@@ -36,6 +36,7 @@ func main() {
 	//route (method + path + call handler)
 	r.Post("/auth/register", auth.RegisterUser)
 	r.Get("/expense", expense.ExpenseHandler)
+	r.Post("/expense", expense.CreateExpense)
 	r.Get("/summary", summary.SummaryHandler)
 
 	port := os.Getenv("PORT")

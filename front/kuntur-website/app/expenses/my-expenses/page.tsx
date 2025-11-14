@@ -83,7 +83,7 @@ export default function MyExpensesPage() {
             fill="#0e8f53"
             letter-spacing="1"
           >
-            kuntur.
+            kuntur
           </text>
         </svg>
       </div>

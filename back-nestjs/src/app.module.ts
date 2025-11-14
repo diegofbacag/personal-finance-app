@@ -4,6 +4,8 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Expense } from './expenses/expense.entity';
+import { ExpensesModule } from './expenses/expenses.module';
 
 @Module({
   imports: [
@@ -11,17 +13,17 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
-      port: parseInt(process.env.DB_PORT ?? '3000', 10),
-      username: process.env.DB_NAME,
+      port: parseInt(process.env.DB_PORT ?? '5432', 10),
+      username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
+      entities: [Expense],
       synchronize: true,
       logging: ['error'],
       dropSchema: true,
       autoLoadEntities: true,
-      entities: ['dist/**/*.entity{.ts,.js}'],
-      migrations: ['dist/migrations/*{.ts,.js}'],
     }),
+    ExpensesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

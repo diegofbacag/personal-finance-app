@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 import Image from 'next/image'
+import { createExpense } from '@/src/features/expenses/services/expenses.service'
 
 interface Expense {
   amount: number
@@ -49,13 +50,15 @@ export default function MyExpensesPage() {
     setExpenseFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const submitExpenseFormData = () => {
+  const submitExpenseFormData = async () => {
     const newExpense: Expense = {
       amount: Number(expenseFormData.amount),
       category: expenseFormData.category || undefined,
       description: expenseFormData.description || undefined,
       date: new Date(`${expenseFormData.date}T00:00:00`),
     }
+
+    await createExpense(newExpense)
 
     setExpenseHistory((prev) => [...prev, newExpense])
 

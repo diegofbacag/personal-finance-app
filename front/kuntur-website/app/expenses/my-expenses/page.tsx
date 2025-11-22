@@ -75,28 +75,19 @@ export default function MyExpensesPage() {
   }, [expenseHistory])
 
   return (
-    <main className="py-10 px-50 font-poppins bg-[#f5f5f5] min-h-screen pb-30">
-      <div className="fixed top-2 left-2 h-[80px] w-[80px]">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100">
-          <text
-            x="0"
-            y="70"
-            font-size="72"
-            font-weight="700"
-            fill="#0e8f53"
-            letter-spacing="1"
-          >
-            kuntur
-          </text>
-        </svg>
-      </div>
-      <header className="mb-5">
-        <h1 className="text-2xl font-bold">Mis gastos</h1>
+    <main className="flex flex-col py-8 px-10 font-poppins bg-[#FAFAF7] min-h-screen pb-30 w-full gap-2">
+      <header className="flex align-top items-center justify-between">
+        <h1 className="text-lg font-bold text-black mt-0 align-top leading-none">
+          Mis gastos
+        </h1>
+        <div className="bg-[#f5f5f5] p-2 rounded-2xl ">
+          <p className="text-sm text-[#495057] font-bold">Total: S/ 100</p>
+        </div>
       </header>
       <section aria-label="Expenses table" className="w-full">
-        <table className="w-full rounded-2xl overflow-hidden border-separate border-spacing-0 text-sm text-[#212529]">
+        <table className="w-full rounded-2xl  overflow-hidden border-separate border-spacing-0 text-sm text-[#212529]">
           <thead>
-            <tr className="bg-white border-b border-[#dee2e6] text-left">
+            <tr className="bg-[#f5f5f5] border-b border-[#dee2e6] text-left">
               <th className="font-medium text-sm text-[#495057] p-4">Fecha</th>
               <th className="font-medium text-sm text-[#495057]">
                 Descripción
@@ -122,7 +113,7 @@ export default function MyExpensesPage() {
               ${
                 isGrayRow
                   ? 'bg-[#f8f9fa] shadow-[inset_0_1px_0_rgba(0,0,0,0.03),_inset_0_-1px_0_rgba(0,0,0,0.02)]'
-                  : 'bg-white'
+                  : 'bg-[#f5f5f5]'
               }
               hover:shadow-[0_2px_8px_rgba(0,0,0,0.05)] hover:-translate-y-[1px] hover:bg-[#f1f3f5]
             `}
@@ -166,15 +157,15 @@ export default function MyExpensesPage() {
         aria-label="Expenses input bar"
         className="fixed bottom-10 min-w-[80vw] left-1/2 transform -translate-x-1/2 "
       >
-        <div className="grid grid-cols-[auto_1fr_auto] bg-white items-center border rounded-full border-gray-900/5 p-1 shadow-md gap-4">
-          <div className="flex items-center justify-center rounded-full text-white h-10 w-10">
+        <div className="px-4 grid grid-cols-[1fr_auto] bg-white items-center border rounded-full border-gray-900/5 p-1 shadow-md gap-4">
+          {/* <div className="flex items-center justify-center rounded-full text-white h-10 w-10">
             <Image
               src="/svg/icons/menu.svg"
               height={20}
               width={20}
               alt="plus icon"
             />
-          </div>
+          </div> */}
           <div className="grid grid-cols-5 items-start text-sm text-gray">
             <div>
               <p className="font-medium text-sm text-[#495057]">Monto (S/)</p>

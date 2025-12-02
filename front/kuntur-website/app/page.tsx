@@ -15,7 +15,7 @@ export default function Home() {
       <div className="blob blob2"></div>
       <div className="blob blob3"></div>
 
-      <main className="flex flex-col min-h-[50vh] min-w-[30vw] relative bg-white p-14 rounded-3xl shadow-xl backdrop-blur-xl gap-6 items-center justify-center">
+      <main className="flex flex-col min-h-[25vh] min-w-[25vw] relative bg-white p-14 rounded-3xl shadow-xl backdrop-blur-xl gap-6 items-center justify-center">
         {authMode === 'home' && <AuthHome />}
         {authMode === 'signIn' && <SignInForm />}
       </main>

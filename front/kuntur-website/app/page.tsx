@@ -8,6 +8,7 @@ type AuthMode = 'home' | 'signIn' | 'signUp'
 
 export default function Home() {
   const [authMode, setAuthMode] = useState<AuthMode>('home')
+
   return (
     <div className="flex min-h-screen items-center justify-center font-sans relative overflow-hidden bg-[#04644f] premium-bg bg-[#f5f5f5]">
       {/* Blobs */}
@@ -16,8 +17,12 @@ export default function Home() {
       <div className="blob blob3"></div>
 
       <main className="flex flex-col min-h-[25vh] min-w-[25vw] relative bg-white p-14 rounded-3xl shadow-xl backdrop-blur-xl gap-6 items-center justify-center">
-        {authMode === 'home' && <AuthHome />}
-        {authMode === 'signIn' && <SignInForm />}
+        {authMode === 'home' && (
+          <AuthHome onSignIn={() => setAuthMode('signIn')} />
+        )}
+        {authMode === 'signIn' && (
+          <SignInForm onBack={() => setAuthMode('home')} />
+        )}
       </main>
 
       <style jsx global>{`

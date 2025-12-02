@@ -1,6 +1,10 @@
 import Image from 'next/image'
 
-export const SignInForm = () => {
+interface SignInFormProps {
+  onBack: () => void
+}
+
+export const SignInForm = ({ onBack }: SignInFormProps) => {
   return (
     <>
       <div className="flex justify-start w-full">
@@ -9,6 +13,8 @@ export const SignInForm = () => {
           alt="go back icon"
           height={20}
           width={20}
+          onClick={onBack}
+          className="cursor-pointer"
         />
       </div>
       <div>

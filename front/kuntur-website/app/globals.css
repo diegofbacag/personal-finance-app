@@ -11,6 +11,7 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-poppins: var(--font-sans);
+  --font-alfa: var(--font-alfa);
 }
 
 @media (prefers-color-scheme: dark) {

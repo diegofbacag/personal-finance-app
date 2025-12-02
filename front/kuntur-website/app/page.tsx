@@ -1,5 +1,13 @@
 'use client'
+
+import { useState } from 'react'
+import { SignInForm } from '@/src/features/auth/components/SignInForm'
+import { AuthHome } from '@/src/features/auth/components/AuthHome'
+
+type AuthMode = 'home' | 'signIn' | 'signUp'
+
 export default function Home() {
+  const [authMode, setAuthMode] = useState<AuthMode>('home')
   return (
     <div className="flex min-h-screen items-center justify-center font-sans relative overflow-hidden bg-[#04644f] premium-bg bg-[#f5f5f5]">
       {/* Blobs */}
@@ -7,37 +15,9 @@ export default function Home() {
       <div className="blob blob2"></div>
       <div className="blob blob3"></div>
 
-      <main className="flex flex-col min-h-[50vh] min-w-[28vw] relative bg-white p-10 rounded-2xl shadow-xl backdrop-blur-xl gap-3 items-center justify-center">
-        <div className="flex items-center justify-between mb-4">
-          <p className="font-bold text-[#0a7242] text-2xl">Kuntur</p>
-        </div>
-        <p className="text-[#5c5c5c] font-bold ">Tu dinero, claro y simple.</p>
-        <div className="flex flex-col items-center justify-center">
-          <p className="text-[#5c5c5c]">
-            Controla tus gastos, organiza tu presupuesto
-          </p>
-          <p className="text-[#5c5c5c]">
-            y toma decisiones sin complicaciones.
-          </p>
-        </div>
-        <div className="flex flex-col gap-1">
-          <input
-            className="p-2 bg-[#eaeaea] text-white rounded-xl"
-            placeholder="mail@mail.com"
-          ></input>
-          <input
-            className="p-2 bg-[#eaeaea] text-white rounded-2xl"
-            placeholder="mail@mail.com"
-          ></input>
-        </div>
-
-        <button className="bg-[#04644f] h-10 w-40 rounded-xl cursor-pointer">
-          <p className="text-white font-medium text-sm">Login</p>
-        </button>
-        <div>o</div>
-        <button className="bg-[#04644f] h-10 w-40 rounded-xl cursor-pointer">
-          <p className="text-white font-medium text-sm">Login with google</p>
-        </button>
+      <main className="flex flex-col min-h-[50vh] min-w-[30vw] relative bg-white p-14 rounded-2xl shadow-xl backdrop-blur-xl gap-6 items-center justify-center">
+        {authMode === 'home' && <AuthHome />}
+        {authMode === 'signIn' && <SignInForm />}
       </main>
 
       <style jsx global>{`

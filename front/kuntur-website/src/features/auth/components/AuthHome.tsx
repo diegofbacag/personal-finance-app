@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { ContinueWithGoogleButton } from './ContinueWithGoogleButton'
+import { Button } from '@/src/components/ui/Button'
 
 interface AuthHomeProps {
   onSignIn: () => void
@@ -28,19 +29,17 @@ export const AuthHome = ({ onSignIn }: AuthHomeProps) => {
           <span className="text-gray-500 text-sm font-medium">o</span>
           <div className="h-px bg-gray-300 flex-1" />
         </div>
-        <button
-          className="bg-[#dbf2d9] h-10 w-40 rounded-xl cursor-pointer w-full"
+
+        <Button
+          text="Iniciar sesión con correo"
+          variant="dark"
           onClick={onSignIn}
-        >
-          <p className="text-[#0a7242] font-medium text-sm">
-            Iniciar sesión con correo
-          </p>
-        </button>
-        <button className="bg-[#dbf2d9] h-10 w-40 rounded-xl cursor-pointer w-full">
-          <p className="text-[#0a7242] font-medium text-sm">
-            Crear cuenta con correo
-          </p>
-        </button>
+        />
+        <Button
+          text="Crear cuenta con correo"
+          variant="light"
+          onClick={onSignIn}
+        />
       </div>
     </>
   )

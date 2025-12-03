@@ -1,5 +1,6 @@
 import { Button } from '@/src/components/ui/Button'
 import Image from 'next/image'
+import Link from 'next/link'
 
 interface SignInFormProps {
   onBack: () => void
@@ -48,7 +49,9 @@ export const SignInForm = ({ onBack }: SignInFormProps) => {
         </div>
       </div>
       <div className="flex flex-col items-center w-full gap-2">
-        <Button text="Iniciar sesión" variant="dark" />
+        <Link href="/expenses/my-expenses" className="w-full">
+          <Button text="Iniciar sesión" variant="dark" />
+        </Link>
       </div>
     </>
   )

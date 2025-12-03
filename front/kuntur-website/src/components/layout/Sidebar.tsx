@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { SidebarItem } from './SidebarItem'
 
 interface SidebarProps {
   isOpen: boolean
@@ -21,43 +22,28 @@ export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
     )
   }
   return (
-    <aside className="flex flex-col justify-between w-54 bg-[#f5f5f5] shadow-inner font-poppins p-2 pb-14">
+    <aside className="flex flex-col justify-between w-46 bg-[#f5f5f5] font-poppins p-2 pb-14">
       <div className="">
-        <div className="flex items-center justify-between mb-10">
+        <div className="flex items-center justify-between mb-10 pb-2">
           <p className="font-bold text-[#0a7242]">Kuntur</p>
-          <button className="cursor-pointer" onClick={toggleSidebar}>
+          {/* <button className="cursor-pointer" onClick={toggleSidebar}>
             <Image
               src="/svg/icons/collapse.svg"
               height={24}
               width={24}
               alt="collapse icon"
             />
-          </button>
+          </button> */}
         </div>
-        <div className="border-b-2 py-1">
-          <div
-            className="flex items-center font-medium text-xs text-[#2f2f2f]
-     bg-[#e6e6e6] gap-1
-     rounded-xl py-2 px-2
-     border border-[#d8d8d8]
-     shadow-inner"
-          >
-            <Image
-              src="/svg/icons/money.svg"
-              height={20}
-              width={20}
-              alt="money icon"
-            />
-            <p>Mis gastos</p>
-          </div>
-          <div className="flex items-center font-medium text-xs text-[#2f2f2f] gap-1 rounded-xl py-2 px-2">
-            <Image
-              src="/svg/icons/money.svg"
-              height={20}
-              width={20}
-              alt="money icon"
-            />
-            <p>Dashboard</p>
+        <div>
+          <div className="flex flex-col gap-2">
+            <p className="text-sm font-alfa text-[#5c5c5c] leading-none">
+              Gastos
+            </p>
+            <div className="pl-2">
+              <SidebarItem text="Mis gastos" active={true} />
+              <SidebarItem text="Dashboard" />
+            </div>
           </div>
         </div>
       </div>

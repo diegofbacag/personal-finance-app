@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { SignInForm } from '@/src/features/auth/components/SignInForm'
+import { SignUpForm } from '@/src/features/auth/components/SignUpForm'
 import { AuthHome } from '@/src/features/auth/components/AuthHome'
 
 type AuthMode = 'home' | 'signIn' | 'signUp'
@@ -18,10 +19,16 @@ export default function Home() {
 
       <main className="flex flex-col min-h-[25vh] min-w-[25vw] relative bg-white p-14 rounded-3xl shadow-xl backdrop-blur-xl gap-6 items-center justify-center">
         {authMode === 'home' && (
-          <AuthHome onSignIn={() => setAuthMode('signIn')} />
+          <AuthHome
+            onSignIn={() => setAuthMode('signIn')}
+            onSignUp={() => setAuthMode('signUp')}
+          />
         )}
         {authMode === 'signIn' && (
           <SignInForm onBack={() => setAuthMode('home')} />
+        )}
+        {authMode === 'signUp' && (
+          <SignUpForm onBack={() => setAuthMode('home')} />
         )}
       </main>
 

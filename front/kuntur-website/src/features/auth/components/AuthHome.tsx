@@ -3,10 +3,11 @@ import { ContinueWithGoogleButton } from './ContinueWithGoogleButton'
 import { Button } from '@/src/components/ui/Button'
 
 interface AuthHomeProps {
-  onSignIn: () => void
+  onSignIn?: () => void
+  onSignUp?: () => void
 }
 
-export const AuthHome = ({ onSignIn }: AuthHomeProps) => {
+export const AuthHome = ({ onSignIn, onSignUp }: AuthHomeProps) => {
   return (
     <>
       <div>
@@ -38,7 +39,7 @@ export const AuthHome = ({ onSignIn }: AuthHomeProps) => {
         <Button
           text="Crear cuenta con correo"
           variant="light"
-          onClick={onSignIn}
+          onClick={onSignUp}
         />
       </div>
     </>

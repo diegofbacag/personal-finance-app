@@ -1,11 +1,11 @@
 import { Button } from '@/src/components/ui/Button'
 import Image from 'next/image'
 
-interface SignInFormProps {
+interface SignUpFormProps {
   onBack: () => void
 }
 
-export const SignInForm = ({ onBack }: SignInFormProps) => {
+export const SignUpForm = ({ onBack }: SignUpFormProps) => {
   return (
     <>
       <div className="flex justify-start w-full">
@@ -23,10 +23,10 @@ export const SignInForm = ({ onBack }: SignInFormProps) => {
       </div>
       <div className="flex flex-col items-center justify-center gap-1">
         <p className="text-[#5c5c5c] font-alfa text-xl leading-none">
-          Bienvenido a tu espacio financiero
+          Tu nuevo espacio financiero
         </p>
         <p className="text-[#5c5c5c] font-alfa text-sm">
-          Ingresa tu correo y contraseña
+          Crea tu cuenta con correo y contraseña
         </p>
       </div>
       <div className="flex flex-col gap-2 w-full">
@@ -48,7 +48,7 @@ export const SignInForm = ({ onBack }: SignInFormProps) => {
         </div>
       </div>
       <div className="flex flex-col items-center w-full gap-2">
-        <Button text="Iniciar sesión" variant="dark" />
+        <Button text="Registrate" variant="dark" />
       </div>
     </>
   )

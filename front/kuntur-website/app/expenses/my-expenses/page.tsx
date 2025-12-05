@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import Image from 'next/image'
 import { createExpense } from '@/src/features/expenses/services/expenses.service'
-import { InputForm } from '@/src/features/expenses/components/InputForm'
+import { ExpenseInput } from '@/src/features/expenses/components/expense-input/ExpenseInput'
 import { Button } from '@/src/components/ui/Button'
 
 interface Expense {
@@ -27,6 +27,12 @@ const expenses: Expense[] = [
     category: 'Transporte',
     description: 'Taxi al trabajo',
     date: new Date('2025-10-25'),
+  },
+  {
+    amount: 120.0,
+    category: 'Comida',
+    description: 'Cena con amigos',
+    date: new Date('2025-10-24'),
   },
   {
     amount: 120.0,
@@ -77,8 +83,8 @@ export default function MyExpensesPage() {
   }, [expenseHistory])
 
   return (
-    <main className="flex flex-col p-2 font-poppins bg-[#f5f5f5] min-h-screen pb-30 w-full gap-2">
-      <div className="flex flex-col bg-white py-10 px-10 rounded-2xl h-auto pb-40  gap-2">
+    <main className="flex flex-col p-2 font-poppins bg-[#f5f5f5] min-h-screen w-full gap-2 h-full">
+      <div className="relative flex flex-col bg-white py-10 px-10 rounded-2xl h-auto gap-2 h-full">
         <div className="flex flex-row">
           <div className="flex flex-row justify-end mt-2">
             <div
@@ -89,7 +95,7 @@ export default function MyExpensesPage() {
             </div>
           </div>
         </div>
-        <InputForm />
+
         <header className="flex align-top items-center justify-between">
           <h1 className="text-lg font-bold text-black mt-0 align-top leading-none">
             Mis gastos
@@ -170,6 +176,8 @@ export default function MyExpensesPage() {
           </table>
           <div ref={tableEndRef} />
         </section>
+
+        <ExpenseInput className="absolute bottom-10 left-10 right-10" />
       </div>
     </main>
   )

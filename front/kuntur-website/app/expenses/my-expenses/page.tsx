@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import Image from 'next/image'
 import { createExpense } from '@/src/features/expenses/services/expenses.service'
-import { ExpenseInput } from '@/src/features/expenses/components/expense-input/ExpenseInput'
+import { ExpenseForm } from '@/src/features/expenses/components/expense-input/ExpenseForm'
 import { Button } from '@/src/components/ui/Button'
 
 interface Expense {
@@ -177,7 +177,7 @@ export default function MyExpensesPage() {
           <div ref={tableEndRef} />
         </section>
 
-        <ExpenseInput className="absolute bottom-10 left-10 right-10" />
+        <ExpenseForm className="absolute bottom-10 left-10 right-10" />
       </div>
     </main>
   )

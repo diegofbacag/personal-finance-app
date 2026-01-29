@@ -10,6 +10,7 @@ import { Button } from '@/src/components/ui/Button'
 interface Expense {
   amount: number
   category?: string
+  subcategory?: string
   description?: string
   date: Date
 }
@@ -17,6 +18,7 @@ interface Expense {
 interface ExpenseForm {
   amount: string
   category?: string
+  subcategory?: string
   description?: string
   date: string
 }
@@ -46,6 +48,7 @@ export default function MyExpensesPage() {
   const [expenseFormData, setExpenseFormData] = useState<ExpenseForm>({
     amount: '',
     category: '',
+    subcategory: '',
     description: '',
     date: new Date().toISOString().split('T')[0],
   })
@@ -54,9 +57,10 @@ export default function MyExpensesPage() {
   const tableEndRef = useRef<HTMLDivElement | null>(null)
 
   const handleExpenseFormInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target
+    console.log(name, value)
     setExpenseFormData((prev) => ({ ...prev, [name]: value }))
   }
 
@@ -64,6 +68,7 @@ export default function MyExpensesPage() {
     const newExpense: Expense = {
       amount: Number(expenseFormData.amount),
       category: expenseFormData.category || undefined,
+      subcategory: expenseFormData.subcategory || undefined,
       description: expenseFormData.description || undefined,
       date: new Date(`${expenseFormData.date}T00:00:00`),
     }
@@ -72,12 +77,12 @@ export default function MyExpensesPage() {
 
     setExpenseHistory((prev) => [...prev, newExpense])
 
-    setExpenseFormData((prev) => ({
-      ...prev,
-      amount: '',
-      category: '',
-      description: '',
-    }))
+    // setExpenseFormData((prev) => ({
+    //   ...prev,
+    //   amount: '',
+    //   category: '',
+    //   description: '',
+    // }))
   }
 
   useEffect(() => {
@@ -164,7 +169,13 @@ export default function MyExpensesPage() {
                         </span>
                       )}
                     </td>
-                    <td>Fijos</td>
+                    <td>
+                      {e.subcategory || (
+                        <span className="text-gray-400 italic">
+                          Sin subcategoría
+                        </span>
+                      )}
+                    </td>
                     <td className="text-right pr-4 font-medium text-[#dc3545]">
                       {(-e.amount).toLocaleString('es-PE', {
                         style: 'currency',
@@ -183,6 +194,7 @@ export default function MyExpensesPage() {
 
         <section className="absolute bottom-10 left-10 right-10 rounded-xl py-3 px-4 text-sm bg-[#f5f5f5] transition-all duration-300">
           <div className="flex flex-row gap-2 text-black">
+            {/* Amount */}
             <div className="">
               <p className="font-medium text-sm text-[#495057]">Monto (S/)</p>
               <input
@@ -190,6 +202,43 @@ export default function MyExpensesPage() {
                 placeholder="Ej. 100"
                 type="number"
                 min="1"
+                className="p-1 my-1 rounded-md focus:outline-none placeholder:text-gray-400 placeholder:italic placeholder:font-light text-[#212529] bg-white transition-all duration-300 focus:bg-[#0e8f53]/10 focus:shadow-[0_0_20px_8px_rgba(14,143,83,0.12)] [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                onChange={handleExpenseFormInputChange}
+              />
+            </div>
+            {/* Category */}
+            <div className="">
+              <p className="font-medium text-sm text-[#495057]">Categoría</p>
+              <select
+                name="category"
+                className="p-1 my-1 rounded-md focus:outline-none border-none text-[#212529] bg-white transition-all duration-200 focus:shadow-[0_0_6px_1px_rgba(14,143,83,0.25)] placeholder:text-gray-400 text-sm"
+                onChange={handleExpenseFormInputChange}
+              >
+                <option value="">Selecciona una categoría</option>
+                <option value="Gastos fijos">Gastos fijos</option>
+                <option value="Gastos libres">Gasto libre</option>
+              </select>
+            </div>
+            {/* Subcategory */}
+            <div className="">
+              <p className="font-medium text-sm text-[#495057]">Subategoría</p>
+              <select
+                name="subcategory"
+                className="p-1 my-1 rounded-md focus:outline-none border-none text-[#212529] bg-white transition-all duration-200 focus:shadow-[0_0_6px_1px_rgba(14,143,83,0.25)] placeholder:text-gray-400 text-sm"
+                onChange={handleExpenseFormInputChange}
+              >
+                <option value="">Selecciona una subcategoría</option>
+                <option value="Gastos fijos">Transporte</option>
+                <option value="Gastos libres">Gasto libre</option>
+              </select>
+            </div>
+            {/* Description */}
+            <div className="">
+              <p className="font-medium text-sm text-[#495057]">Descripción</p>
+              <input
+                name="description"
+                placeholder="Ej. Cena con amigos"
+                type="text"
                 className="p-1 my-1 rounded-md focus:outline-none placeholder:text-gray-400 placeholder:italic placeholder:font-light text-[#212529] bg-white transition-all duration-300 focus:bg-[#0e8f53]/10 focus:shadow-[0_0_20px_8px_rgba(14,143,83,0.12)] [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                 onChange={handleExpenseFormInputChange}
               />

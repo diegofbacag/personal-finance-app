@@ -53,7 +53,9 @@ export default function MyExpensesPage() {
 
   const tableEndRef = useRef<HTMLDivElement | null>(null)
 
-  const handleExpenseFormInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleExpenseFormInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const { name, value } = e.target
     setExpenseFormData((prev) => ({ ...prev, [name]: value }))
   }
@@ -66,7 +68,7 @@ export default function MyExpensesPage() {
       date: new Date(`${expenseFormData.date}T00:00:00`),
     }
 
-    await createExpense(newExpense)
+    // await createExpense(newExpense)
 
     setExpenseHistory((prev) => [...prev, newExpense])
 
@@ -178,6 +180,35 @@ export default function MyExpensesPage() {
         </section>
 
         <ExpenseForm className="absolute bottom-10 left-10 right-10" />
+
+        <section className="absolute bottom-10 left-10 right-10 rounded-xl py-3 px-4 text-sm bg-[#f5f5f5] transition-all duration-300">
+          <div className="flex flex-row gap-2 text-black">
+            <div className="">
+              <p className="font-medium text-sm text-[#495057]">Monto (S/)</p>
+              <input
+                name="amount"
+                placeholder="Ej. 100"
+                type="number"
+                min="1"
+                className="p-1 my-1 rounded-md focus:outline-none placeholder:text-gray-400 placeholder:italic placeholder:font-light text-[#212529] bg-white transition-all duration-300 focus:bg-[#0e8f53]/10 focus:shadow-[0_0_20px_8px_rgba(14,143,83,0.12)] [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                onChange={handleExpenseFormInputChange}
+              />
+            </div>
+
+            <button
+              className="flex items-center justify-center bg-[#0e8f53] rounded-full text-white h-10 w-10 cursor-pointer"
+              onClick={submitExpenseFormData}
+            >
+              <Image
+                src="/svg/icons/plus-bold.svg"
+                height={20}
+                width={20}
+                alt="send icon"
+                className="invert"
+              />
+            </button>
+          </div>
+        </section>
       </div>
     </main>
   )

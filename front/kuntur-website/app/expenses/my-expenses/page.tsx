@@ -73,9 +73,10 @@ export default function MyExpensesPage() {
       date: new Date(`${expenseFormData.date}T00:00:00`),
     }
 
-    // await createExpense(newExpense)
+    const savedExpense: Expense = await createExpense(newExpense)
 
-    setExpenseHistory((prev) => [...prev, newExpense])
+    console.log('ssaved expense', savedExpense)
+    setExpenseHistory((prev) => [...prev, savedExpense])
 
     // setExpenseFormData((prev) => ({
     //   ...prev,
@@ -111,83 +112,81 @@ export default function MyExpensesPage() {
             <p className="text-sm text-[#495057] font-bold">Total: S/ 100</p>
           </div>
         </header>
-        <section aria-label="Expenses table" className="w-full">
-          <table className="w-full rounded-2xl  overflow-hidden border-separate border-spacing-0 text-sm text-[#212529]">
-            <thead>
-              <tr className="bg-[#f5f5f5] border-b border-[#dee2e6] text-left">
-                <th className="font-medium text-sm text-[#495057] p-4">
-                  Fecha
-                </th>
-                <th className="font-medium text-sm text-[#495057]">
-                  Descripción
-                </th>
-                <th className="font-medium text-sm text-[#495057]">
-                  Categoría
-                </th>
-                <th className="font-medium text-sm text-[#495057]">
-                  Subcategoría
-                </th>
-                <th className="font-medium text-sm text-[#495057] text-right pr-4">
-                  Monto
-                </th>
-              </tr>
-            </thead>
+        <section aria-label="Expenses table" className="pb-16">
+          <div className="relative h-[60vh] overflow-auto">
+            <table className="w-full rounded-2xl border-separate border-spacing-0 text-sm text-[#212529]">
+              <thead>
+                <tr className="bg-[#f5f5f5] border-b border-[#dee2e6] text-left">
+                  <th className="font-medium text-sm text-[#495057] p-4">
+                    Fecha
+                  </th>
+                  <th className="font-medium text-sm text-[#495057]">
+                    Descripción
+                  </th>
+                  <th className="font-medium text-sm text-[#495057]">
+                    Categoría
+                  </th>
+                  <th className="font-medium text-sm text-[#495057]">
+                    Subcategoría
+                  </th>
+                  <th className="font-medium text-sm text-[#495057] text-right pr-4">
+                    Monto
+                  </th>
+                </tr>
+              </thead>
 
-            <tbody>
-              {expenseHistory.map((e, index) => {
-                const isGrayRow = index % 2 === 0
-                return (
-                  <tr
-                    key={index}
-                    className={`
-              h-14 transition-all duration-200 text-left
-              ${
-                isGrayRow
-                  ? 'bg-[#f8f9fa] shadow-[inset_0_1px_0_rgba(0,0,0,0.03),_inset_0_-1px_0_rgba(0,0,0,0.02)]'
-                  : 'bg-[#f5f5f5]'
-              }
-              hover:shadow-[0_2px_8px_rgba(0,0,0,0.05)] hover:-translate-y-[1px] hover:bg-[#f1f3f5]
-            `}
-                  >
-                    <td className="p-4">
-                      {e.date.toLocaleDateString('es-PE', {
-                        day: 'numeric',
-                        month: 'short',
-                      })}
-                    </td>
-                    <td className="truncate max-w-[200px]">
-                      {e.description || (
-                        <span className="text-gray-400 italic">
-                          Sin descripción
-                        </span>
-                      )}
-                    </td>
-                    <td>
-                      {e.category || (
-                        <span className="text-gray-400 italic">
-                          Sin categoría
-                        </span>
-                      )}
-                    </td>
-                    <td>
-                      {e.subcategory || (
-                        <span className="text-gray-400 italic">
-                          Sin subcategoría
-                        </span>
-                      )}
-                    </td>
-                    <td className="text-right pr-4 font-medium text-[#dc3545]">
-                      {(-e.amount).toLocaleString('es-PE', {
-                        style: 'currency',
-                        currency: 'PEN',
-                      })}
-                    </td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
-          <div ref={tableEndRef} />
+              <tbody>
+                {expenseHistory.map((e, index) => {
+                  const isGrayRow = index % 2 === 0
+                  return (
+                    <tr
+                      key={index}
+                      className={`h-14 transition-all duration-200 text-left hover:shadow-[0_2px_8px_rgba(0,0,0,0.05)] hover:-translate-y-[1px] hover:bg-[#f1f3f5] ${
+                        isGrayRow
+                          ? 'bg-[#f8f9fa] shadow-[inset_0_1px_0_rgba(0,0,0,0.03),_inset_0_-1px_0_rgba(0,0,0,0.02)]'
+                          : 'bg-[#f5f5f5]'
+                      }`}
+                    >
+                      <td className="p-4">
+                        {new Date(e.date).toLocaleDateString('es-PE', {
+                          day: 'numeric',
+                          month: 'short',
+                        })}
+                      </td>
+                      <td className="truncate max-w-[200px]">
+                        {e.description || (
+                          <span className="text-gray-400 italic">
+                            Sin descripción
+                          </span>
+                        )}
+                      </td>
+                      <td>
+                        {e.category || (
+                          <span className="text-gray-400 italic">
+                            Sin categoría
+                          </span>
+                        )}
+                      </td>
+                      <td>
+                        {e.subcategory || (
+                          <span className="text-gray-400 italic">
+                            Sin subcategoría
+                          </span>
+                        )}
+                      </td>
+                      <td className="text-right pr-4 font-medium text-[#dc3545]">
+                        {(-e.amount).toLocaleString('es-PE', {
+                          style: 'currency',
+                          currency: 'PEN',
+                        })}
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+            <div ref={tableEndRef} />
+          </div>
         </section>
 
         <ExpenseForm className="absolute bottom-10 left-10 right-10" />
@@ -241,6 +240,21 @@ export default function MyExpensesPage() {
                 type="text"
                 className="p-1 my-1 rounded-md focus:outline-none placeholder:text-gray-400 placeholder:italic placeholder:font-light text-[#212529] bg-white transition-all duration-300 focus:bg-[#0e8f53]/10 focus:shadow-[0_0_20px_8px_rgba(14,143,83,0.12)] [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                 onChange={handleExpenseFormInputChange}
+              />
+            </div>
+            {/* Date */}
+            <div>
+              <p className="font-medium font-medium text-[#495057]">Fecha</p>
+              <input
+                type="date"
+                name="date"
+                value={
+                  expenseFormData.date || new Date().toISOString().split('T')[0]
+                }
+                placeholder="100"
+                onChange={handleExpenseFormInputChange}
+                className="
+                my-1 rounded-md focus:outline-none placeholder:text-gray-400 placeholder:italic placeholder:font-light text-[#212529] bg-white transition-all duration-300 focus:bg-[#0e8f53]/10 focus:shadow-[0_0_20px_8px_rgba(14,143,83,0.12)]"
               />
             </div>
 

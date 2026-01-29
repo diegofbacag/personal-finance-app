@@ -15,8 +15,8 @@ export class ExpensesService {
 
   async createExpense(expenseData: CreateExpenseDto) {
     const newExpense = this.expensesRepository.create(expenseData);
-    await this.expensesRepository.save(newExpense);
+    const savedExpense = await this.expensesRepository.save(newExpense);
 
-    return 'usuario Creado';
+    return savedExpense;
   }
 }

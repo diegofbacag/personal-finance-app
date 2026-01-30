@@ -12,11 +12,13 @@ import Image from 'next/image'
 
 import {
   createExpense,
+  deleteExpense,
   getExpenses,
 } from '@/src/features/expenses/services/expenses.service'
 import { ExpenseForm } from '@/src/features/expenses/components/expense-input/ExpenseForm'
 
 interface Expense {
+  id?: string
   amount: number
   category?: string
   subcategory?: string
@@ -50,7 +52,7 @@ const formatDate = (isoDate: string) => {
     'dic',
   ]
 
-  return `${Number(day)} ${months[Number(month) - 1]}`
+  return `${Number(day)} ${months[Number(month) - 1]}.`
 }
 
 export default function MyExpensesPage() {
@@ -155,6 +157,9 @@ export default function MyExpensesPage() {
                   <th className="font-medium text-sm text-[#495057] text-right pr-4">
                     Monto
                   </th>
+                  <th className="font-medium text-sm text-[#495057] text-right pr-4">
+                    Delete
+                  </th>
                 </tr>
               </thead>
 
@@ -197,6 +202,21 @@ export default function MyExpensesPage() {
                           style: 'currency',
                           currency: 'PEN',
                         })}
+                      </td>
+                      <td className="text-right pr-8 font-medium text-[#dc3545] ">
+                        <button
+                          className="cursor-pointer"
+                          onClick={() => {
+                            if (confirm('¿Eliminar este gasto?')) {
+                              setExpenseHistory((prev) =>
+                                prev.filter((exp) => exp.id !== e.id),
+                              )
+                              deleteExpense(e.id!)
+                            }
+                          }}
+                        >
+                          x
+                        </button>
                       </td>
                     </tr>
                   )

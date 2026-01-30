@@ -24,4 +24,8 @@ export class ExpensesService {
 
     return savedExpense;
   }
+
+  async deleteExpense(id: string) {
+    await this.expensesRepository.softDelete(id);
+  }
 }

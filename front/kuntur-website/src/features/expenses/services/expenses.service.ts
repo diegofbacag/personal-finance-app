@@ -12,3 +12,7 @@ export const createExpense = async (newExpense) => {
   console.log('create expense', data)
   return data
 }
+
+export const deleteExpense = async (id: string) => {
+  await axios.delete(`http://localhost:8080/expenses/${id}`)
+}

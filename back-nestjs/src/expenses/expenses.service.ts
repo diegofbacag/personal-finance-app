@@ -13,6 +13,11 @@ export class ExpensesService {
     private expensesRepository: Repository<Expense>,
   ) {}
 
+  async getExpenses() {
+    const expenses = this.expensesRepository.find();
+    return expenses;
+  }
+
   async createExpense(expenseData: CreateExpenseDto) {
     const newExpense = this.expensesRepository.create(expenseData);
     const savedExpense = await this.expensesRepository.save(newExpense);

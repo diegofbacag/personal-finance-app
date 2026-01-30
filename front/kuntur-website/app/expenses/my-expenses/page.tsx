@@ -1,18 +1,27 @@
+///to do :
+
+///delete button
+///logger
+/// ui fixes
+
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
 
 import Image from 'next/image'
-import { createExpense } from '@/src/features/expenses/services/expenses.service'
+
+import {
+  createExpense,
+  getExpenses,
+} from '@/src/features/expenses/services/expenses.service'
 import { ExpenseForm } from '@/src/features/expenses/components/expense-input/ExpenseForm'
-import { Button } from '@/src/components/ui/Button'
 
 interface Expense {
   amount: number
   category?: string
   subcategory?: string
   description?: string
-  date: Date
+  date: string
 }
 
 interface ExpenseForm {
@@ -23,26 +32,26 @@ interface ExpenseForm {
   date: string
 }
 
-const expenses: Expense[] = [
-  {
-    amount: 45.5,
-    category: 'Transporte',
-    description: 'Taxi al trabajo',
-    date: new Date('2025-10-25'),
-  },
-  {
-    amount: 120.0,
-    category: 'Comida',
-    description: 'Cena con amigos',
-    date: new Date('2025-10-24'),
-  },
-  {
-    amount: 120.0,
-    category: 'Comida',
-    description: 'Cena con amigos',
-    date: new Date('2025-10-24'),
-  },
-]
+const formatDate = (isoDate: string) => {
+  const [year, month, day] = isoDate.split('-')
+
+  const months = [
+    'ene',
+    'feb',
+    'mar',
+    'abr',
+    'may',
+    'jun',
+    'jul',
+    'ago',
+    'sep',
+    'oct',
+    'nov',
+    'dic',
+  ]
+
+  return `${Number(day)} ${months[Number(month) - 1]}`
+}
 
 export default function MyExpensesPage() {
   const [expenseFormData, setExpenseFormData] = useState<ExpenseForm>({
@@ -50,11 +59,24 @@ export default function MyExpensesPage() {
     category: '',
     subcategory: '',
     description: '',
-    date: new Date().toISOString().split('T')[0],
+    date: new Date().toLocaleDateString('en-CA'),
   })
-  const [expenseHistory, setExpenseHistory] = useState<Expense[]>(expenses)
+  const [expenseHistory, setExpenseHistory] = useState<Expense[]>([])
 
-  const tableEndRef = useRef<HTMLDivElement | null>(null)
+  useEffect(() => {
+    async function fetchExpenses() {
+      console.log('fetchExpenses')
+      try {
+        const data = await getExpenses()
+        setExpenseHistory(data)
+      } catch (error) {
+        console.log('error', error)
+      } finally {
+      }
+    }
+
+    fetchExpenses()
+  }, [])
 
   const handleExpenseFormInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -70,12 +92,11 @@ export default function MyExpensesPage() {
       category: expenseFormData.category || undefined,
       subcategory: expenseFormData.subcategory || undefined,
       description: expenseFormData.description || undefined,
-      date: new Date(`${expenseFormData.date}T00:00:00`),
+      date: expenseFormData.date,
     }
 
     const savedExpense: Expense = await createExpense(newExpense)
 
-    console.log('ssaved expense', savedExpense)
     setExpenseHistory((prev) => [...prev, savedExpense])
 
     // setExpenseFormData((prev) => ({
@@ -86,6 +107,8 @@ export default function MyExpensesPage() {
     // }))
   }
 
+  const tableEndRef = useRef<HTMLDivElement | null>(null)
+
   useEffect(() => {
     tableEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [expenseHistory])
@@ -93,7 +116,7 @@ export default function MyExpensesPage() {
   return (
     <main className="flex flex-col p-2 font-poppins bg-[#f5f5f5] min-h-screen w-full gap-2 h-full">
       <div className="relative flex flex-col bg-white py-10 px-10 rounded-2xl h-auto gap-2 h-full">
-        <div className="flex flex-row">
+        {/* <div className="flex flex-row">
           <div className="flex flex-row justify-end mt-2">
             <div
               className="flex w-14 bg-gray-300 text-xs hover:bg-[#97C7A3] 
@@ -102,7 +125,7 @@ export default function MyExpensesPage() {
               Texto
             </div>
           </div>
-        </div>
+        </div> */}
 
         <header className="flex align-top items-center justify-between">
           <h1 className="text-lg font-bold text-black mt-0 align-top leading-none">
@@ -113,7 +136,7 @@ export default function MyExpensesPage() {
           </div>
         </header>
         <section aria-label="Expenses table" className="pb-16">
-          <div className="relative h-[60vh] overflow-auto">
+          <div className="relative h-[60vh] overflow-auto rounded-2xl">
             <table className="w-full rounded-2xl border-separate border-spacing-0 text-sm text-[#212529]">
               <thead>
                 <tr className="bg-[#f5f5f5] border-b border-[#dee2e6] text-left">
@@ -147,12 +170,7 @@ export default function MyExpensesPage() {
                           : 'bg-[#f5f5f5]'
                       }`}
                     >
-                      <td className="p-4">
-                        {new Date(e.date).toLocaleDateString('es-PE', {
-                          day: 'numeric',
-                          month: 'short',
-                        })}
-                      </td>
+                      <td className="p-4">{formatDate(e.date)}</td>
                       <td className="truncate max-w-[200px]">
                         {e.description || (
                           <span className="text-gray-400 italic">
@@ -189,8 +207,6 @@ export default function MyExpensesPage() {
           </div>
         </section>
 
-        <ExpenseForm className="absolute bottom-10 left-10 right-10" />
-
         <section className="absolute bottom-10 left-10 right-10 rounded-xl py-3 px-4 text-sm bg-[#f5f5f5] transition-all duration-300">
           <div className="flex flex-row gap-2 text-black">
             {/* Amount */}
@@ -201,6 +217,17 @@ export default function MyExpensesPage() {
                 placeholder="Ej. 100"
                 type="number"
                 min="1"
+                className="p-1 my-1 rounded-md focus:outline-none placeholder:text-gray-400 placeholder:italic placeholder:font-light text-[#212529] bg-white transition-all duration-300 focus:bg-[#0e8f53]/10 focus:shadow-[0_0_20px_8px_rgba(14,143,83,0.12)] [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                onChange={handleExpenseFormInputChange}
+              />
+            </div>
+            {/* Description */}
+            <div className="">
+              <p className="font-medium text-sm text-[#495057]">Descripción</p>
+              <input
+                name="description"
+                placeholder="Ej. Cena con amigos"
+                type="text"
                 className="p-1 my-1 rounded-md focus:outline-none placeholder:text-gray-400 placeholder:italic placeholder:font-light text-[#212529] bg-white transition-all duration-300 focus:bg-[#0e8f53]/10 focus:shadow-[0_0_20px_8px_rgba(14,143,83,0.12)] [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                 onChange={handleExpenseFormInputChange}
               />
@@ -231,17 +258,7 @@ export default function MyExpensesPage() {
                 <option value="Gastos libres">Gasto libre</option>
               </select>
             </div>
-            {/* Description */}
-            <div className="">
-              <p className="font-medium text-sm text-[#495057]">Descripción</p>
-              <input
-                name="description"
-                placeholder="Ej. Cena con amigos"
-                type="text"
-                className="p-1 my-1 rounded-md focus:outline-none placeholder:text-gray-400 placeholder:italic placeholder:font-light text-[#212529] bg-white transition-all duration-300 focus:bg-[#0e8f53]/10 focus:shadow-[0_0_20px_8px_rgba(14,143,83,0.12)] [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                onChange={handleExpenseFormInputChange}
-              />
-            </div>
+
             {/* Date */}
             <div>
               <p className="font-medium font-medium text-[#495057]">Fecha</p>
@@ -253,8 +270,7 @@ export default function MyExpensesPage() {
                 }
                 placeholder="100"
                 onChange={handleExpenseFormInputChange}
-                className="
-                my-1 rounded-md focus:outline-none placeholder:text-gray-400 placeholder:italic placeholder:font-light text-[#212529] bg-white transition-all duration-300 focus:bg-[#0e8f53]/10 focus:shadow-[0_0_20px_8px_rgba(14,143,83,0.12)]"
+                className="my-1 rounded-md focus:outline-none placeholder:text-gray-400 placeholder:italic placeholder:font-light text-[#212529] bg-white transition-all duration-300 focus:bg-[#0e8f53]/10 focus:shadow-[0_0_20px_8px_rgba(14,143,83,0.12)]"
               />
             </div>
 

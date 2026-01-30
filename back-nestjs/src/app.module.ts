@@ -20,7 +20,7 @@ import { ExpensesModule } from './expenses/expenses.module';
       entities: [Expense],
       synchronize: true,
       logging: ['error'],
-      dropSchema: true,
+      dropSchema: false,
       autoLoadEntities: true,
     }),
     ExpensesModule,

@@ -19,10 +19,12 @@ export class ExpensesService {
   }
 
   async createExpense(expenseData: CreateExpenseDto) {
-    const newExpense = this.expensesRepository.create(expenseData);
-    const savedExpense = await this.expensesRepository.save(newExpense);
+    const newExpense = this.expensesRepository.create({
+      ...expenseData,
+      amount: expenseData.amount.toString(),
+    });
 
-    return savedExpense;
+    return await this.expensesRepository.save(newExpense);
   }
 
   async deleteExpense(id: string) {

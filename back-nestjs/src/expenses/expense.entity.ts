@@ -10,8 +10,8 @@ export class Expense {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  amount: number;
+  @Column({ type: 'numeric', precision: 10, scale: 2 })
+  amount: string;
 
   @Column()
   category: string;

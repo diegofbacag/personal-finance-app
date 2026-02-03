@@ -1,12 +1,14 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Expense } from './expenses/expense.entity';
 import { ExpensesModule } from './expenses/expenses.module';
 import { LoggerMiddleware } from './middleware/logger.middleware';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { User } from './users/entities/user.entity';
+import { Credential } from './users/entities/credential.entity';
 
 @Module({
   imports: [
@@ -18,16 +20,18 @@ import { LoggerMiddleware } from './middleware/logger.middleware';
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      entities: [Expense],
+      entities: [Expense, User, Credential],
       synchronize: true,
       logging: ['error'],
       dropSchema: false,
       autoLoadEntities: true,
     }),
     ExpensesModule,
+    AuthModule,
+    UsersModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

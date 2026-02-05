@@ -36,7 +36,7 @@ export class AuthGuard implements CanActivate {
       user.iat = new Date(user.iat * 1000);
 
       request.user = user;
-      console.log('tudo bem');
+
       return true;
     } catch (error) {
       throw new UnauthorizedException('Token invalido o expirado');

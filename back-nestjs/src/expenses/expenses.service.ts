@@ -13,8 +13,11 @@ export class ExpensesService {
     private expensesRepository: Repository<Expense>,
   ) {}
 
-  async getExpenses() {
-    const expenses = this.expensesRepository.find();
+  async getExpenses(userId: string) {
+    const expenses = this.expensesRepository.find({
+      where: { user: { id_user: userId } },
+      relations: ['user'],
+    });
     return expenses;
   }
 

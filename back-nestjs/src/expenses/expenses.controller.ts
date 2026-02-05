@@ -5,11 +5,13 @@ import {
   Get,
   Param,
   Post,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { ExpensesService } from './expenses.service';
 import { CreateExpenseDto } from './dto/expense.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { JwtSecretRequestType } from '@nestjs/jwt';
 
 @Controller('expenses')
 @UseGuards(AuthGuard)
@@ -17,8 +19,9 @@ export class ExpensesController {
   constructor(private readonly expensesService: ExpensesService) {}
 
   @Get()
-  getExpenses() {
-    return this.expensesService.getExpenses();
+  getExpenses(@Req() req) {
+    const userId: string = req.user.sub;
+    return this.expensesService.getExpenses(userId);
   }
 
   @Post()

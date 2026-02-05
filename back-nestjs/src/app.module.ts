@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { User } from './users/entities/user.entity';
 import { Credential } from './users/entities/credential.entity';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -25,6 +26,11 @@ import { Credential } from './users/entities/credential.entity';
       logging: ['error'],
       dropSchema: false,
       autoLoadEntities: true,
+    }),
+    JwtModule.register({
+      secret: process.env.JWT_SECRET || 'yourSecretKey', // keep this in env
+      signOptions: { expiresIn: '1h' },
+      global: true,
     }),
     ExpensesModule,
     AuthModule,

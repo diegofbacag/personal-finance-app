@@ -28,7 +28,9 @@ export const SignUpForm = ({ onBack }: SignUpFormProps) => {
 
   const handleSubmitForm = async () => {
     try {
-      await emailSignUp(credentials)
+      const data = await emailSignUp(credentials)
+
+      localStorage.setItem('accessToken', data.access_token)
 
       router.push('/expenses/my-expenses')
     } catch (e) {}

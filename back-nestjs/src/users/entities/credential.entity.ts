@@ -10,7 +10,7 @@ import { User } from './user.entity';
 @Entity({ name: 'credentials' })
 export class Credential {
   @PrimaryGeneratedColumn('uuid')
-  id_credentials: number;
+  id_credentials: string;
 
   @Column({ type: 'varchar', length: 120, unique: true, nullable: false })
   email: string;

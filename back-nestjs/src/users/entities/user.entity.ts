@@ -7,7 +7,9 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id_user: string;
 
-  @OneToOne(() => Credential, (credentials) => credentials.user)
+  @OneToOne(() => Credential, (credentials) => credentials.user, {
+    cascade: true,
+  })
   credentials: Credential;
 
   @OneToMany(() => Expense, (expense) => expense.user)

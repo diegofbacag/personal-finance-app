@@ -1,15 +1,3 @@
-// FRONT END
-// credentials
-// form
-// validation
-// BACK END
-// ENDPOINT
-// VALIDATION
-/// database validation for duplicates DONE
-// hashing DONE
-// STORAGE
-// JWT TOKEN
-
 import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
@@ -17,15 +5,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Credential } from 'src/users/entities/credential.entity';
 import { User } from 'src/users/entities/user.entity';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(Credential)
     private readonly credentialRepository: Repository<Credential>,
-
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    private jwtService: JwtService,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -36,7 +25,6 @@ export class AuthService {
       throw new ConflictException('Email already exists');
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
 
     const user = this.userRepository.create({
@@ -48,6 +36,8 @@ export class AuthService {
 
     await this.userRepository.save(user);
 
-    return 'susses';
+    const payload = { sub: user.id_user };
+
+    return { access_token: await this.jwtService.signAsync(payload) };
   }
 }

@@ -14,11 +14,14 @@ export class ExpensesService {
   ) {}
 
   async getExpenses(userId: string) {
-    const expenses = this.expensesRepository.find({
+    const expenses = await this.expensesRepository.find({
       where: { user: { id: userId } },
       relations: ['user'],
     });
-    return expenses;
+    return expenses.map((e) => ({
+      ...e,
+      amount: Number(e.amount),
+    }));
   }
 
   async createExpense(expenseData: CreateExpenseDto, userId: string) {

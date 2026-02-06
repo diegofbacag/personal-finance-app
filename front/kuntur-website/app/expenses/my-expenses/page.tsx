@@ -1,9 +1,3 @@
-///to do :
-
-///delete button
-///logger
-/// ui fixes
-
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
@@ -34,6 +28,21 @@ interface ExpenseForm {
   date: string
 }
 
+const MONTHS = [
+  { label: 'Ene', value: 0 },
+  { label: 'Feb', value: 1 },
+  { label: 'Mar', value: 2 },
+  { label: 'Abr', value: 3 },
+  { label: 'May', value: 4 },
+  { label: 'Jun', value: 5 },
+  { label: 'Jul', value: 6 },
+  { label: 'Ago', value: 7 },
+  { label: 'Sep', value: 8 },
+  { label: 'Oct', value: 9 },
+  { label: 'Nov', value: 10 },
+  { label: 'Dic', value: 11 },
+]
+
 const formatDate = (isoDate: string) => {
   const [year, month, day] = isoDate.split('-')
 
@@ -56,6 +65,11 @@ const formatDate = (isoDate: string) => {
 }
 
 export default function MyExpensesPage() {
+  const [selectedMonth, setSelectedMonth] = useState<number>(
+    new Date().getMonth(),
+  )
+  const currentYear = new Date().getFullYear()
+
   const [expenseFormData, setExpenseFormData] = useState<ExpenseForm>({
     amount: '',
     category: '',
@@ -64,6 +78,7 @@ export default function MyExpensesPage() {
     date: new Date().toLocaleDateString('en-CA'),
   })
   const [expenseHistory, setExpenseHistory] = useState<Expense[]>([])
+  const [isMonthMenuOpen, setIsMonthMenuOpen] = useState<boolean>(false)
 
   useEffect(() => {
     async function fetchExpenses() {
@@ -108,7 +123,15 @@ export default function MyExpensesPage() {
     //   description: '',
     // }))
   }
+  const filteredExpenses = expenseHistory.filter((expense) => {
+    const [year, month, day] = expense.date.split('-').map(Number)
 
+    const expenseDate = new Date(year, month - 1, day)
+    return (
+      expenseDate.getMonth() === selectedMonth &&
+      expenseDate.getFullYear() === currentYear
+    )
+  })
   const tableEndRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -133,10 +156,67 @@ export default function MyExpensesPage() {
           <h1 className="text-lg font-bold text-black mt-0 align-top leading-none">
             Mis gastos
           </h1>
+
           <div className="bg-[#f5f5f5] p-2 rounded-2xl ">
-            <p className="text-sm text-[#495057] font-bold">Total: S/ 100</p>
+            <p className="text-sm text-[#495057] font-bold">{`Total: S/ ${filteredExpenses.reduce(
+              (sum, expense) => {
+                return sum + expense.amount
+              },
+              0,
+            )}`}</p>
           </div>
         </header>
+        <div className="flex gap-2">
+          <p>Mes:</p>
+          <div
+            className="cursor-pointer"
+            onClick={() => {
+              setIsMonthMenuOpen((prev) => !prev)
+            }}
+          >
+            {MONTHS[selectedMonth].label}
+          </div>
+          {isMonthMenuOpen && (
+            <div>
+              <div className="flex gap-1">
+                <div
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setSelectedMonth(0)
+                    setIsMonthMenuOpen((prev) => !prev)
+                  }}
+                >
+                  Ene
+                </div>
+                <div
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setSelectedMonth(1)
+                    setIsMonthMenuOpen((prev) => !prev)
+                  }}
+                >
+                  Feb
+                </div>
+                <div className="cursor-pointer">Mar</div>
+              </div>
+              <div className="flex gap-1">
+                <div>Abr</div>
+                <div>May</div>
+                <div>Jun</div>
+              </div>
+              <div className="flex gap-1">
+                <div>Jul</div>
+                <div>Ago</div>
+                <div>Sep</div>
+              </div>
+              <div className="flex gap-1">
+                <div>Oct</div>
+                <div>Nov</div>
+                <div>Dic</div>
+              </div>
+            </div>
+          )}
+        </div>
         <section aria-label="Expenses table" className="pb-16">
           <div className="relative h-[60vh] overflow-auto rounded-2xl">
             <table className="w-full rounded-2xl border-separate border-spacing-0 text-sm text-[#212529]">
@@ -164,7 +244,7 @@ export default function MyExpensesPage() {
               </thead>
 
               <tbody>
-                {expenseHistory.map((e, index) => {
+                {filteredExpenses.map((e, index) => {
                   const isGrayRow = index % 2 === 0
                   return (
                     <tr

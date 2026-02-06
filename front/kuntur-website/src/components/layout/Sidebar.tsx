@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { SidebarItem } from './SidebarItem'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 interface SidebarProps {
   isOpen: boolean
@@ -31,7 +32,10 @@ export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
     <aside className="flex flex-col justify-between w-46 bg-[#f5f5f5] font-poppins p-2 pb-14">
       <div className="">
         <div className="flex items-center justify-between mb-10 pb-2">
-          <p className="font-bold text-[#0a7242]">Kuntur</p>
+          <Link href="/">
+            <p className="font-bold text-[#0a7242]">Kuntur</p>
+          </Link>
+
           {/* <button className="cursor-pointer" onClick={toggleSidebar}>
             <Image
               src="/svg/icons/collapse.svg"

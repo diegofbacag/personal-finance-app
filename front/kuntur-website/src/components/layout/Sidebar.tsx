@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { SidebarItem } from './SidebarItem'
+import { useRouter } from 'next/navigation'
 
 interface SidebarProps {
   isOpen: boolean
@@ -7,6 +8,11 @@ interface SidebarProps {
 }
 
 export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
+  const router = useRouter()
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken')
+    router.push('/')
+  }
   if (!isOpen) {
     return (
       <aside className="bg-white p-2">
@@ -48,16 +54,19 @@ export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
         </div>
       </div>
       <div className="flex flex-col justify-center items-start">
-        <div className="flex flex-row items-center justify-center gap-1">
-          <div className="bg-white rounded-full p-1">
+        <div
+          className="flex flex-row items-center justify-center gap-1 cursor-pointer"
+          onClick={handleLogout}
+        >
+          <div className=" rounded-full p-1">
             <Image
-              src="/svg/icons/avatar.svg"
+              src="/svg/icons/logout.svg"
               height={20}
               width={20}
               alt="avatar icon"
             />
           </div>
-          <p className="text-black text-sm">Nombre Apellido</p>
+          <p className="text-black text-sm">Cerrar Sesión</p>
         </div>
       </div>
     </aside>

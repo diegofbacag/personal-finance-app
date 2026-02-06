@@ -10,7 +10,7 @@ import { User } from './user.entity';
 @Entity({ name: 'credentials' })
 export class Credential {
   @PrimaryGeneratedColumn('uuid')
-  id_credentials: string;
+  id: string;
 
   @Column({ type: 'varchar', length: 120, unique: true, nullable: false })
   email: string;
@@ -19,6 +19,6 @@ export class Credential {
   password: string;
 
   @OneToOne(() => User, (user) => user.credentials)
-  @JoinColumn({ name: 'id_user' })
+  @JoinColumn({ name: 'user_id' })
   user: User;
 }

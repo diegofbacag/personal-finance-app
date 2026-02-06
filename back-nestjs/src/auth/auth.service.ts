@@ -36,7 +36,7 @@ export class AuthService {
 
     await this.userRepository.save(user);
 
-    const payload = { sub: user.id_user };
+    const payload = { sub: user.id };
 
     return { access_token: await this.jwtService.signAsync(payload) };
   }

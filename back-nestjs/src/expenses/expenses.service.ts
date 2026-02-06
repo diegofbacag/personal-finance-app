@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -15,22 +15,34 @@ export class ExpensesService {
 
   async getExpenses(userId: string) {
     const expenses = this.expensesRepository.find({
-      where: { user: { id_user: userId } },
+      where: { user: { id: userId } },
       relations: ['user'],
     });
     return expenses;
   }
 
-  async createExpense(expenseData: CreateExpenseDto) {
+  async createExpense(expenseData: CreateExpenseDto, userId: string) {
     const newExpense = this.expensesRepository.create({
       ...expenseData,
       amount: expenseData.amount.toString(),
+      user: { id: userId },
     });
 
     return await this.expensesRepository.save(newExpense);
   }
 
-  async deleteExpense(id: string) {
-    await this.expensesRepository.softDelete(id);
+  async deleteExpense(expenseId: number, userId: string) {
+    const expense = await this.expensesRepository.findOne({
+      where: {
+        id: expenseId,
+        user: { id: userId },
+      },
+    });
+
+    if (!expense) {
+      throw new NotFoundException('Expense not found');
+    }
+
+    await this.expensesRepository.softDelete(expenseId);
   }
 }

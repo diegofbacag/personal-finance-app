@@ -5,7 +5,7 @@ import { Expense } from 'src/expenses/expense.entity';
 @Entity({ name: 'users' })
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id_user: string;
+  id: string;
 
   @OneToOne(() => Credential, (credentials) => credentials.user, {
     cascade: true,

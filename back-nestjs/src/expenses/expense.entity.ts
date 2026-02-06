@@ -1,6 +1,7 @@
 import { User } from 'src/users/entities/user.entity';
 import {
   Column,
+  CreateDateColumn,
   DeleteDateColumn,
   Entity,
   JoinColumn,
@@ -31,6 +32,10 @@ export class Expense {
   @DeleteDateColumn({ name: 'deleted_at' })
   deletedAt?: Date;
 
+  @CreateDateColumn()
+  createdAt: Date;
+
+  ///poner nullable false
   @ManyToOne(() => User, (user) => user.expenses, {
     onDelete: 'CASCADE',
   })

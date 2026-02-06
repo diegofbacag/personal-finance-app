@@ -10,3 +10,13 @@ export const emailSignUp = async (newUser: Credentials) => {
   console.log('emailSignUp service', data)
   return data
 }
+
+export const emailSignIn = async (credentials: Credentials) => {
+  const payload = credentials
+  const { data } = await axios.post(
+    'http://localhost:8080/auth/signin',
+    payload,
+  )
+  console.log('emailSignUp service', data)
+  return data
+}

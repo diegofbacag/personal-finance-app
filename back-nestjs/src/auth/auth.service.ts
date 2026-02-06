@@ -48,8 +48,9 @@ export class AuthService {
   }
 
   async emailSignIn(signInDto) {
-    const credentials = await this.credentialRepository.findOneBy({
-      email: signInDto.email,
+    const credentials = await this.credentialRepository.findOne({
+      where: { email: signInDto.email },
+      relations: ['user'],
     });
 
     if (!credentials) {
@@ -64,6 +65,7 @@ export class AuthService {
     if (!isMatch) {
       throw new UnauthorizedException('Invalid email or password');
     }
+    console.log('todo bien hasta aqui', credentials);
 
     const payload = { sub: credentials.user.id };
 

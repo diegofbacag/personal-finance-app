@@ -12,9 +12,9 @@ export class AuthController {
     // Empty on purpose – just triggers the guard
   }
 
-  @Get('signin')
-  async signIn(@Body() body) {
-    return await this.authService.emailSignIn(body);
+  @Post('signin')
+  async signIn(@Body() credentials) {
+    return await this.authService.emailSignIn(credentials);
   }
 
   @Post('signup')

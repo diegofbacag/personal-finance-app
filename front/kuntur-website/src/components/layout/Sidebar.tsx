@@ -29,11 +29,13 @@ export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
     )
   }
   return (
-    <aside className="flex flex-col justify-between w-46 bg-[#f5f5f5] font-poppins p-2 pb-14">
+    <aside className="flex flex-col justify-between w-46 bg-[#f5f5f5] font-poppins p-2 pb-5">
       <div className="">
         <div className="flex items-center justify-between mb-10 pb-2">
           <Link href="/">
-            <p className="font-bold text-[#0a7242]">Kuntur</p>
+            <p className="font-bold text-[#0066FF] text-xl tracking-wide">
+              Vyse
+            </p>
           </Link>
 
           {/* <button className="cursor-pointer" onClick={toggleSidebar}>
@@ -57,7 +59,7 @@ export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col justify-center items-start">
+      <div className="flex flex-col justify-center items-center">
         <div
           className="flex flex-row items-center justify-center gap-1 cursor-pointer"
           onClick={handleLogout}

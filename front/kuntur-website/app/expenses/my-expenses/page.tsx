@@ -1,3 +1,6 @@
+//color gris label
+//  text-[#6c757d]
+
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
@@ -307,71 +310,215 @@ export default function MyExpensesPage() {
           </div>
         </section>
 
-        <section className="absolute bottom-10 left-10 right-10 rounded-xl py-3 px-4 text-sm bg-[#f5f5f5] transition-all duration-300">
-          <div className="flex flex-row gap-2 text-black">
+        <section className="absolute bottom-5 left-10 right-10 py-1 px-3 text-sm border-1 border-[rgba(13,13,13,0.05)] rounded-3xl shadow-short   ">
+          <div className="grid grid-cols-[1fr_1fr_1fr_1fr_1fr_auto] items-center gap-2">
             {/* Amount */}
-            <div className="">
-              <p className="font-medium text-sm text-[#495057]">Monto (S/)</p>
+            <div className="relative my-2">
               <input
                 name="amount"
-                placeholder="Ej. 100"
                 type="number"
                 min="1"
-                className="p-1 my-1 rounded-md focus:outline-none placeholder:text-gray-400 placeholder:italic placeholder:font-light text-[#212529] bg-white transition-all duration-300 focus:bg-[#0e8f53]/10 focus:shadow-[0_0_20px_8px_rgba(14,143,83,0.12)] [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                placeholder="Ej. 150.50"
+                className="
+                placeholder:text-gray-400 placeholder:italic placeholder:font-light
+      w-full
+      p-2
+      rounded-md
+      border border-gray-300
+       bg-transparent
+      text-[#212529]
+      transition-colors
+      focus:outline-none
+      focus:border-[#0e8f53]
+      [appearance:textfield]
+      [&::-webkit-inner-spin-button]:appearance-none
+      [&::-webkit-outer-spin-button]:appearance-none
+    "
                 onChange={handleExpenseFormInputChange}
               />
+
+              <label
+                className="
+      absolute
+      left-2
+      -top-2
+      text-xs
+       text-[#6c757d]
+      bg-white
+      px-1
+      pointer-events-none
+    "
+              >
+                Monto (S/)
+              </label>
             </div>
             {/* Description */}
-            <div className="">
-              <p className="font-medium text-sm text-[#495057]">Descripción</p>
+            <div className="relative my-2">
               <input
                 name="description"
-                placeholder="Ej. Cena con amigos"
                 type="text"
-                className="p-1 my-1 rounded-md focus:outline-none placeholder:text-gray-400 placeholder:italic placeholder:font-light text-[#212529] bg-white transition-all duration-300 focus:bg-[#0e8f53]/10 focus:shadow-[0_0_20px_8px_rgba(14,143,83,0.12)] [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                min="1"
+                placeholder="Ej. Cena con amigos"
+                className="
+                placeholder:text-gray-400 placeholder:italic placeholder:font-light
+      w-full
+      p-2
+      rounded-md
+      border border-gray-300
+       bg-transparent
+      text-[#212529]
+      transition-colors
+      focus:outline-none
+      focus:border-[#0e8f53]
+      [appearance:textfield]
+      [&::-webkit-inner-spin-button]:appearance-none
+      [&::-webkit-outer-spin-button]:appearance-none
+    "
                 onChange={handleExpenseFormInputChange}
               />
+
+              <label
+                className="
+      absolute
+      left-2
+      -top-2
+      text-xs
+       text-[#6c757d]
+      bg-white
+      px-1
+      pointer-events-none
+    "
+              >
+                Descripción
+              </label>
             </div>
+
             {/* Category */}
-            <div className="">
-              <p className="font-medium text-sm text-[#495057]">Categoría</p>
+            <div className="relative my-2">
               <select
                 name="category"
-                className="p-1 my-1 rounded-md focus:outline-none border-none text-[#212529] bg-white transition-all duration-200 focus:shadow-[0_0_6px_1px_rgba(14,143,83,0.25)] placeholder:text-gray-400 text-sm"
+                defaultValue=""
+                className="
+      w-full
+      p-2
+      rounded-md
+      border border-gray-300
+      bg-transparent
+       text-[#6c757d]
+      text-sm
+      transition-colors
+      focus:outline-none
+      focus:border-[#0e8f53]
+    "
                 onChange={handleExpenseFormInputChange}
               >
-                <option value="">Selecciona una categoría</option>
+                <option value="" disabled hidden>
+                  Selecciona una categoría
+                </option>
                 <option value="Gastos fijos">Gastos fijos</option>
-                <option value="Gastos libres">Gasto libre</option>
+                <option value="Gastos libres">Gastos sin culpa</option>
+                <option value="Gastos fijos">Ahorros</option>
+                <option value="Gastos libres">Inversión</option>
               </select>
+
+              <label
+                className="
+      absolute
+      left-2
+      -top-2
+      text-xs
+      text-[#6c757d]
+      bg-white
+      px-1
+      pointer-events-none
+    "
+              >
+                Categoría
+              </label>
             </div>
+
             {/* Subcategory */}
-            <div className="">
-              <p className="font-medium text-sm text-[#495057]">Subategoría</p>
+            <div className="relative my-2">
               <select
                 name="subcategory"
-                className="p-1 my-1 rounded-md focus:outline-none border-none text-[#212529] bg-white transition-all duration-200 focus:shadow-[0_0_6px_1px_rgba(14,143,83,0.25)] placeholder:text-gray-400 text-sm"
+                defaultValue=""
+                className="
+      w-full
+      p-2
+      rounded-md
+      border border-gray-300
+      bg-transparent
+          text-[#6c757d]
+      text-sm
+      transition-colors
+      focus:outline-none
+      focus:border-[#0e8f53]
+      
+    "
                 onChange={handleExpenseFormInputChange}
               >
-                <option value="">Selecciona una subcategoría</option>
-                <option value="Gastos fijos">Transporte</option>
-                <option value="Gastos libres">Gasto libre</option>
+                <option value="" disabled hidden>
+                  Selecciona una subcategoría
+                </option>
+                <option value="Gastos fijos">Gastos fijos</option>
+                <option value="Gastos libres">Gastos sin culpa</option>
+                <option value="Gastos fijos">Ahorros</option>
+                <option value="Gastos libres">Inversión</option>
               </select>
+
+              <label
+                className="
+      absolute
+      left-2
+      -top-2
+      text-xs
+      text-[#6c757d]
+      bg-white
+      px-1
+      pointer-events-none
+    "
+              >
+                Subcategoría
+              </label>
             </div>
 
             {/* Date */}
-            <div>
-              <p className="font-medium font-medium text-[#495057]">Fecha</p>
+            <div className="relative my-2">
               <input
                 type="date"
                 name="date"
                 value={
                   expenseFormData.date || new Date().toISOString().split('T')[0]
                 }
-                placeholder="100"
                 onChange={handleExpenseFormInputChange}
-                className="my-1 rounded-md focus:outline-none placeholder:text-gray-400 placeholder:italic placeholder:font-light text-[#212529] bg-white transition-all duration-300 focus:bg-[#0e8f53]/10 focus:shadow-[0_0_20px_8px_rgba(14,143,83,0.12)]"
+                className="
+      w-full
+      p-2
+      rounded-md
+      border border-gray-300
+      bg-transparent
+      text-[#212529]
+      text-sm
+      transition-colors
+      focus:outline-none
+      focus:border-[#0e8f53]
+    "
               />
+
+              <label
+                className="
+      absolute
+      left-2
+      -top-2
+      text-xs
+      text-[#6c757d]
+      bg-white
+      px-1
+      pointer-events-none
+    "
+              >
+                Fecha
+              </label>
             </div>
 
             <button

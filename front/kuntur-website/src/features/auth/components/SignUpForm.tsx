@@ -49,7 +49,12 @@ export const SignUpForm = ({ onBack }: SignUpFormProps) => {
         />
       </div>
       <div>
-        <Image src="/img/mail.png" alt="mail image" height={60} width={60} />
+        <Image
+          src="/img/kuntur-logo.jpeg"
+          alt="logo image"
+          height={40}
+          width={40}
+        />
       </div>
       <div className="flex flex-col items-center justify-center gap-1">
         <p className="text-[#5c5c5c] font-alfa text-xl leading-none">
@@ -85,7 +90,12 @@ export const SignUpForm = ({ onBack }: SignUpFormProps) => {
         </div>
       </div>
       <div className="flex flex-col items-center w-full gap-2">
-        <Button text="Registrate" variant="dark" onClick={handleSubmitForm} />
+        <Button
+          text="Registrate"
+          variant="dark"
+          onClick={handleSubmitForm}
+          className="w-full"
+        />
       </div>
     </>
   )

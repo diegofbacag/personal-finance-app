@@ -1,19 +1,11 @@
-interface ButtonProps {
-  text?: string
-  size?: 'sm' | 'md' | 'lg'
-  variant?: 'light' | 'dark'
-  onClick?: () => void
-  children?: React.ReactNode
-  className?: string
-}
-
 export const Button = ({
   text,
   variant = 'dark',
   onClick,
   children,
   size = 'md',
-  className,
+  className = '',
+  disabled = false,
 }: ButtonProps) => {
   const sizeClasses = {
     sm: 'h-8 px-1 text-sm',
@@ -22,15 +14,28 @@ export const Button = ({
   }
 
   const base =
-    'flex flex-row items-center justify-center rounded-lg cursor-pointer font-sans font-medium text-sm'
-  const styles =
-    variant === 'light'
-      ? 'bg-[#dbf2d9] text-[#0a7242]'
-      : 'bg-[#04644f] text-white'
+    'flex items-center justify-center rounded-lg font-sans font-medium text-sm transition-colors'
+
+  const variantStyles = {
+    light: 'bg-[#dbf2d9] text-[#0E9053]',
+    dark: 'bg-[#0E9053] text-white',
+  }
+
+  const disabledStyles = 'bg-[#9bd6b8] text-white cursor-not-allowed opacity-80'
+
+  const enabledStyles = `cursor-pointer ${variantStyles[variant]}`
+
   return (
     <button
-      className={`${base} ${styles} ${sizeClasses[size]} ${className}`}
-      onClick={onClick}
+      type="button"
+      disabled={disabled}
+      onClick={disabled ? undefined : onClick}
+      className={`
+        ${base}
+        ${sizeClasses[size]}
+        ${disabled ? disabledStyles : enabledStyles}
+        ${className}
+      `}
     >
       {children ?? <p>{text}</p>}
     </button>

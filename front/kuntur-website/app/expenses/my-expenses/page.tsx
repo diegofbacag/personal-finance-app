@@ -522,7 +522,7 @@ export default function MyExpensesPage() {
             </div>
 
             <button
-              className="flex items-center justify-center bg-[#0e8f53] rounded-full text-white h-10 w-10 cursor-pointer"
+              className="flex items-center justify-center bg-[#0E9053] rounded-full text-white h-10 w-10 cursor-pointer"
               onClick={submitExpenseFormData}
             >
               <Image

@@ -33,9 +33,7 @@ export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
       <div className="">
         <div className="flex items-center justify-between mb-10 pb-2">
           <Link href="/">
-            <p className="font-bold text-[#0066FF] text-xl tracking-wide">
-              Vyse
-            </p>
+            <p className="font-bold text-[#0E9053] text-md">Kuntur</p>
           </Link>
 
           {/* <button className="cursor-pointer" onClick={toggleSidebar}>

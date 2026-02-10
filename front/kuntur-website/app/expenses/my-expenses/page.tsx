@@ -12,24 +12,9 @@ import {
   deleteExpense,
   getExpenses,
 } from '@/src/features/expenses/services/expenses.service'
-import { ExpenseForm } from '@/src/features/expenses/components/expense-input/ExpenseForm'
-
-interface Expense {
-  id?: string
-  amount: number
-  category?: string
-  subcategory?: string
-  description?: string
-  date: string
-}
-
-interface ExpenseForm {
-  amount: string
-  category?: string
-  subcategory?: string
-  description?: string
-  date: string
-}
+import { ExpenseForm } from '@/src/features/expenses/types/expense.form'
+import { Expense } from '@/src/features/expenses/types/expense.model'
+import { mapFormToCreateExpenseDTO } from '@/src/features/expenses/mappers/expense.mapper'
 
 const MONTHS = [
   { label: 'Ene', value: 0 },
@@ -45,6 +30,11 @@ const MONTHS = [
   { label: 'Nov', value: 10 },
   { label: 'Dic', value: 11 },
 ]
+
+function parseDateInput(value: string): Date {
+  const [year, month, day] = value.split('-').map(Number)
+  return new Date(year, month - 1, day)
+}
 
 const formatDate = (isoDate: string) => {
   const [year, month, day] = isoDate.split('-')
@@ -112,10 +102,12 @@ export default function MyExpensesPage() {
       category: expenseFormData.category || undefined,
       subcategory: expenseFormData.subcategory || undefined,
       description: expenseFormData.description || undefined,
-      date: expenseFormData.date,
+      date: parseDateInput(expenseFormData.date),
     }
 
-    const savedExpense: Expense = await createExpense(newExpense)
+    const savedExpense: Expense = await createExpense(
+      mapFormToCreateExpenseDTO(newExpense),
+    )
 
     setExpenseHistory((prev) => [...prev, savedExpense])
 

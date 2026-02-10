@@ -2,7 +2,7 @@ import { GoogleIcon } from '@/src/components/ui/icons/GoogleIcon'
 ///green colour #04644f
 export const ContinueWithGoogleButton = () => {
   const handleGoogleSignIn = () => {
-    window.location.href = `http://localhost:8080/auth/google`
+    // window.location.href = `http://localhost:8080/auth/google`
   }
   return (
     <button

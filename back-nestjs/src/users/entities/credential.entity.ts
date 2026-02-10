@@ -1,0 +1,24 @@
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { User } from './user.entity';
+
+@Entity({ name: 'credentials' })
+export class Credential {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column({ type: 'varchar', length: 120, unique: true, nullable: false })
+  email: string;
+
+  @Column({ type: 'varchar', length: 100, nullable: false })
+  password: string;
+
+  @OneToOne(() => User, (user) => user.credentials)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
+}

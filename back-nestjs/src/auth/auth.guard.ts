@@ -27,7 +27,7 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException('Formato de token invalido');
     }
 
-    const secret = 'yourSecretKey';
+    const secret = process.env.JWT_SECRET;
 
     try {
       const user = this.jwtService.verify(accessToken, { secret });

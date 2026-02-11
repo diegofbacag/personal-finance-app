@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { CreateExpenseDto } from '../types/expense.dto'
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
@@ -11,10 +12,9 @@ export const getExpenses = async () => {
   return data
 }
 
-export const createExpense = async (newExpense) => {
+export const createExpense = async (dto: CreateExpenseDto) => {
   const accessToken = localStorage.getItem('accessToken')
-  const payload = newExpense
-  const { data } = await axios.post(`${apiUrl}/expenses`, payload, {
+  const { data } = await axios.post(`${apiUrl}/expenses`, dto, {
     headers: { Authorization: `Bearer ${accessToken}` },
   })
   console.log('create expense', data)

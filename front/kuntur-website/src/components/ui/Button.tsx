@@ -1,3 +1,13 @@
+interface ButtonProps {
+  text?: string
+  size?: 'sm' | 'md' | 'lg'
+  variant?: 'light' | 'dark'
+  onClick?: () => void
+  children?: React.ReactNode
+  className?: string
+  disabled?: boolean
+}
+
 export const Button = ({
   text,
   variant = 'dark',

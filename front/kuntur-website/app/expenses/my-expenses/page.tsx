@@ -12,24 +12,10 @@ import {
   deleteExpense,
   getExpenses,
 } from '@/src/features/expenses/services/expenses.service'
-import { ExpenseForm } from '@/src/features/expenses/components/expense-input/ExpenseForm'
-
-interface Expense {
-  id?: string
-  amount: number
-  category?: string
-  subcategory?: string
-  description?: string
-  date: string
-}
-
-interface ExpenseForm {
-  amount: string
-  category?: string
-  subcategory?: string
-  description?: string
-  date: string
-}
+import { ExpenseForm } from '@/src/features/expenses/types/expense.form'
+import { Expense } from '@/src/features/expenses/types/expense.model'
+import { mapFormToCreateExpenseDTO } from '@/src/features/expenses/mappers/expense.mapper'
+import { ResponseExpenseDto } from '@/src/features/expenses/types/expense.dto'
 
 const MONTHS = [
   { label: 'Ene', value: 0 },
@@ -47,7 +33,7 @@ const MONTHS = [
 ]
 
 const formatDate = (isoDate: string) => {
-  const [year, month, day] = isoDate.split('-')
+  const [, month, day] = isoDate.split('-')
 
   const months = [
     'ene',
@@ -63,7 +49,6 @@ const formatDate = (isoDate: string) => {
     'nov',
     'dic',
   ]
-
   return `${Number(day)} ${months[Number(month) - 1]}.`
 }
 
@@ -87,8 +72,8 @@ export default function MyExpensesPage() {
     async function fetchExpenses() {
       console.log('fetchExpenses')
       try {
-        const data = await getExpenses()
-        setExpenseHistory(data)
+        const responseExpenseDto: ResponseExpenseDto[] = await getExpenses()
+        setExpenseHistory(responseExpenseDto)
       } catch (error) {
         console.log('error', error)
       } finally {
@@ -115,7 +100,9 @@ export default function MyExpensesPage() {
       date: expenseFormData.date,
     }
 
-    const savedExpense: Expense = await createExpense(newExpense)
+    const savedExpense: Expense = await createExpense(
+      mapFormToCreateExpenseDTO(newExpense),
+    )
 
     setExpenseHistory((prev) => [...prev, savedExpense])
 
@@ -126,15 +113,13 @@ export default function MyExpensesPage() {
     //   description: '',
     // }))
   }
-  const filteredExpenses = expenseHistory.filter((expense) => {
-    const [year, month, day] = expense.date.split('-').map(Number)
 
-    const expenseDate = new Date(year, month - 1, day)
-    return (
-      expenseDate.getMonth() === selectedMonth &&
-      expenseDate.getFullYear() === currentYear
-    )
+  const filteredExpenses = expenseHistory.filter((expense) => {
+    const [year, month] = expense.date.split('-').map(Number)
+
+    return month - 1 === selectedMonth && year === currentYear
   })
+
   const tableEndRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -144,17 +129,6 @@ export default function MyExpensesPage() {
   return (
     <main className="flex flex-col p-2 font-poppins bg-[#f5f5f5] min-h-screen w-full gap-2 h-full">
       <div className="relative flex flex-col bg-white py-10 px-10 rounded-2xl h-auto gap-2 h-full">
-        {/* <div className="flex flex-row">
-          <div className="flex flex-row justify-end mt-2">
-            <div
-              className="flex w-14 bg-gray-300 text-xs hover:bg-[#97C7A3] 
-              text-[#0B3D1F] leading-none font-sans rounded-lg items-center text-[#04644f] justify-center align-center p-2"
-            >
-              Texto
-            </div>
-          </div>
-        </div> */}
-
         <header className="flex align-top items-center justify-between">
           <h1 className="text-lg font-bold text-black mt-0 align-top leading-none">
             Mis gastos

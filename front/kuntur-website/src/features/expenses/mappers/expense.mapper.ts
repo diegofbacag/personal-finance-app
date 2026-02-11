@@ -9,5 +9,5 @@ export const mapFormToCreateExpenseDTO = (
   category: expense.category || undefined,
   subcategory: expense.subcategory || undefined,
   description: expense.description || undefined,
-  date: expense.date.toISOString(),
+  date: expense.date,
 })

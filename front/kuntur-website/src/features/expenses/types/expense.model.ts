@@ -4,5 +4,5 @@ export interface Expense {
   category?: string
   subcategory?: string
   description?: string
-  date: Date
+  date: string
 }

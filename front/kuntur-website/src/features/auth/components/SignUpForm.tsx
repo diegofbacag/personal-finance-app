@@ -52,6 +52,7 @@ export const SignUpForm = ({ onBack }: SignUpFormProps) => {
       setError(validationError)
       return
     }
+
     try {
       setError(null)
       setIsLoading(true)
@@ -136,6 +137,9 @@ export const SignUpForm = ({ onBack }: SignUpFormProps) => {
           className="w-full"
           disabled={isLoading}
         />
+        <p className="text-xs text-[#5c5c5c]">
+          {isLoading && 'La primera carga puede tardar hasta 50 segundos.'}
+        </p>
       </div>
     </>
   )

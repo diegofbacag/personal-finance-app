@@ -1,4 +1,4 @@
-import { CreateExpenseDto } from '../types/expense.dto'
+import { CreateExpenseDto, TransactionType } from '../types/expense.dto'
 
 import { Expense } from '../types/expense.model'
 
@@ -10,4 +10,5 @@ export const mapFormToCreateExpenseDTO = (
   subcategory: expense.subcategory || undefined,
   description: expense.description || undefined,
   date: expense.date,
+  type: TransactionType.EXPENSE,
 })

@@ -15,7 +15,10 @@ import {
 import { ExpenseForm } from '@/src/features/expenses/types/expense.form'
 import { Expense } from '@/src/features/expenses/types/expense.model'
 import { mapFormToCreateExpenseDTO } from '@/src/features/expenses/mappers/expense.mapper'
-import { ResponseExpenseDto } from '@/src/features/expenses/types/expense.dto'
+import {
+  ResponseExpenseDto,
+  TransactionType,
+} from '@/src/features/expenses/types/expense.dto'
 
 const MONTHS = [
   { label: 'Ene', value: 0 },
@@ -33,7 +36,7 @@ const MONTHS = [
 ]
 
 const formatDate = (isoDate: string) => {
-  const [, month, day] = isoDate.split('-')
+  const [year, month, day] = isoDate.split('-')
 
   const months = [
     'ene',
@@ -49,7 +52,15 @@ const formatDate = (isoDate: string) => {
     'nov',
     'dic',
   ]
-  return `${Number(day)} ${months[Number(month) - 1]}.`
+  return `${Number(day)} ${months[Number(month) - 1]}. ${year}`
+}
+
+function decimalToCents(value: string): number {
+  return Math.round(Number(value) * 100)
+}
+
+function centsToDecimal(cents: number): string {
+  return (cents / 100).toFixed(2)
 }
 
 export default function MyExpensesPage() {
@@ -64,6 +75,7 @@ export default function MyExpensesPage() {
     subcategory: '',
     description: '',
     date: new Date().toLocaleDateString('en-CA'),
+    type: TransactionType.EXPENSE,
   })
   const [expenseHistory, setExpenseHistory] = useState<Expense[]>([])
   const [isMonthMenuOpen, setIsMonthMenuOpen] = useState<boolean>(false)
@@ -93,11 +105,12 @@ export default function MyExpensesPage() {
 
   const submitExpenseFormData = async () => {
     const newExpense: Expense = {
-      amount: Number(expenseFormData.amount),
+      amount: decimalToCents(expenseFormData.amount),
       category: expenseFormData.category || undefined,
       subcategory: expenseFormData.subcategory || undefined,
       description: expenseFormData.description || undefined,
       date: expenseFormData.date,
+      type: TransactionType.EXPENSE,
     }
 
     const savedExpense: Expense = await createExpense(
@@ -127,140 +140,185 @@ export default function MyExpensesPage() {
   }, [expenseHistory])
 
   return (
-    <main className="flex flex-col p-2 font-poppins bg-[#f5f5f5] min-h-screen w-full gap-2 h-full">
-      <div className="relative flex flex-col bg-white py-10 px-10 rounded-2xl h-auto gap-2 h-full">
-        <header className="flex align-top items-center justify-between">
-          <h1 className="text-lg font-bold text-black mt-0 align-top leading-none">
-            Mis gastos
+    <main className="flex flex-col py-10  font-poppins bg-[#FAFAFA] min-h-screen h-full items-center">
+      <div className="relative flex flex-col w-[68vw] gap-3 ">
+        <header className="flex align-top items-center justify-between mb-4">
+          <h1 className="items-center text-3xl tracking-wide font-bold text-black mt-0 align-top leading-none border-b-1 pb-4 border-[#00000014] w-full">
+            Mis movimientos
           </h1>
+        </header>
 
-          <div className="bg-[#f5f5f5] p-2 rounded-2xl ">
-            <p className="text-sm text-[#495057] font-bold">{`Total: S/ ${filteredExpenses.reduce(
-              (sum, expense) => {
+        <div className="flex flex-row items-center justify-between gap-2">
+          <div className=" p-3 px-4 rounded-2xl border-[1px] border-[#00000014] bg-white">
+            <p className="text-sm text-black  tracking-wider ">{`Total: S/ ${centsToDecimal(
+              filteredExpenses.reduce((sum, expense) => {
                 return sum + expense.amount
-              },
-              0,
+              }, 0),
             )}`}</p>
           </div>
-        </header>
-        <div className="flex gap-2">
-          <p>Mes:</p>
-          <div
-            className="cursor-pointer"
-            onClick={() => {
-              setIsMonthMenuOpen((prev) => !prev)
-            }}
-          >
-            {MONTHS[selectedMonth].label}
-          </div>
-          {isMonthMenuOpen && (
-            <div>
-              <div className="flex gap-1">
-                <div
-                  className="cursor-pointer"
-                  onClick={() => {
-                    setSelectedMonth(0)
-                    setIsMonthMenuOpen((prev) => !prev)
-                  }}
-                >
-                  Ene
-                </div>
-                <div
-                  className="cursor-pointer"
-                  onClick={() => {
-                    setSelectedMonth(1)
-                    setIsMonthMenuOpen((prev) => !prev)
-                  }}
-                >
-                  Feb
-                </div>
-                <div className="cursor-pointer">Mar</div>
+          <div className="relative inline-block">
+            <div
+              className="cursor-pointer flex items-center p-3 px-4 rounded-2xl border-[1px] border-[#00000014] text-sm gap-2  tracking-wide bg-white"
+              onClick={() => setIsMonthMenuOpen((prev) => !prev)}
+            >
+              <p>Mes:</p>
+              <div className="bg-[#DCE9DF] rounded-lg p-0.5 px-2">
+                <p>{MONTHS[selectedMonth].label}</p>
               </div>
-              <div className="flex gap-1">
-                <div>Abr</div>
-                <div>May</div>
-                <div>Jun</div>
-              </div>
-              <div className="flex gap-1">
-                <div>Jul</div>
-                <div>Ago</div>
-                <div>Sep</div>
-              </div>
-              <div className="flex gap-1">
-                <div>Oct</div>
-                <div>Nov</div>
-                <div>Dic</div>
-              </div>
+              <Image
+                src="/img/angledown-icon.png"
+                height={15}
+                width={15}
+                alt="send icon"
+                className=""
+              />
             </div>
-          )}
+
+            {isMonthMenuOpen && (
+              <div className="absolute left-0 mt-1 w-max bg-white rounded-md shadow-md border border-gray-200 z-10 p-3 text-sm ">
+                <div className="grid grid-cols-3 gap-3">
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => {
+                      setSelectedMonth(0)
+                      setIsMonthMenuOpen(false)
+                    }}
+                  >
+                    Ene
+                  </div>
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => {
+                      setSelectedMonth(1)
+                      setIsMonthMenuOpen(false)
+                    }}
+                  >
+                    Feb
+                  </div>
+                  <div className="cursor-pointer">Mar</div>
+                </div>
+                <div className="grid grid-cols-3 gap-3">
+                  <div>Abr</div>
+                  <div>May</div>
+                  <div>Jun</div>
+                </div>
+                <div className="grid grid-cols-3 gap-3">
+                  <div>Jul</div>
+                  <div>Ago</div>
+                  <div>Sep</div>
+                </div>
+                <div className="grid grid-cols-3 gap-3">
+                  <div>Oct</div>
+                  <div>Nov</div>
+                  <div>Dic</div>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
-        <section aria-label="Expenses table" className="pb-16">
-          <div className="relative h-[60vh] overflow-auto rounded-2xl">
-            <table className="w-full rounded-2xl border-separate border-spacing-0 text-sm text-[#212529]">
+        <section
+          aria-label="Expenses table"
+          className="flex flex-row justify-center pb-28"
+        >
+          <div className="w-full relative overflow-auto border-[1px] border-[#00000014] rounded-2xl">
+            <table className="w-full table-auto rounded-2xl border-separate border-spacing-0 text-sm text-[#212529] border-collapse">
               <thead>
                 <tr className="bg-[#f5f5f5] border-b border-[#dee2e6] text-left">
-                  <th className="font-medium text-sm text-[#495057] p-4">
-                    Fecha
-                  </th>
-                  <th className="font-medium text-sm text-[#495057]">
-                    Descripción
-                  </th>
-                  <th className="font-medium text-sm text-[#495057]">
-                    Categoría
-                  </th>
-                  <th className="font-medium text-sm text-[#495057]">
-                    Subcategoría
-                  </th>
-                  <th className="font-medium text-sm text-[#495057] text-right pr-4">
-                    Monto
-                  </th>
-                  <th className="font-medium text-sm text-[#495057] text-right pr-4">
-                    Delete
-                  </th>
+                  {/* <th className="w-1/12 font-medium text-sm text-[#495057] pl-4">
+                  Monto
+                </th>
+                <th className="font-medium text-sm text-[#495057]">
+                  Descripción
+                </th>
+                <th className="font-medium text-sm text-[#495057]">
+                  Categoría
+                </th>
+                <th className="font-medium text-sm text-[#495057]">
+                  Subcategoría
+                </th>
+                <th className="w-1/12 font-medium text-sm text-[#495057] p-4">
+                  Fecha
+                </th>
+                <th className="w-1/24 font-medium text-sm text-[#495057] text-right pr-4">
+                  Delete
+                </th> */}
                 </tr>
               </thead>
 
               <tbody>
                 {filteredExpenses.map((e, index) => {
                   const isGrayRow = index % 2 === 0
+                  const isLast = index === filteredExpenses.length - 1
                   return (
                     <tr
                       key={index}
-                      className={`h-14 transition-all duration-200 text-left hover:shadow-[0_2px_8px_rgba(0,0,0,0.05)] hover:-translate-y-[1px] hover:bg-[#f1f3f5] ${
-                        isGrayRow
-                          ? 'bg-[#f8f9fa] shadow-[inset_0_1px_0_rgba(0,0,0,0.03),_inset_0_-1px_0_rgba(0,0,0,0.02)]'
-                          : 'bg-[#f5f5f5]'
-                      }`}
+                      className={` h-18 transition-all duration-200 text-left hover:-translate-y-[1px] hover:bg-[#f8f9fa]   ${
+                        isGrayRow ? 'bg-white ' : 'bg-white'
+                      } `}
                     >
-                      <td className="p-4">{formatDate(e.date)}</td>
-                      <td className="truncate max-w-[200px]">
+                      <td
+                        className={` text-left pl-6 font-medium  ${!isLast ? 'border-b-[1px] border-[#00000014]' : ''}`}
+                      >
+                        <span className="flex items-center gap-3 text-[black]">
+                          <span className="w-2 h-2 rounded-full bg-[#E53935] flex-none"></span>
+                          {/* Amount */}
+                          {centsToDecimal(e.amount)}
+                        </span>
+                      </td>
+                      <td
+                        className={`${!isLast ? 'border-b-[1px] border-[#00000014]' : ''} truncate max-w-[200px] font-bold`}
+                      >
                         {e.description || (
                           <span className="text-gray-400 italic">
                             Sin descripción
                           </span>
                         )}
                       </td>
-                      <td>
-                        {e.category || (
-                          <span className="text-gray-400 italic">
-                            Sin categoría
-                          </span>
-                        )}
+                      <td
+                        className={`${!isLast ? 'border-b-[1px] border-[#00000014]' : ''}`}
+                      >
+                        <span className="flex items-center gap-2">
+                          <Image
+                            src="/img/savings-icon.png"
+                            height={15}
+                            width={15}
+                            alt="send icon"
+                            className="invert"
+                          />
+                          {e.category || (
+                            <span className="text-gray-400 italic">
+                              Sin categoría
+                            </span>
+                          )}
+                        </span>
                       </td>
-                      <td>
-                        {e.subcategory || (
-                          <span className="text-gray-400 italic">
-                            Sin subcategoría
-                          </span>
-                        )}
+                      <td
+                        className={`${!isLast ? 'border-b-[1px] border-[#00000014]' : ''}`}
+                      >
+                        <span className="flex items-center gap-2">
+                          {/* <Image
+                            src="/img/triangle-icon.png"
+                            height={15}
+                            width={15}
+                            alt="taxi icon"
+                            className=""
+                          /> */}
+                          {e.subcategory || (
+                            <span className=" text-gray-400 italic">
+                              Sin subcategoría
+                            </span>
+                          )}
+                        </span>
                       </td>
-                      <td className="text-right pr-4 font-medium text-[#dc3545]">
-                        {(-e.amount).toLocaleString('es-PE', {
-                          style: 'currency',
-                          currency: 'PEN',
-                        })}
+
+                      <td
+                        className={`w-1/8 ${!isLast ? 'border-b-[1px] border-[#00000014]' : ''} p-4 text-[#666666] text-sm`}
+                      >
+                        {formatDate(e.date)}
                       </td>
-                      <td className="text-right pr-8 font-medium text-[#dc3545] ">
+                      <td
+                        className={`${!isLast ? 'border-b-[1px] border-[#00000014]' : ''} text-right pr-6 font-medium text-[#dc3545] `}
+                      >
                         <button
                           className="cursor-pointer"
                           onClick={() => {
@@ -272,7 +330,13 @@ export default function MyExpensesPage() {
                             }
                           }}
                         >
-                          x
+                          <Image
+                            src="/img/icons/trash.png"
+                            height={17}
+                            width={17}
+                            alt="trash icon"
+                            style={{ filter: 'grayscale(50%)' }}
+                          />
                         </button>
                       </td>
                     </tr>
@@ -283,230 +347,203 @@ export default function MyExpensesPage() {
             <div ref={tableEndRef} />
           </div>
         </section>
+        {/* INPUT FORM ----------------------------*/}
+        <section className="fixed bottom-10 left-[11rem] w-[calc(100vw-11.5rem)] text-sm shadow-short">
+          <div className="flex flex-col items-cemter w-full bg-[#f5f5f5] mx-auto border-[1px] border-[#00000014] rounded-2xl max-w-[70vw] py-2 px-3 h-20">
+            <div className="flex justify-between items-center gap-2 w-full">
+              {/* <div className="flex flex-col items-start gap-1">
+                <div className="flex justify-start gap-1 bg-[#DCE9DF] rounded-xl py-2 px-3">
+                  <Image
+                    src="/img/icons/page-2.png"
+                    height={15}
+                    width={15}
+                    alt="send icon"
+                    className=""
+                  />
+                  <p className="text-xs text-[#1F3B2E]">Texto</p>
+                </div>
+                <div className="flex justify-start gap-1 bg-[#E6E8F5] rounded-xl py-2 px-3">
+                  <Image
+                    src="/img/icons/robot.png"
+                    height={15}
+                    width={15}
+                    alt="send icon"
+                    className=""
+                  />
+                  <p className="text-xs text-[#2A2F4A]">AI</p>
+                </div>
+              </div> */}
 
-        <section className="absolute bottom-5 left-10 right-10 py-1 px-3 text-sm border-1 border-[rgba(13,13,13,0.05)] rounded-3xl shadow-short   ">
-          <div className="grid grid-cols-[1fr_1fr_1fr_1fr_1fr_auto] items-center gap-2">
-            {/* Amount */}
-            <div className="relative my-2">
-              <input
-                name="amount"
-                type="number"
-                min="1"
-                placeholder="Ej. 150.50"
-                className="
+              {/* Amount */}
+              <div className="flex flex-col gap-0.5 flex-1">
+                <p className="text-xs text-[#1F3B2E] px-1">Monto (S/)</p>
+                <input
+                  name="amount"
+                  type="number"
+                  step="0.01"
+                  min="0.01"
+                  placeholder="Ej. 150.50"
+                  className="
+                placeholder:text-gray-400 placeholder:italic placeholder:font-light p-2 rounded-md border border-gray-300
+      bg-white
+
+      text-[#212529]
+      transition-colors
+     
+      focus:ring-3
+        focus:ring-[#DCE9DF]
+        focus:ring-offset-0
+      focus:outline-none
+      
+      [appearance:textfield]
+      [&::-webkit-inner-spin-button]:appearance-none
+      [&::-webkit-outer-spin-button]:appearance-none
+    "
+                  onChange={handleExpenseFormInputChange}
+                />
+              </div>
+              {/* Description */}
+              <div className="flex flex-col gap-0.5 flex-1">
+                <p className="text-xs text-[#1F3B2E] px-1">Descripción</p>
+                <input
+                  name="description"
+                  type="text"
+                  min="1"
+                  placeholder="Ej. Cena con amigos"
+                  className="
                 placeholder:text-gray-400 placeholder:italic placeholder:font-light
       w-full
       p-2
       rounded-md
       border border-gray-300
-       bg-transparent
+       bg-white
       text-[#212529]
       transition-colors
+
+
+
+
+      focus:ring-3
+        focus:ring-[#DCE9DF]
+        focus:ring-offset-0
       focus:outline-none
-      focus:border-[#0e8f53]
+    
       [appearance:textfield]
       [&::-webkit-inner-spin-button]:appearance-none
       [&::-webkit-outer-spin-button]:appearance-none
     "
-                onChange={handleExpenseFormInputChange}
-              />
+                  onChange={handleExpenseFormInputChange}
+                />
+              </div>
 
-              <label
-                className="
-      absolute
-      left-2
-      -top-2
-      text-xs
-       text-[#6c757d]
-      bg-white
-      px-1
-      pointer-events-none
-    "
-              >
-                Monto (S/)
-              </label>
-            </div>
-            {/* Description */}
-            <div className="relative my-2">
-              <input
-                name="description"
-                type="text"
-                min="1"
-                placeholder="Ej. Cena con amigos"
-                className="
-                placeholder:text-gray-400 placeholder:italic placeholder:font-light
+              {/* Category */}
+              <div className="flex flex-col gap-0.5 flex-1">
+                <p className="text-xs text-[#1F3B2E] px-1">Categoría</p>
+                <select
+                  name="category"
+                  defaultValue=""
+                  className="
       w-full
       p-2
       rounded-md
       border border-gray-300
-       bg-transparent
-      text-[#212529]
-      transition-colors
-      focus:outline-none
-      focus:border-[#0e8f53]
-      [appearance:textfield]
-      [&::-webkit-inner-spin-button]:appearance-none
-      [&::-webkit-outer-spin-button]:appearance-none
-    "
-                onChange={handleExpenseFormInputChange}
-              />
-
-              <label
-                className="
-      absolute
-      left-2
-      -top-2
-      text-xs
-       text-[#6c757d]
       bg-white
-      px-1
-      pointer-events-none
-    "
-              >
-                Descripción
-              </label>
-            </div>
-
-            {/* Category */}
-            <div className="relative my-2">
-              <select
-                name="category"
-                defaultValue=""
-                className="
-      w-full
-      p-2
-      rounded-md
-      border border-gray-300
-      bg-transparent
        text-[#6c757d]
       text-sm
       transition-colors
+      focus:ring-3
+        focus:ring-[#DCE9DF]
+        focus:ring-offset-0
       focus:outline-none
-      focus:border-[#0e8f53]
+    
     "
-                onChange={handleExpenseFormInputChange}
-              >
-                <option value="" disabled hidden>
-                  Selecciona una categoría
-                </option>
-                <option value="Gastos fijos">Gastos fijos</option>
-                <option value="Gastos libres">Gastos sin culpa</option>
-                <option value="Gastos fijos">Ahorros</option>
-                <option value="Gastos libres">Inversión</option>
-              </select>
+                  onChange={handleExpenseFormInputChange}
+                >
+                  <option value="" disabled hidden>
+                    Selecciona una categoría
+                  </option>
+                  <option value="Gastos fijos">Gastos fijos</option>
+                  <option value="Gastos libres">Gastos sin culpa</option>
+                  <option value="Gastos fijos">Ahorros</option>
+                  <option value="Gastos libres">Inversión</option>
+                </select>
+              </div>
 
-              <label
-                className="
-      absolute
-      left-2
-      -top-2
-      text-xs
-      text-[#6c757d]
-      bg-white
-      px-1
-      pointer-events-none
-    "
-              >
-                Categoría
-              </label>
-            </div>
-
-            {/* Subcategory */}
-            <div className="relative my-2">
-              <select
-                name="subcategory"
-                defaultValue=""
-                className="
+              {/* Subcategory */}
+              <div className="flex flex-col gap-0.5 flex-1">
+                <p className="text-xs text-[#1F3B2E] px-1">Subcategoría</p>
+                <select
+                  name="subcategory"
+                  defaultValue=""
+                  className="
       w-full
       p-2
       rounded-md
       border border-gray-300
-      bg-transparent
+      bg-white
           text-[#6c757d]
       text-sm
       transition-colors
+     focus:ring-3
+        focus:ring-[#DCE9DF]
+        focus:ring-offset-0
       focus:outline-none
-      focus:border-[#0e8f53]
+    
       
     "
-                onChange={handleExpenseFormInputChange}
-              >
-                <option value="" disabled hidden>
-                  Selecciona una subcategoría
-                </option>
-                <option value="Gastos fijos">Gastos fijos</option>
-                <option value="Gastos libres">Gastos sin culpa</option>
-                <option value="Gastos fijos">Ahorros</option>
-                <option value="Gastos libres">Inversión</option>
-              </select>
+                  onChange={handleExpenseFormInputChange}
+                >
+                  <option value="" disabled hidden>
+                    Selecciona una subcategoría
+                  </option>
+                  <option value="Gastos fijos">Gastos fijos</option>
+                  <option value="Gastos libres">Gastos sin culpa</option>
+                  <option value="Gastos fijos">Ahorros</option>
+                  <option value="Gastos libres">Inversión</option>
+                </select>
+              </div>
 
-              <label
-                className="
-      absolute
-      left-2
-      -top-2
-      text-xs
-      text-[#6c757d]
-      bg-white
-      px-1
-      pointer-events-none
-    "
-              >
-                Subcategoría
-              </label>
-            </div>
-
-            {/* Date */}
-            <div className="relative my-2">
-              <input
-                type="date"
-                name="date"
-                value={
-                  expenseFormData.date || new Date().toISOString().split('T')[0]
-                }
-                onChange={handleExpenseFormInputChange}
-                className="
+              {/* Date */}
+              <div className="flex flex-col gap-0.5">
+                <p className="text-xs text-[#1F3B2E] px-1">Fecha</p>
+                <input
+                  type="date"
+                  name="date"
+                  value={
+                    expenseFormData.date ||
+                    new Date().toISOString().split('T')[0]
+                  }
+                  onChange={handleExpenseFormInputChange}
+                  className="
       w-full
       p-2
       rounded-md
       border border-gray-300
-      bg-transparent
+      bg-white
       text-[#212529]
       text-sm
       transition-colors
+      focus:ring-3
+        focus:ring-[#DCE9DF]
+        focus:ring-offset-0
       focus:outline-none
-      focus:border-[#0e8f53]
     "
-              />
+                />
+              </div>
 
-              <label
-                className="
-      absolute
-      left-2
-      -top-2
-      text-xs
-      text-[#6c757d]
-      bg-white
-      px-1
-      pointer-events-none
-    "
+              <button
+                className="flex items-center justify-center bg-[#1F3B2E] rounded-full text-white h-11 w-11 cursor-pointer"
+                onClick={submitExpenseFormData}
               >
-                Fecha
-              </label>
+                <Image
+                  src="/svg/icons/plus-bold.svg"
+                  height={20}
+                  width={20}
+                  alt="send icon"
+                  className="invert"
+                />
+              </button>
             </div>
-
-            <button
-              className="flex items-center justify-center bg-[#0E9053] rounded-full text-white h-10 w-10 cursor-pointer"
-              onClick={submitExpenseFormData}
-            >
-              <Image
-                src="/svg/icons/plus-bold.svg"
-                height={20}
-                width={20}
-                alt="send icon"
-                className="invert"
-              />
-            </button>
           </div>
         </section>
       </div>

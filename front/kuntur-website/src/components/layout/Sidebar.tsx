@@ -29,11 +29,13 @@ export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
     )
   }
   return (
-    <aside className="flex flex-col justify-between w-46 bg-[#f5f5f5] font-poppins p-2 pb-5">
-      <div className="">
-        <div className="flex items-center justify-between mb-10 pb-2">
+    <aside className="flex flex-col justify-between w-46 bg-[#f5f5f5] font-poppins border-r-[1px] border-[#00000014]">
+      <div className="pt-3 px-4">
+        <div className="flex items-center justify-between mb-4 pb-3 border-b-[1px] border-[#00000014]">
           <Link href="/">
-            <p className="font-bold text-[#0E9053] text-md">Kuntur</p>
+            <p className="font-alpha font-bold text-[#1F3B2E] text-md tracking-wide ">
+              Kuntur
+            </p>
           </Link>
 
           {/* <button className="cursor-pointer" onClick={toggleSidebar}>
@@ -47,30 +49,49 @@ export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
         </div>
         <div>
           <div className="flex flex-col gap-2">
-            <p className="text-sm font-alfa text-[#5c5c5c] leading-none">
-              Gastos
-            </p>
-            <div className="pl-2">
-              <SidebarItem text="Mis gastos" active={true} />
-              <SidebarItem text="Dashboard" />
+            <div className="flex gap-2 items-center justify-start">
+              <Image
+                src="/img/icons/house-4.png"
+                height={14}
+                width={14}
+                alt="expeses icon"
+                className=""
+              />
+              <p className="text-sm font-alfa text-[#5c5c5c] leading-none">
+                Movimientos
+              </p>
+            </div>
+
+            <div className="pl-4">
+              <SidebarItem
+                text="Mis movimientos"
+                active={true}
+                iconSrc={'/img/icons/swap-arrow.png'}
+              />
+              {/* <SidebarItem
+                text="Dashboard"
+                iconSrc={'/img/icons/dashboard-2.png'}
+              /> */}
             </div>
           </div>
         </div>
       </div>
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col justify-center items-center w-full">
         <div
-          className="flex flex-row items-center justify-center gap-1 cursor-pointer"
+          className="flex flex-row items-center justify-center gap-1 py-4 cursor-pointer border-t-[1px] border-[#00000014] w-full"
           onClick={handleLogout}
         >
-          <div className=" rounded-full p-1">
+          <div className=" rounded-full">
             <Image
               src="/svg/icons/logout.svg"
-              height={20}
-              width={20}
+              height={16}
+              width={16}
               alt="avatar icon"
             />
           </div>
-          <p className="text-black text-sm">Cerrar Sesión</p>
+          <p className="text-sm font-alfa text-[#5c5c5c] leading-none">
+            Cerrar Sesión
+          </p>
         </div>
       </div>
     </aside>

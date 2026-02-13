@@ -1,6 +1,5 @@
 import { Button } from '@/src/components/ui/Button'
 import Image from 'next/image'
-import Link from 'next/link'
 import { useState } from 'react'
 import { emailSignIn } from '../services/auth.service'
 import { useRouter } from 'next/navigation'
@@ -13,6 +12,7 @@ export const SignInForm = ({ onBack }: SignInFormProps) => {
   const router = useRouter()
   const [form, setForm] = useState({ email: '', password: '' })
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -23,17 +23,20 @@ export const SignInForm = ({ onBack }: SignInFormProps) => {
     if (isLoading) return
 
     try {
+      setError(null)
       setIsLoading(true)
 
       const data = await emailSignIn(form)
       localStorage.setItem('accessToken', data.access_token)
 
       router.push('/expenses/my-expenses')
-    } catch (e) {
-      // ideally show toast / error message here
-      console.error(e)
-      setIsLoading(false)
+    } catch (err) {
+      console.log('error', err)
+      setError(
+        err?.response?.data?.message || 'Algo salió mal. Inténtalo de nuevo.',
+      )
     } finally {
+      setIsLoading(false)
     }
   }
 
@@ -77,7 +80,7 @@ export const SignInForm = ({ onBack }: SignInFormProps) => {
             value={form.email}
             disabled={isLoading}
             className="p-2 text-[#5c5c5c] rounded-2xl h-12 text-sm border-2 border-[#eaeaea] w-full focus:border-[#5c5c5c] focus:outline-none disabled:opacity-50"
-            placeholder="mail@mail.com"
+            placeholder="Ingresa tu correo electrónico"
             onChange={handleFormChange}
           />
         </div>
@@ -90,10 +93,11 @@ export const SignInForm = ({ onBack }: SignInFormProps) => {
             value={form.password}
             disabled={isLoading}
             className="p-2 text-[#5c5c5c] rounded-2xl h-12 text-sm border-2 border-[#eaeaea] w-full focus:border-[#5c5c5c] focus:outline-none disabled:opacity-50"
-            placeholder="password"
+            placeholder="Ingresa tu contraseña"
             onChange={handleFormChange}
           />
         </div>
+        <p className="text-xs text-[#c1121f]">{error}</p>
       </div>
 
       <div className="flex flex-col items-center w-full gap-2 disabled:bg-[#9ca3af] disabled:text-white disabled:cursor-not-allowed">

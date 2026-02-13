@@ -20,20 +20,52 @@ export const SignUpForm = ({ onBack }: SignUpFormProps) => {
     email: '',
     password: '',
   })
+  const [error, setError] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const handleSignUpFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setCredentials((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmitForm = async () => {
-    try {
-      const data = await emailSignUp(credentials)
+  const validateForm = () => {
+    if (!credentials.email.trim()) {
+      return 'Ingresa tu correo electrónico.'
+    }
 
+    if (!/^\S+@\S+\.\S+$/.test(credentials.email)) {
+      return 'Correo electrónico inválido.'
+    }
+
+    if (!credentials.password || credentials.password.length < 6) {
+      return 'La contraseña debe tener mínimo 6 caracteres.'
+    }
+
+    return null
+  }
+
+  const handleSubmitForm = async () => {
+    const validationError = validateForm()
+
+    if (validationError) {
+      setError(validationError)
+      return
+    }
+    try {
+      setError(null)
+      setIsLoading(true)
+
+      const data = await emailSignUp(credentials)
       localStorage.setItem('accessToken', data.access_token)
 
       router.push('/expenses/my-expenses')
-    } catch (e) {}
+    } catch (err) {
+      setError(
+        err?.response?.data?.message || 'Algo salió mal. Inténtalo de nuevo.',
+      )
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -64,13 +96,13 @@ export const SignUpForm = ({ onBack }: SignUpFormProps) => {
           Crea tu cuenta con correo y contraseña
         </p>
       </div>
-      <div className="flex flex-col gap-2 w-full">
+      <div className="flex flex-col gap-1 w-full">
         <div className="flex flex-col gap-1 w-full">
           <p className="text-[#5c5c5c] text-sm">Correo electrónico</p>
           <input
             name="email"
             className="p-2 text-[#5c5c5c] rounded-2xl h-12 text-sm border-2 border-[#eaeaea] w-full focus:border-[#5c5c5c] focus:outline-none"
-            placeholder="mail@mail.com"
+            placeholder="Ingresa tu correo electrónico"
             onChange={handleSignUpFormChange}
             value={credentials.email}
           />
@@ -83,18 +115,21 @@ export const SignUpForm = ({ onBack }: SignUpFormProps) => {
             name="password"
             type="password"
             className="p-2 text-[#5c5c5c] rounded-2xl h-12 text-sm border-2 border-[#eaeaea] w-full focus:border-[#5c5c5c] focus:outline-none"
-            placeholder="password"
+            placeholder="Ingresa tu contraseña"
             onChange={handleSignUpFormChange}
             value={credentials.password}
           ></input>
         </div>
+        <p className="text-xs text-[#c1121f]">{error}</p>
       </div>
+
       <div className="flex flex-col items-center w-full gap-2">
         <Button
-          text="Registrate"
+          text={isLoading ? 'Creando cuenta...' : 'Registrate'}
           variant="dark"
           onClick={handleSubmitForm}
           className="w-full"
+          disabled={isLoading}
         />
       </div>
     </>

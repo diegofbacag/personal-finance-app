@@ -15,7 +15,10 @@ import {
 import { ExpenseForm } from '@/src/features/expenses/types/expense.form'
 import { Expense } from '@/src/features/expenses/types/expense.model'
 import { mapFormToCreateExpenseDTO } from '@/src/features/expenses/mappers/expense.mapper'
-import { ResponseExpenseDto } from '@/src/features/expenses/types/expense.dto'
+import {
+  ResponseExpenseDto,
+  TransactionType,
+} from '@/src/features/expenses/types/expense.dto'
 
 const MONTHS = [
   { label: 'Ene', value: 0 },
@@ -52,6 +55,14 @@ const formatDate = (isoDate: string) => {
   return `${Number(day)} ${months[Number(month) - 1]}.`
 }
 
+function decimalToCents(value: string): number {
+  return Math.round(Number(value) * 100)
+}
+
+function centsToDecimal(cents: number): string {
+  return (cents / 100).toFixed(2)
+}
+
 export default function MyExpensesPage() {
   const [selectedMonth, setSelectedMonth] = useState<number>(
     new Date().getMonth(),
@@ -64,6 +75,7 @@ export default function MyExpensesPage() {
     subcategory: '',
     description: '',
     date: new Date().toLocaleDateString('en-CA'),
+    type: TransactionType.EXPENSE,
   })
   const [expenseHistory, setExpenseHistory] = useState<Expense[]>([])
   const [isMonthMenuOpen, setIsMonthMenuOpen] = useState<boolean>(false)
@@ -93,11 +105,12 @@ export default function MyExpensesPage() {
 
   const submitExpenseFormData = async () => {
     const newExpense: Expense = {
-      amount: Number(expenseFormData.amount),
+      amount: decimalToCents(expenseFormData.amount),
       category: expenseFormData.category || undefined,
       subcategory: expenseFormData.subcategory || undefined,
       description: expenseFormData.description || undefined,
       date: expenseFormData.date,
+      type: TransactionType.EXPENSE,
     }
 
     const savedExpense: Expense = await createExpense(
@@ -135,11 +148,10 @@ export default function MyExpensesPage() {
           </h1>
 
           <div className="bg-[#f5f5f5] p-2 rounded-2xl ">
-            <p className="text-sm text-[#495057] font-bold">{`Total: S/ ${filteredExpenses.reduce(
-              (sum, expense) => {
+            <p className="text-sm text-[#495057] font-bold">{`Total: S/ ${centsToDecimal(
+              filteredExpenses.reduce((sum, expense) => {
                 return sum + expense.amount
-              },
-              0,
+              }, 0),
             )}`}</p>
           </div>
         </header>
@@ -255,7 +267,7 @@ export default function MyExpensesPage() {
                         )}
                       </td>
                       <td className="text-right pr-4 font-medium text-[#dc3545]">
-                        {(-e.amount).toLocaleString('es-PE', {
+                        {(-centsToDecimal(e.amount)).toLocaleString('es-PE', {
                           style: 'currency',
                           currency: 'PEN',
                         })}

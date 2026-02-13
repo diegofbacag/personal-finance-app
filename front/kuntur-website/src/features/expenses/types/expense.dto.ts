@@ -1,9 +1,15 @@
+export enum TransactionType {
+  INCOME = 'income',
+  EXPENSE = 'expense',
+}
+
 export interface CreateExpenseDto {
   amount: number
   category?: string
   subcategory?: string
   description?: string
   date: string
+  type: TransactionType
 }
 
 export interface ResponseExpenseDto {
@@ -13,4 +19,5 @@ export interface ResponseExpenseDto {
   subcategory?: string
   description?: string
   date: string
+  type: TransactionType
 }

@@ -29,7 +29,7 @@ export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
     )
   }
   return (
-    <aside className="flex flex-col justify-between w-46 bg-[#f5f5f5] font-poppins p-2 pb-5">
+    <aside className="flex flex-col justify-between w-46 bg-[#f5f5f5] font-poppins p-2 pb-5 border-r-[1px] border-[#00000014]">
       <div className="">
         <div className="flex items-center justify-between mb-10 pb-2">
           <Link href="/">

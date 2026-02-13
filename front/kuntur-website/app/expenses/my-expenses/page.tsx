@@ -140,7 +140,7 @@ export default function MyExpensesPage() {
   }, [expenseHistory])
 
   return (
-    <main className="flex flex-col py-10  font-poppins bg-white min-h-screen h-full items-center">
+    <main className="flex flex-col py-10  font-poppins bg-[#FAFAFA] min-h-screen h-full items-center">
       <div className="relative flex flex-col w-[68vw] gap-3 ">
         <header className="flex align-top items-center justify-between mb-6">
           <h1 className="text-3xl tracking-wide font-bold text-black mt-0 align-top leading-none">
@@ -149,7 +149,7 @@ export default function MyExpensesPage() {
         </header>
 
         <div className="flex flex-row items-center justify-between gap-2">
-          <div className=" p-3 px-4 rounded-[6px] border-[1px] border-[#00000014] ">
+          <div className=" p-3 px-4 rounded-[6px] border-[1px] border-[#00000014] bg-white">
             <p className="text-sm text-black  tracking-wider ">{`Total: S/ ${centsToDecimal(
               filteredExpenses.reduce((sum, expense) => {
                 return sum + expense.amount
@@ -158,7 +158,7 @@ export default function MyExpensesPage() {
           </div>
           <div className="relative inline-block">
             <div
-              className="cursor-pointer flex items-center p-3 px-4 rounded-[6px] border-[1px] border-[#00000014] text-sm gap-2  tracking-wide"
+              className="cursor-pointer flex items-center p-3 px-4 rounded-[6px] border-[1px] border-[#00000014] text-sm gap-2  tracking-wide bg-white"
               onClick={() => setIsMonthMenuOpen((prev) => !prev)}
             >
               <p>Mes:</p>
@@ -218,7 +218,7 @@ export default function MyExpensesPage() {
         </div>
         <section
           aria-label="Expenses table"
-          className="flex flex-row justify-center pb-20"
+          className="flex flex-row justify-center pb-28"
         >
           <div className="w-full relative overflow-auto border-[1px] border-[#00000014] rounded-[6px]">
             <table className="w-full table-auto rounded-2xl border-separate border-spacing-0 text-sm text-[#212529] ">
@@ -337,10 +337,11 @@ export default function MyExpensesPage() {
         </section>
 
         <section className="fixed bottom-10 left-[11rem] w-[calc(100vw-11.5rem)] text-sm shadow-short">
-          <div className="w-full bg-[#00000014] mx-auto border-[1px] border-[#00000014]  rounded-3xl max-w-[70vw] py-1 px-4">
-            <div className="flex flex-wrap justify-between items-center gap-2 w-full">
+          <div className="flex items-cemter w-full bg-[#f5f5f5] mx-auto border-[1px] border-[#00000014]  rounded-2xl max-w-[70vw] py-2 px-4 h-20">
+            <div className="flex justify-between items-center gap-2 w-full">
               {/* Amount */}
-              <div className="relative my-2">
+              <div className="flex flex-col gap-0.5 flex-1">
+                <p className="text-xs text-[#6c757d] px-1">Monto (S/)</p>
                 <input
                   name="amount"
                   type="number"
@@ -349,34 +350,22 @@ export default function MyExpensesPage() {
                   placeholder="Ej. 150.50"
                   className="
                 placeholder:text-gray-400 placeholder:italic placeholder:font-light p-2 rounded-md border border-gray-300
-      
+      bg-white
+
       text-[#212529]
       transition-colors
       focus:outline-none
+      focus:border-[#0e8f53]
       [appearance:textfield]
       [&::-webkit-inner-spin-button]:appearance-none
       [&::-webkit-outer-spin-button]:appearance-none
     "
                   onChange={handleExpenseFormInputChange}
                 />
-
-                <label
-                  className="
-      absolute
-      left-2
-      -top-2
-      text-xs
-       text-[#6c757d]
-      bg-white
-      px-1
-      pointer-events-none
-    "
-                >
-                  Monto (S/)
-                </label>
               </div>
               {/* Description */}
-              <div className="relative my-2 ">
+              <div className="flex flex-col gap-0.5 flex-1">
+                <p className="text-xs text-[#6c757d] px-1">Descripción</p>
                 <input
                   name="description"
                   type="text"
@@ -388,36 +377,23 @@ export default function MyExpensesPage() {
       p-2
       rounded-md
       border border-gray-300
-       bg-transparent
+       bg-white
       text-[#212529]
       transition-colors
       focus:outline-none
       focus:border-[#0e8f53]
+    
       [appearance:textfield]
       [&::-webkit-inner-spin-button]:appearance-none
       [&::-webkit-outer-spin-button]:appearance-none
     "
                   onChange={handleExpenseFormInputChange}
                 />
-
-                <label
-                  className="
-      absolute
-      left-2
-      -top-2
-      text-xs
-       text-[#6c757d]
-      bg-white
-      px-1
-      pointer-events-none
-    "
-                >
-                  Descripción
-                </label>
               </div>
 
               {/* Category */}
-              <div className="relative my-2">
+              <div className="flex flex-col gap-0.5 flex-1">
+                <p className="text-xs text-[#6c757d] px-1">Categoría</p>
                 <select
                   name="category"
                   defaultValue=""
@@ -426,12 +402,13 @@ export default function MyExpensesPage() {
       p-2
       rounded-md
       border border-gray-300
-      bg-transparent
+      bg-white
        text-[#6c757d]
       text-sm
       transition-colors
       focus:outline-none
       focus:border-[#0e8f53]
+    
     "
                   onChange={handleExpenseFormInputChange}
                 >
@@ -443,25 +420,11 @@ export default function MyExpensesPage() {
                   <option value="Gastos fijos">Ahorros</option>
                   <option value="Gastos libres">Inversión</option>
                 </select>
-
-                <label
-                  className="
-      absolute
-      left-2
-      -top-2
-      text-xs
-      text-[#6c757d]
-      bg-white
-      px-1
-      pointer-events-none
-    "
-                >
-                  Categoría
-                </label>
               </div>
 
               {/* Subcategory */}
-              <div className="relative my-2">
+              <div className="flex flex-col gap-0.5 flex-1">
+                <p className="text-xs text-[#6c757d] px-1">Subcategoría</p>
                 <select
                   name="subcategory"
                   defaultValue=""
@@ -470,12 +433,13 @@ export default function MyExpensesPage() {
       p-2
       rounded-md
       border border-gray-300
-      bg-transparent
+      bg-white
           text-[#6c757d]
       text-sm
       transition-colors
       focus:outline-none
       focus:border-[#0e8f53]
+    
       
     "
                   onChange={handleExpenseFormInputChange}
@@ -488,25 +452,11 @@ export default function MyExpensesPage() {
                   <option value="Gastos fijos">Ahorros</option>
                   <option value="Gastos libres">Inversión</option>
                 </select>
-
-                <label
-                  className="
-      absolute
-      left-2
-      -top-2
-      text-xs
-      text-[#6c757d]
-      bg-white
-      px-1
-      pointer-events-none
-    "
-                >
-                  Subcategoría
-                </label>
               </div>
 
               {/* Date */}
-              <div className="relative my-2">
+              <div className="flex flex-col gap-0.5">
+                <p className="text-xs text-[#6c757d] px-1">Fecha</p>
                 <input
                   type="date"
                   name="date"
@@ -520,7 +470,7 @@ export default function MyExpensesPage() {
       p-2
       rounded-md
       border border-gray-300
-      bg-transparent
+      bg-white
       text-[#212529]
       text-sm
       transition-colors
@@ -528,31 +478,16 @@ export default function MyExpensesPage() {
       focus:border-[#0e8f53]
     "
                 />
-
-                <label
-                  className="
-      absolute
-      left-2
-      -top-2
-      text-xs
-      text-[#6c757d]
-      bg-white
-      px-1
-      pointer-events-none
-    "
-                >
-                  Fecha
-                </label>
               </div>
 
               <button
-                className="flex items-center justify-center bg-[#0E9053] rounded-full text-white h-10 w-10 cursor-pointer"
+                className="flex items-center justify-center bg-[#0E9053] rounded-full text-white h-11 w-11 cursor-pointer"
                 onClick={submitExpenseFormData}
               >
                 <Image
                   src="/svg/icons/plus-bold.svg"
-                  height={20}
-                  width={20}
+                  height={24}
+                  width={24}
                   alt="send icon"
                   className="invert"
                 />

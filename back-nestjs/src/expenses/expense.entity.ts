@@ -9,13 +9,25 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
+export enum TransactionType {
+  INCOME = 'income',
+  EXPENSE = 'expense',
+}
+
 @Entity()
 export class Expense {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'numeric', precision: 10, scale: 2 })
-  amount: string;
+  @Column({ type: 'integer', default: 0 })
+  amount: number;
+
+  @Column({
+    type: 'enum',
+    enum: TransactionType,
+    nullable: false,
+  })
+  type: TransactionType;
 
   @Column()
   category: string;

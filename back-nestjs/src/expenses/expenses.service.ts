@@ -27,7 +27,7 @@ export class ExpensesService {
   async createExpense(expenseData: CreateExpenseDto, userId: string) {
     const newExpense = this.expensesRepository.create({
       ...expenseData,
-      amount: expenseData.amount.toString(),
+      amount: expenseData.amount,
       user: { id: userId },
     });
 

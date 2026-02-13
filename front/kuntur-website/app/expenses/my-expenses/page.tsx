@@ -142,14 +142,14 @@ export default function MyExpensesPage() {
   return (
     <main className="flex flex-col py-10  font-poppins bg-[#FAFAFA] min-h-screen h-full items-center">
       <div className="relative flex flex-col w-[68vw] gap-3 ">
-        <header className="flex align-top items-center justify-between mb-6">
-          <h1 className="text-3xl tracking-wide font-bold text-black mt-0 align-top leading-none">
+        <header className="flex align-top items-center justify-between mb-4">
+          <h1 className="items-center text-3xl tracking-wide font-bold text-black mt-0 align-top leading-none border-b-1 pb-4 border-[#00000014] w-full">
             Mis movimientos
           </h1>
         </header>
 
         <div className="flex flex-row items-center justify-between gap-2">
-          <div className=" p-3 px-4 rounded-[6px] border-[1px] border-[#00000014] bg-white">
+          <div className=" p-3 px-4 rounded-2xl border-[1px] border-[#00000014] bg-white">
             <p className="text-sm text-black  tracking-wider ">{`Total: S/ ${centsToDecimal(
               filteredExpenses.reduce((sum, expense) => {
                 return sum + expense.amount
@@ -158,11 +158,11 @@ export default function MyExpensesPage() {
           </div>
           <div className="relative inline-block">
             <div
-              className="cursor-pointer flex items-center p-3 px-4 rounded-[6px] border-[1px] border-[#00000014] text-sm gap-2  tracking-wide bg-white"
+              className="cursor-pointer flex items-center p-3 px-4 rounded-2xl border-[1px] border-[#00000014] text-sm gap-2  tracking-wide bg-white"
               onClick={() => setIsMonthMenuOpen((prev) => !prev)}
             >
               <p>Mes:</p>
-              <div className="bg-gray-300 rounded-full p-0.5 px-2">
+              <div className="bg-[#DCE9DF] rounded-lg p-0.5 px-2">
                 <p>{MONTHS[selectedMonth].label}</p>
               </div>
               <Image
@@ -220,8 +220,8 @@ export default function MyExpensesPage() {
           aria-label="Expenses table"
           className="flex flex-row justify-center pb-28"
         >
-          <div className="w-full relative overflow-auto border-[1px] border-[#00000014] rounded-[6px]">
-            <table className="w-full table-auto rounded-2xl border-separate border-spacing-0 text-sm text-[#212529] ">
+          <div className="w-full relative overflow-auto border-[1px] border-[#00000014] rounded-2xl">
+            <table className="w-full table-auto rounded-2xl border-separate border-spacing-0 text-sm text-[#212529] border-collapse">
               <thead>
                 <tr className="bg-[#f5f5f5] border-b border-[#dee2e6] text-left">
                   {/* <th className="w-1/12 font-medium text-sm text-[#495057] pl-4">
@@ -248,29 +248,35 @@ export default function MyExpensesPage() {
               <tbody>
                 {filteredExpenses.map((e, index) => {
                   const isGrayRow = index % 2 === 0
+                  const isLast = index === filteredExpenses.length - 1
                   return (
                     <tr
                       key={index}
-                      className={` h-18 transition-all duration-200 text-left hover:-translate-y-[1px] hover:bg-[#f8f9fa] ${
+                      className={` h-18 transition-all duration-200 text-left hover:-translate-y-[1px] hover:bg-[#f8f9fa]   ${
                         isGrayRow ? 'bg-white ' : 'bg-white'
-                      }`}
+                      } `}
                     >
-                      <td className="border-b-[1px] border-[#00000014] text-left pl-6 font-medium">
-                        <span className="flex items-center gap-2 text-black">
-                          {/* Red circle on the left */}
-                          <span className="w-2.5 h-2.5 rounded-full bg-red-500 flex-none"></span>
+                      <td
+                        className={` text-left pl-6 font-medium  ${!isLast ? 'border-b-[1px] border-[#00000014]' : ''}`}
+                      >
+                        <span className="flex items-center gap-3 text-[black]">
+                          <span className="w-2 h-2 rounded-full bg-[#E53935] flex-none"></span>
                           {/* Amount */}
                           {centsToDecimal(e.amount)}
                         </span>
                       </td>
-                      <td className="border-b-[1px] border-[#00000014] truncate max-w-[200px] font-bold">
+                      <td
+                        className={`${!isLast ? 'border-b-[1px] border-[#00000014]' : ''} truncate max-w-[200px] font-bold`}
+                      >
                         {e.description || (
                           <span className="text-gray-400 italic">
                             Sin descripción
                           </span>
                         )}
                       </td>
-                      <td className="border-b-[1px] border-[#00000014] ">
+                      <td
+                        className={`${!isLast ? 'border-b-[1px] border-[#00000014]' : ''}`}
+                      >
                         <span className="flex items-center gap-2">
                           <Image
                             src="/img/savings-icon.png"
@@ -286,7 +292,9 @@ export default function MyExpensesPage() {
                           )}
                         </span>
                       </td>
-                      <td className="border-b-[1px] border-[#00000014]">
+                      <td
+                        className={`${!isLast ? 'border-b-[1px] border-[#00000014]' : ''}`}
+                      >
                         <span className="flex items-center gap-2">
                           {/* <Image
                             src="/img/triangle-icon.png"
@@ -303,10 +311,14 @@ export default function MyExpensesPage() {
                         </span>
                       </td>
 
-                      <td className="w-1/8 border-b-[1px] border-[#00000014] p-4 text-[#666666] text-sm">
+                      <td
+                        className={`w-1/8 ${!isLast ? 'border-b-[1px] border-[#00000014]' : ''} p-4 text-[#666666] text-sm`}
+                      >
                         {formatDate(e.date)}
                       </td>
-                      <td className="border-b-[1px] border-[#00000014] text-right pr-6 font-medium text-[#dc3545] ">
+                      <td
+                        className={`${!isLast ? 'border-b-[1px] border-[#00000014]' : ''} text-right pr-6 font-medium text-[#dc3545] `}
+                      >
                         <button
                           className="cursor-pointer"
                           onClick={() => {
@@ -320,10 +332,10 @@ export default function MyExpensesPage() {
                         >
                           <Image
                             src="/img/icons/trash.png"
-                            height={15}
-                            width={15}
+                            height={17}
+                            width={17}
                             alt="trash icon"
-                            className=""
+                            style={{ filter: 'grayscale(50%)' }}
                           />
                         </button>
                       </td>
@@ -335,13 +347,36 @@ export default function MyExpensesPage() {
             <div ref={tableEndRef} />
           </div>
         </section>
-
+        {/* INPUT FORM ----------------------------*/}
         <section className="fixed bottom-10 left-[11rem] w-[calc(100vw-11.5rem)] text-sm shadow-short">
-          <div className="flex items-cemter w-full bg-[#f5f5f5] mx-auto border-[1px] border-[#00000014]  rounded-2xl max-w-[70vw] py-2 px-4 h-20">
+          <div className="flex flex-col items-cemter w-full bg-[#f5f5f5] mx-auto border-[1px] border-[#00000014] rounded-2xl max-w-[70vw] py-2 px-3 h-20">
             <div className="flex justify-between items-center gap-2 w-full">
+              {/* <div className="flex flex-col items-start gap-1">
+                <div className="flex justify-start gap-1 bg-[#DCE9DF] rounded-xl py-2 px-3">
+                  <Image
+                    src="/img/icons/page-2.png"
+                    height={15}
+                    width={15}
+                    alt="send icon"
+                    className=""
+                  />
+                  <p className="text-xs text-[#1F3B2E]">Texto</p>
+                </div>
+                <div className="flex justify-start gap-1 bg-[#E6E8F5] rounded-xl py-2 px-3">
+                  <Image
+                    src="/img/icons/robot.png"
+                    height={15}
+                    width={15}
+                    alt="send icon"
+                    className=""
+                  />
+                  <p className="text-xs text-[#2A2F4A]">AI</p>
+                </div>
+              </div> */}
+
               {/* Amount */}
               <div className="flex flex-col gap-0.5 flex-1">
-                <p className="text-xs text-[#6c757d] px-1">Monto (S/)</p>
+                <p className="text-xs text-[#1F3B2E] px-1">Monto (S/)</p>
                 <input
                   name="amount"
                   type="number"
@@ -354,8 +389,12 @@ export default function MyExpensesPage() {
 
       text-[#212529]
       transition-colors
+     
+      focus:ring-3
+        focus:ring-[#DCE9DF]
+        focus:ring-offset-0
       focus:outline-none
-      focus:border-[#0e8f53]
+      
       [appearance:textfield]
       [&::-webkit-inner-spin-button]:appearance-none
       [&::-webkit-outer-spin-button]:appearance-none
@@ -365,7 +404,7 @@ export default function MyExpensesPage() {
               </div>
               {/* Description */}
               <div className="flex flex-col gap-0.5 flex-1">
-                <p className="text-xs text-[#6c757d] px-1">Descripción</p>
+                <p className="text-xs text-[#1F3B2E] px-1">Descripción</p>
                 <input
                   name="description"
                   type="text"
@@ -380,8 +419,14 @@ export default function MyExpensesPage() {
        bg-white
       text-[#212529]
       transition-colors
+
+
+
+
+      focus:ring-3
+        focus:ring-[#DCE9DF]
+        focus:ring-offset-0
       focus:outline-none
-      focus:border-[#0e8f53]
     
       [appearance:textfield]
       [&::-webkit-inner-spin-button]:appearance-none
@@ -393,7 +438,7 @@ export default function MyExpensesPage() {
 
               {/* Category */}
               <div className="flex flex-col gap-0.5 flex-1">
-                <p className="text-xs text-[#6c757d] px-1">Categoría</p>
+                <p className="text-xs text-[#1F3B2E] px-1">Categoría</p>
                 <select
                   name="category"
                   defaultValue=""
@@ -406,8 +451,10 @@ export default function MyExpensesPage() {
        text-[#6c757d]
       text-sm
       transition-colors
+      focus:ring-3
+        focus:ring-[#DCE9DF]
+        focus:ring-offset-0
       focus:outline-none
-      focus:border-[#0e8f53]
     
     "
                   onChange={handleExpenseFormInputChange}
@@ -424,7 +471,7 @@ export default function MyExpensesPage() {
 
               {/* Subcategory */}
               <div className="flex flex-col gap-0.5 flex-1">
-                <p className="text-xs text-[#6c757d] px-1">Subcategoría</p>
+                <p className="text-xs text-[#1F3B2E] px-1">Subcategoría</p>
                 <select
                   name="subcategory"
                   defaultValue=""
@@ -437,8 +484,10 @@ export default function MyExpensesPage() {
           text-[#6c757d]
       text-sm
       transition-colors
+     focus:ring-3
+        focus:ring-[#DCE9DF]
+        focus:ring-offset-0
       focus:outline-none
-      focus:border-[#0e8f53]
     
       
     "
@@ -456,7 +505,7 @@ export default function MyExpensesPage() {
 
               {/* Date */}
               <div className="flex flex-col gap-0.5">
-                <p className="text-xs text-[#6c757d] px-1">Fecha</p>
+                <p className="text-xs text-[#1F3B2E] px-1">Fecha</p>
                 <input
                   type="date"
                   name="date"
@@ -474,20 +523,22 @@ export default function MyExpensesPage() {
       text-[#212529]
       text-sm
       transition-colors
+      focus:ring-3
+        focus:ring-[#DCE9DF]
+        focus:ring-offset-0
       focus:outline-none
-      focus:border-[#0e8f53]
     "
                 />
               </div>
 
               <button
-                className="flex items-center justify-center bg-[#0E9053] rounded-full text-white h-11 w-11 cursor-pointer"
+                className="flex items-center justify-center bg-[#1F3B2E] rounded-full text-white h-11 w-11 cursor-pointer"
                 onClick={submitExpenseFormData}
               >
                 <Image
                   src="/svg/icons/plus-bold.svg"
-                  height={24}
-                  width={24}
+                  height={20}
+                  width={20}
                   alt="send icon"
                   className="invert"
                 />

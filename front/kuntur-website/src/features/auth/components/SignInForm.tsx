@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { emailSignIn } from '../services/auth.service'
 import { useRouter } from 'next/navigation'
+import axios from 'axios'
 
 interface SignInFormProps {
   onBack: () => void
@@ -30,11 +31,14 @@ export const SignInForm = ({ onBack }: SignInFormProps) => {
       localStorage.setItem('accessToken', data.access_token)
 
       router.push('/expenses/my-expenses')
-    } catch (err) {
-      console.log('error', err)
-      setError(
-        err?.response?.data?.message || 'Algo salió mal. Inténtalo de nuevo.',
-      )
+    } catch (error: unknown) {
+      let message = 'Algo salió mal. Inténtalo de nuevo.'
+
+      if (axios.isAxiosError(error)) {
+        message = error.response?.data?.message ?? message
+      }
+
+      setError(message)
     } finally {
       setIsLoading(false)
     }

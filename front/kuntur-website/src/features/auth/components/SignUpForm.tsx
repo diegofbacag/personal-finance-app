@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { emailSignUp } from '../services/auth.service'
 import { useRouter } from 'next/navigation'
+import axios, { AxiosError } from 'axios'
 
 interface SignUpFormProps {
   onBack: () => void
@@ -59,10 +60,14 @@ export const SignUpForm = ({ onBack }: SignUpFormProps) => {
       localStorage.setItem('accessToken', data.access_token)
 
       router.push('/expenses/my-expenses')
-    } catch (err) {
-      setError(
-        err?.response?.data?.message || 'Algo salió mal. Inténtalo de nuevo.',
-      )
+    } catch (error: unknown) {
+      let message = 'Algo salió mal. Inténtalo de nuevo.'
+
+      if (axios.isAxiosError(error)) {
+        message = error.response?.data?.message ?? message
+      }
+
+      setError(message)
     } finally {
       setIsLoading(false)
     }

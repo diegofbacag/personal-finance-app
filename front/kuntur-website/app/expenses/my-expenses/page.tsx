@@ -309,7 +309,7 @@ export default function MyExpensesPage() {
                         <span className="flex items-center gap-3 text-[black]">
                           <span className="w-2 h-2 rounded-full bg-[#E53935] flex-none"></span>
                           {/* Amount */}
-                          {centsToDecimal(e.amount)}
+                          {`S/ ${centsToDecimal(e.amount)}`}
                         </span>
                       </td>
                       <td

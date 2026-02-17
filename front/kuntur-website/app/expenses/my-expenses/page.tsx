@@ -19,6 +19,8 @@ import {
   ResponseExpenseDto,
   TransactionType,
 } from '@/src/features/expenses/types/expense.dto'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 const MONTHS = [
   { label: 'Ene', value: 0 },
@@ -63,7 +65,39 @@ function centsToDecimal(cents: number): string {
   return (cents / 100).toFixed(2)
 }
 
+const mockExpenses: Expense[] = [
+  {
+    id: 'demo-1',
+    amount: 4590, // 45.90 en centavos
+    category: 'Gastos libres',
+    subcategory: 'Comer afuera',
+    description: 'Cena en restaurante (Prueba)',
+    date: '2026-02-15',
+    type: TransactionType.EXPENSE,
+  },
+  {
+    id: 'demo-2',
+    amount: 1200, // 12.00 en centavos
+    category: 'Gastos fijos',
+    subcategory: 'Transporte',
+    description: 'Taxi al trabajo (Prueba)',
+    date: '2026-02-14',
+    type: TransactionType.EXPENSE,
+  },
+  {
+    id: 'demo-3',
+    amount: 8999, // 89.99 en centavos
+    category: 'Gastos libres',
+    subcategory: 'Entretenimiento',
+    description: 'Suscripción mensual streaming (Prueba)',
+    date: '2026-02-13',
+    type: TransactionType.EXPENSE,
+  },
+]
+
 export default function MyExpensesPage() {
+  const router = useRouter()
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
   const [selectedMonth, setSelectedMonth] = useState<number>(
     new Date().getMonth(),
   )
@@ -77,8 +111,19 @@ export default function MyExpensesPage() {
     date: new Date().toLocaleDateString('en-CA'),
     type: TransactionType.EXPENSE,
   })
-  const [expenseHistory, setExpenseHistory] = useState<Expense[]>([])
+
+  const [expenseHistory, setExpenseHistory] = useState<Expense[]>(mockExpenses)
   const [isMonthMenuOpen, setIsMonthMenuOpen] = useState<boolean>(false)
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken')
+
+    if (accessToken) {
+      setIsLoggedIn(true)
+    } else {
+      setIsLoggedIn(false)
+    }
+  }, [])
 
   useEffect(() => {
     async function fetchExpenses() {
@@ -104,6 +149,11 @@ export default function MyExpensesPage() {
   }
 
   const submitExpenseFormData = async () => {
+    if (!isLoggedIn) {
+      alert('Debes iniciar sesión para registrar un movimiento.')
+      return
+    }
+
     const newExpense: Expense = {
       amount: decimalToCents(expenseFormData.amount),
       category: expenseFormData.category || undefined,
@@ -139,9 +189,39 @@ export default function MyExpensesPage() {
     tableEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [expenseHistory])
 
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken')
+    router.push('/')
+  }
   return (
-    <main className="flex flex-col py-10  font-poppins bg-[#FAFAFA] min-h-screen h-full items-center">
-      <div className="relative flex flex-col w-[68vw] gap-3 ">
+    <main className="flex flex-col   font-poppins bg-[#FAFAFA] min-h-screen h-full items-center">
+      <div className="flex items-center justify-between md:hidden bg-white w-full h-10 px-5 border-b-[1px] border-[#00000014]">
+        <Link href="/">
+          <p className="font-alpha font-bold text-[#1F3B2E] text-md tracking-wide ">
+            Kuntur
+          </p>
+        </Link>
+        <div>
+          <div
+            className="flex flex-row items-center justify-center gap-1 py-4 cursor-pointer border-t-[1px] border-[#00000014] w-full"
+            onClick={handleLogout}
+          >
+            <div className=" rounded-full">
+              <Image
+                src="/svg/icons/logout.svg"
+                height={16}
+                width={16}
+                alt="avatar icon"
+                className={!isLoggedIn ? 'scale-x-[-1]' : ''}
+              />
+            </div>
+            <p className="text-sm font-alfa text-[#5c5c5c] leading-none">
+              {isLoggedIn ? 'Cerrar Sesión' : 'Iniciar Sesión'}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="relative flex flex-col w-[90vw] md:w-[68vw] gap-3 py-10">
         <header className="flex align-top items-center justify-between mb-4">
           <h1 className="items-center text-3xl tracking-wide font-bold text-black mt-0 align-top leading-none border-b-1 pb-4 border-[#00000014] w-full">
             Mis movimientos
@@ -262,7 +342,7 @@ export default function MyExpensesPage() {
                         <span className="flex items-center gap-3 text-[black]">
                           <span className="w-2 h-2 rounded-full bg-[#E53935] flex-none"></span>
                           {/* Amount */}
-                          {centsToDecimal(e.amount)}
+                          {`S/ ${centsToDecimal(e.amount)}`}
                         </span>
                       </td>
                       <td
@@ -326,7 +406,9 @@ export default function MyExpensesPage() {
                               setExpenseHistory((prev) =>
                                 prev.filter((exp) => exp.id !== e.id),
                               )
-                              deleteExpense(e.id!)
+                              if (!e.id?.startsWith('demo')) {
+                                deleteExpense(e.id!)
+                              }
                             }
                           }}
                         >
@@ -348,9 +430,9 @@ export default function MyExpensesPage() {
           </div>
         </section>
         {/* INPUT FORM ----------------------------*/}
-        <section className="fixed bottom-10 left-[11rem] w-[calc(100vw-11.5rem)] text-sm shadow-short">
-          <div className="flex flex-col items-cemter w-full bg-[#f5f5f5] mx-auto border-[1px] border-[#00000014] rounded-2xl max-w-[70vw] py-2 px-3 h-20">
-            <div className="flex justify-between items-center gap-2 w-full">
+        <section className="fixed bottom-5 md:bottom-10 md:left-[11.6rem] w-[calc(90vw)] md:w-[calc(100vw)]  md:w-[calc(100vw-11.6rem)] text-sm shadow-short">
+          <div className="flex flex-col items-cemter w-full bg-[#f5f5f5] mx-auto border-[1px] border-[#00000014] rounded-2xl w-[90vw] md:max-w-[70vw] py-2 px-3 h-20">
+            <div className="flex flex-wrap md:flex-row justify-between items-center gap-2 w-full">
               {/* <div className="flex flex-col items-start gap-1">
                 <div className="flex justify-start gap-1 bg-[#DCE9DF] rounded-xl py-2 px-3">
                   <Image
@@ -375,7 +457,7 @@ export default function MyExpensesPage() {
               </div> */}
 
               {/* Amount */}
-              <div className="flex flex-col gap-0.5 flex-1">
+              <div className="flex flex-col gap-0.5 flex-1 w-5 md:w-15 lg:w-20 lg:w-auto">
                 <p className="text-xs text-[#1F3B2E] px-1">Monto (S/)</p>
                 <input
                   name="amount"
@@ -504,7 +586,7 @@ export default function MyExpensesPage() {
               </div>
 
               {/* Date */}
-              <div className="flex flex-col gap-0.5">
+              <div className="flex flex-col gap-0.5 w-10 md:w-29 lg: flex-1">
                 <p className="text-xs text-[#1F3B2E] px-1">Fecha</p>
                 <input
                   type="date"
@@ -532,7 +614,7 @@ export default function MyExpensesPage() {
               </div>
 
               <button
-                className="flex items-center justify-center bg-[#1F3B2E] rounded-full text-white h-11 w-11 cursor-pointer"
+                className="flex items-center justify-center bg-[#1F3B2E] rounded-full text-white h-8 w-8 lg:h-11 lg:w-11 cursor-pointer"
                 onClick={submitExpenseFormData}
               >
                 <Image

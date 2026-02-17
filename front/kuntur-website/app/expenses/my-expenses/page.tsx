@@ -57,6 +57,14 @@ const formatDate = (isoDate: string) => {
   return `${Number(day)} ${months[Number(month) - 1]}. ${year}`
 }
 
+const formatDateShort = (isoDate: string) => {
+  const [year, month, day] = isoDate.split('-')
+
+  const shortYear = year.slice(-2)
+
+  return `${day}/${month}/${shortYear}`
+}
+
 function decimalToCents(value: string): number {
   return Math.round(Number(value) * 100)
 }
@@ -195,7 +203,7 @@ export default function MyExpensesPage() {
   }
   return (
     <main className="flex flex-col   font-poppins bg-[#FAFAFA] min-h-screen h-full items-center">
-      <div className="flex items-center justify-between md:hidden bg-white w-full h-10 px-5 border-b-[1px] border-[#00000014]">
+      <div className="flex items-center justify-between md:hidden bg-white w-full h-10 px-3 border-b-[1px] border-[#00000014]">
         <Link href="/">
           <p className="font-alpha font-bold text-[#1F3B2E] text-md tracking-wide ">
             Kuntur
@@ -221,7 +229,7 @@ export default function MyExpensesPage() {
           </div>
         </div>
       </div>
-      <div className="relative flex flex-col w-[90vw] md:w-[68vw] gap-3 py-10">
+      <div className="relative flex flex-col w-[95vw] md:w-[68vw] gap-3 py-10">
         <header className="flex align-top items-center justify-between mb-4">
           <h1 className="items-center text-3xl tracking-wide font-bold text-black mt-0 align-top leading-none border-b-1 pb-4 border-[#00000014] w-full">
             Mis movimientos
@@ -392,7 +400,12 @@ export default function MyExpensesPage() {
                       </td>
 
                       <td
-                        className={`w-1/8 ${!isLast ? 'border-b-[1px] border-[#00000014]' : ''} p-4 text-[#666666] text-sm`}
+                        className={`w-1/8 ${!isLast ? 'border-b-[1px] border-[#00000014]' : ''} p-4 text-[#666666] text-sm md:hidden`}
+                      >
+                        {formatDateShort(e.date)}
+                      </td>
+                      <td
+                        className={`w-1/8 ${!isLast ? 'border-b-[1px] border-[#00000014]' : ''} p-4 text-[#666666] text-sm hidden md:block`}
                       >
                         {formatDate(e.date)}
                       </td>
@@ -430,9 +443,9 @@ export default function MyExpensesPage() {
           </div>
         </section>
         {/* INPUT FORM ----------------------------*/}
-        <section className="fixed bottom-5 md:bottom-10 md:left-[11.6rem] w-[calc(90vw)] md:w-[calc(100vw)]  md:w-[calc(100vw-11.6rem)] text-sm shadow-short">
-          <div className="flex flex-col items-cemter w-full bg-[#f5f5f5] mx-auto border-[1px] border-[#00000014] rounded-2xl w-[90vw] md:max-w-[70vw] py-2 px-3 h-20">
-            <div className="flex flex-wrap md:flex-row justify-between items-center gap-2 w-full">
+        <section className="fixed bottom-5 md:bottom-10 md:left-[11.6rem] w-[calc(95vw)] md:w-[calc(100vw)]  md:w-[calc(100vw-11.6rem)] text-sm shadow-short">
+          <div className="sm:flex sm:flex-col items-cemter w-full bg-[#f5f5f5] mx-auto border-[1px] border-[#00000014] rounded-2xl w-[95vw] md:max-w-[70vw] py-2 px-3 h-38 sm:h-20">
+            <div className=" grid grid-cols-3 sm:flex sm:flex-row justify-between items-center gap-2 w-full">
               {/* <div className="flex flex-col items-start gap-1">
                 <div className="flex justify-start gap-1 bg-[#DCE9DF] rounded-xl py-2 px-3">
                   <Image
@@ -457,7 +470,7 @@ export default function MyExpensesPage() {
               </div> */}
 
               {/* Amount */}
-              <div className="flex flex-col gap-0.5 flex-1 w-5 md:w-15 lg:w-20 lg:w-auto">
+              <div className="flex flex-col gap-0.5 flex-1 w-auto md:w-15 lg:w-20 lg:w-auto">
                 <p className="text-xs text-[#1F3B2E] px-1">Monto (S/)</p>
                 <input
                   name="amount"
@@ -586,7 +599,7 @@ export default function MyExpensesPage() {
               </div>
 
               {/* Date */}
-              <div className="flex flex-col gap-0.5 w-10 md:w-29 lg: flex-1">
+              <div className="flex flex-col gap-0.5 w-auto md:w-29 lg: flex-1">
                 <p className="text-xs text-[#1F3B2E] px-1">Fecha</p>
                 <input
                   type="date"
@@ -614,7 +627,7 @@ export default function MyExpensesPage() {
               </div>
 
               <button
-                className="flex items-center justify-center bg-[#1F3B2E] rounded-full text-white h-8 w-8 lg:h-11 lg:w-11 cursor-pointer"
+                className="flex items-center justify-center bg-[#1F3B2E] rounded-full text-white h-16 w-auto sm:h-8 sm:w-8 lg:h-11 lg:w-11 cursor-pointer"
                 onClick={submitExpenseFormData}
               >
                 <Image

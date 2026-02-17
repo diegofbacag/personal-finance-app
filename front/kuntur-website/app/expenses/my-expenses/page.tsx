@@ -443,8 +443,8 @@ export default function MyExpensesPage() {
           </div>
         </section>
         {/* INPUT FORM ----------------------------*/}
-        <section className="fixed bottom-5 md:bottom-10 md:left-[11.6rem] w-[calc(90vw)] md:w-[calc(100vw)]  md:w-[calc(100vw-11.6rem)] text-sm shadow-short">
-          <div className="sm:flex sm:flex-col items-cemter w-full bg-[#f5f5f5] mx-auto border-[1px] border-[#00000014] rounded-2xl w-[90vw] md:max-w-[70vw] py-2 px-3 h-38 sm:h-20">
+        <section className="fixed bottom-5 md:bottom-10 md:left-[11.6rem] w-[calc(95vw)] md:w-[calc(100vw)]  md:w-[calc(100vw-11.6rem)] text-sm shadow-short">
+          <div className="sm:flex sm:flex-col items-cemter w-full bg-[#f5f5f5] mx-auto border-[1px] border-[#00000014] rounded-2xl w-[95vw] md:max-w-[70vw] py-2 px-3 h-38 sm:h-20">
             <div className=" grid grid-cols-3 sm:flex sm:flex-row justify-between items-center gap-2 w-full">
               {/* <div className="flex flex-col items-start gap-1">
                 <div className="flex justify-start gap-1 bg-[#DCE9DF] rounded-xl py-2 px-3">

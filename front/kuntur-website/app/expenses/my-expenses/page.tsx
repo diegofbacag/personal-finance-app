@@ -102,7 +102,14 @@ const mockExpenses: Expense[] = [
     type: TransactionType.EXPENSE,
   },
 ]
+function getLocalDateISO() {
+  const today = new Date()
+  const year = today.getFullYear()
+  const month = String(today.getMonth() + 1).padStart(2, '0')
+  const day = String(today.getDate()).padStart(2, '0')
 
+  return `${year}-${month}-${day}`
+}
 export default function MyExpensesPage() {
   const router = useRouter()
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
@@ -116,7 +123,7 @@ export default function MyExpensesPage() {
     category: '',
     subcategory: '',
     description: '',
-    date: new Date().toLocaleDateString('en-CA'),
+    date: getLocalDateISO(),
     type: TransactionType.EXPENSE,
   })
 
@@ -398,17 +405,17 @@ export default function MyExpensesPage() {
                           )}
                         </span>
                       </td>
-
+                      {/* <td
+                        className={`w-1/8 ${!isLast ? 'border-b-[1px] border-[#00000014]' : ''} p-4 text-[#666666] text-sm hidden md:flex`}
+                      >
+                        {formatDate(e.date)}
+                      </td> */}
                       <td
-                        className={`w-1/8 ${!isLast ? 'border-b-[1px] border-[#00000014]' : ''} p-4 text-[#666666] text-sm md:hidden`}
+                        className={`w-1/8 ${!isLast ? 'border-b-[1px] border-[#00000014]' : ''} p-4 text-[#666666] text-sm `}
                       >
                         {formatDateShort(e.date)}
                       </td>
-                      <td
-                        className={`w-1/8 ${!isLast ? 'border-b-[1px] border-[#00000014]' : ''} p-4 text-[#666666] text-sm hidden md:block`}
-                      >
-                        {formatDate(e.date)}
-                      </td>
+
                       <td
                         className={`${!isLast ? 'border-b-[1px] border-[#00000014]' : ''} text-right pr-6 font-medium text-[#dc3545] `}
                       >
@@ -536,7 +543,7 @@ export default function MyExpensesPage() {
                 <p className="text-xs text-[#1F3B2E] px-1">Categoría</p>
                 <select
                   name="category"
-                  defaultValue=""
+                  defaultValue="gastos fijos"
                   className="
       w-full
       p-2

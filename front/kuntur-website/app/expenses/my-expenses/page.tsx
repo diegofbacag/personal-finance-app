@@ -63,7 +63,38 @@ function centsToDecimal(cents: number): string {
   return (cents / 100).toFixed(2)
 }
 
+const mockExpenses: Expense[] = [
+  {
+    id: 'demo-1',
+    amount: 4590, // 45.90 en centavos
+    category: 'Gastos libres',
+    subcategory: 'Comer afuera',
+    description: 'Cena en restaurante (Prueba)',
+    date: '2026-02-15',
+    type: TransactionType.EXPENSE,
+  },
+  {
+    id: 'demo-2',
+    amount: 1200, // 12.00 en centavos
+    category: 'Gastos fijos',
+    subcategory: 'Transporte',
+    description: 'Taxi al trabajo (Prueba)',
+    date: '2026-02-14',
+    type: TransactionType.EXPENSE,
+  },
+  {
+    id: 'demo-3',
+    amount: 8999, // 89.99 en centavos
+    category: 'Gastos libres',
+    subcategory: 'Entretenimiento',
+    description: 'Suscripción mensual streaming (Prueba)',
+    date: '2026-02-13',
+    type: TransactionType.EXPENSE,
+  },
+]
+
 export default function MyExpensesPage() {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
   const [selectedMonth, setSelectedMonth] = useState<number>(
     new Date().getMonth(),
   )
@@ -77,8 +108,19 @@ export default function MyExpensesPage() {
     date: new Date().toLocaleDateString('en-CA'),
     type: TransactionType.EXPENSE,
   })
-  const [expenseHistory, setExpenseHistory] = useState<Expense[]>([])
+
+  const [expenseHistory, setExpenseHistory] = useState<Expense[]>(mockExpenses)
   const [isMonthMenuOpen, setIsMonthMenuOpen] = useState<boolean>(false)
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken')
+
+    if (accessToken) {
+      setIsLoggedIn(true)
+    } else {
+      setIsLoggedIn(false)
+    }
+  }, [])
 
   useEffect(() => {
     async function fetchExpenses() {
@@ -104,6 +146,11 @@ export default function MyExpensesPage() {
   }
 
   const submitExpenseFormData = async () => {
+    if (!isLoggedIn) {
+      alert('Debes iniciar sesión para registrar un movimiento.')
+      return
+    }
+
     const newExpense: Expense = {
       amount: decimalToCents(expenseFormData.amount),
       category: expenseFormData.category || undefined,
@@ -326,7 +373,9 @@ export default function MyExpensesPage() {
                               setExpenseHistory((prev) =>
                                 prev.filter((exp) => exp.id !== e.id),
                               )
-                              deleteExpense(e.id!)
+                              if (!e.id?.startsWith('demo')) {
+                                deleteExpense(e.id!)
+                              }
                             }
                           }}
                         >

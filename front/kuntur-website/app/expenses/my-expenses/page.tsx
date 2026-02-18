@@ -171,6 +171,7 @@ export default function MyExpensesPage() {
     }
 
     const newExpense: Expense = {
+      id: `temp-${Date.now()}`,
       amount: decimalToCents(expenseFormData.amount),
       category: expenseFormData.category || undefined,
       subcategory: expenseFormData.subcategory || undefined,
@@ -179,18 +180,20 @@ export default function MyExpensesPage() {
       type: TransactionType.EXPENSE,
     }
 
-    const savedExpense: Expense = await createExpense(
-      mapFormToCreateExpenseDTO(newExpense),
-    )
+    setExpenseHistory((prev) => [...prev, newExpense])
 
-    setExpenseHistory((prev) => [...prev, savedExpense])
+    try {
+      const savedExpense: Expense = await createExpense(
+        mapFormToCreateExpenseDTO(newExpense),
+      )
 
-    // setExpenseFormData((prev) => ({
-    //   ...prev,
-    //   amount: '',
-    //   category: '',
-    //   description: '',
-    // }))
+      setExpenseHistory((prev) =>
+        prev.map((e) => (e.id === newExpense.id ? savedExpense : e)),
+      )
+    } catch (error) {
+      setExpenseHistory((prev) => prev.filter((e) => e.id !== newExpense.id))
+      alert('Error al guardar el gasto.')
+    }
   }
 
   const filteredExpenses = expenseHistory.filter((expense) => {

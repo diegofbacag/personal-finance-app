@@ -261,9 +261,15 @@ export const TransactionInputBar = ({
 
             {/* DayPicker dropdown */}
             {isDatePickerOpen && (
-              <div className="absolute bottom-full mb-1 bg-white rounded-lg shadow-lg z-50 p-2">
+              <div className="absolute bottom-full right-0 mb-1 bg-white rounded-lg shadow-lg z-50 p-2">
                 <DayPicker
                   mode="single"
+                  style={
+                    {
+                      '--rdp-accent-color': '#0E9053',
+                      '--rdp-accent-background-color': '#DCE9DF',
+                    } as React.CSSProperties
+                  }
                   selected={
                     expenseFormData.date
                       ? new Date(expenseFormData.date + 'T12:00:00')

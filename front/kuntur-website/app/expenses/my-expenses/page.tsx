@@ -254,7 +254,7 @@ export default function MyExpensesPage() {
           </div>
           <div className="relative inline-block">
             <div
-              className="cursor-pointer flex items-center p-3 px-4 rounded-2xl border-[1px] border-[#00000014] text-sm gap-2  tracking-wide bg-white"
+              className="cursor-pointer flex items-center p-3 px-4 rounded-2xl border-[1px] border-[#00000014] text-sm gap-2  tracking-wide bg-white text-black"
               onClick={() => setIsMonthMenuOpen((prev) => !prev)}
             >
               <p>Mes:</p>
@@ -362,9 +362,9 @@ export default function MyExpensesPage() {
                         </span>
                       </td>
                       <td
-                        className={`${!isLast ? 'border-b-[1px] border-[#00000014]' : ''} truncate max-w-[200px] font-bold`}
+                        className={`${!isLast ? 'border-b-[1px] border-[#00000014]' : ''} truncate font-bold`}
                       >
-                        <div className="flex items-center justify-center">
+                        <div className="flex items-center justify-start truncate">
                           {e.description || (
                             <span className="text-gray-400 italic">
                               Sin descripción

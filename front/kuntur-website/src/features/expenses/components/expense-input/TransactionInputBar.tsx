@@ -229,7 +229,7 @@ export const TransactionInputBar = ({
                       setSelectedSubcategory(subcat.label)
                       setIsSubcategoryMenuOpen(false)
                       onFormChange({
-                        target: { name: 'subcategory', value: subcat.id },
+                        target: { name: 'subcategory', value: subcat.label },
                       } as React.ChangeEvent<HTMLInputElement>)
                     }}
                     className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"

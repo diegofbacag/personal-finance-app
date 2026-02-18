@@ -364,47 +364,73 @@ export default function MyExpensesPage() {
                       <td
                         className={`${!isLast ? 'border-b-[1px] border-[#00000014]' : ''} truncate max-w-[200px] font-bold`}
                       >
-                        {e.description || (
-                          <span className="text-gray-400 italic">
-                            Sin descripción
-                          </span>
-                        )}
-                      </td>
-                      <td
-                        className={`${!isLast ? 'border-b-[1px] border-[#00000014]' : ''}`}
-                      >
-                        <span className="flex items-center gap-2">
-                          <Image
-                            src="/img/savings-icon.png"
-                            height={15}
-                            width={15}
-                            alt="send icon"
-                            className="invert"
-                          />
-                          {e.category || (
+                        <div className="flex items-center justify-center">
+                          {e.description || (
                             <span className="text-gray-400 italic">
-                              Sin categoría
+                              Sin descripción
                             </span>
                           )}
-                        </span>
+                        </div>
                       </td>
                       <td
-                        className={`${!isLast ? 'border-b-[1px] border-[#00000014]' : ''}`}
+                        className={`${!isLast ? 'border-b-[1px] border-[#00000014]' : ''} truncate `}
                       >
-                        <span className="flex items-center gap-2">
-                          {/* <Image
-                            src="/img/triangle-icon.png"
-                            height={15}
-                            width={15}
-                            alt="taxi icon"
-                            className=""
-                          /> */}
+                        <div className="flex flex-col gap-1">
+                          <div className="flex items-center justify-center gap-1 bg-[#0E9053]/15 rounded-lg p-1 md:p-2 text-xs font-bold text-[#1F3B2E] w-fit truncate">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              fill="#000000"
+                              viewBox="0 0 256 256"
+                            >
+                              <path d="M104,40H56A16,16,0,0,0,40,56v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,104,40Zm0,64H56V56h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm0,64H152V56h48v48Zm-96,32H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,104,136Zm0,64H56V152h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,200,136Zm0,64H152V152h48v48Z"></path>
+                            </svg>
+                            {e.category || (
+                              <span className="text-gray-400 italic ">
+                                Sin categoría
+                              </span>
+                            )}
+                          </div>
+
+                          <div className="flex items-center gap-1 p-1 md:p-2 bg-[#0E9053]/8 text-xs font-bold text-[#1F3B2E] truncate rounded-lg w-fit md:hidden">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              fill="#000000"
+                              viewBox="0 0 256 256"
+                            >
+                              <path d="M72,60A12,12,0,1,1,60,48,12,12,0,0,1,72,60Zm56-12a12,12,0,1,0,12,12A12,12,0,0,0,128,48Zm68,24a12,12,0,1,0-12-12A12,12,0,0,0,196,72ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Zm68,0a12,12,0,1,0,12,12A12,12,0,0,0,128,116Zm68,0a12,12,0,1,0,12,12A12,12,0,0,0,196,116ZM60,184a12,12,0,1,0,12,12A12,12,0,0,0,60,184Zm68,0a12,12,0,1,0,12,12A12,12,0,0,0,128,184Zm68,0a12,12,0,1,0,12,12A12,12,0,0,0,196,184Z"></path>
+                            </svg>
+                            {e.subcategory || (
+                              <span className=" text-gray-400 italic">
+                                Sin subcategoría
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </td>
+                      {/* Subcategoria */}
+                      <td
+                        className={`${!isLast ? 'border-b-[1px] border-[#00000014]' : ''} `}
+                      >
+                        <div className="hidden md:flex items-center gap-1 p-2 bg-[#0E9053]/8 text-xs font-bold text-[#1F3B2E] truncate rounded-lg w-fit">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="#000000"
+                            viewBox="0 0 256 256"
+                          >
+                            <path d="M72,60A12,12,0,1,1,60,48,12,12,0,0,1,72,60Zm56-12a12,12,0,1,0,12,12A12,12,0,0,0,128,48Zm68,24a12,12,0,1,0-12-12A12,12,0,0,0,196,72ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Zm68,0a12,12,0,1,0,12,12A12,12,0,0,0,128,116Zm68,0a12,12,0,1,0,12,12A12,12,0,0,0,196,116ZM60,184a12,12,0,1,0,12,12A12,12,0,0,0,60,184Zm68,0a12,12,0,1,0,12,12A12,12,0,0,0,128,184Zm68,0a12,12,0,1,0,12,12A12,12,0,0,0,196,184Z"></path>
+                          </svg>
                           {e.subcategory || (
                             <span className=" text-gray-400 italic">
                               Sin subcategoría
                             </span>
                           )}
-                        </span>
+                        </div>
                       </td>
                       {/* <td
                         className={`w-1/8 ${!isLast ? 'border-b-[1px] border-[#00000014]' : ''} p-4 text-[#666666] text-sm hidden md:flex`}
@@ -412,9 +438,9 @@ export default function MyExpensesPage() {
                         {formatDate(e.date)}
                       </td> */}
                       <td
-                        className={`w-1/8 ${!isLast ? 'border-b-[1px] border-[#00000014]' : ''} p-4 text-[#666666] text-sm `}
+                        className={`w-1/8 ${!isLast ? 'border-b-[1px] border-[#00000014]' : ''} p-4 text-[#666666] text-sm truncate`}
                       >
-                        {formatDateShort(e.date)}
+                        {formatDate(e.date)}
                       </td>
 
                       <td

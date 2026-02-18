@@ -132,14 +132,16 @@ export const TransactionInputBar = ({
         <div className="flex flex-row gap-2 w-full sm:contents">
           {/* Amount */}
           <div className="flex-[2] bg-gray-50 rounded-xl px-4 py-2 flex items-center h-[40px]">
-            <span className="text-[#1F3B2E] font-bold text-sm mr-1">S/</span>
+            <span className="text-[#1F3B2E] tracking-tight font-bold text-base mr-1">
+              S/
+            </span>
             <input
               name="amount"
               type="number"
               step="0.01"
               min="0.01"
               placeholder="0.00"
-              className={`bg-transparent border-none focus:ring-0 p-0 font-bold text-lg w-full text-[#0e0e1b] dark:text-white ${inputClass}`}
+              className={`bg-transparent border-none focus:ring-0 p-0 font-bold text-base w-full text-[#0e0e1b] ${inputClass}`}
               onChange={onFormChange}
             />
           </div>
@@ -149,8 +151,8 @@ export const TransactionInputBar = ({
             <input
               name="description"
               type="text"
-              placeholder="¿De qué fue este movimiento?"
-              className={`bg-transparent border-none focus:ring-0 p-0 text-sm font-bold w-full placeholder:font-light ${inputClass}`}
+              placeholder="¿En qué usaste tu dinero?"
+              className={`bg-transparent border-none focus:ring-0 p-0  text-sm font-bold w-full placeholder:font-light text-[#0e0e1b]  ${inputClass}`}
               onChange={onFormChange}
             />
           </div>
@@ -243,7 +245,7 @@ export const TransactionInputBar = ({
           <div className="relative h-[42px]">
             {/* Your custom button */}
             <button
-              className="flex flex-row items-center justify-center  bg-gray-50 text-primary gap-2 rounded-lg p-3 cursor-pointer "
+              className="flex flex-row items-center justify-center  bg-gray-50 text-[#0e0e1b]  gap-2 rounded-lg p-3 cursor-pointer "
               onClick={() => setIsDatePickerOpen((prev) => !prev)}
             >
               <span className="hidden sm:block text-xs font-bold truncate">

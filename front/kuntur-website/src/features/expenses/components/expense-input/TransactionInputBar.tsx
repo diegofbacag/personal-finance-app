@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { ExpenseForm } from '../../types/expense.form'
+import { useEffect, useRef, useState } from 'react'
 
 interface TransactionInputBarProps {
   expenseFormData: ExpenseForm
@@ -9,16 +10,116 @@ interface TransactionInputBarProps {
   onSubmit: () => void
 }
 
+export const spendingPlan = [
+  {
+    id: 'fixed_costs',
+    label: 'Gastos Fijos',
+    recommendedMin: 50,
+    recommendedMax: 60,
+    color: '#4F46E5',
+    subcategories: [
+      { id: 'rent', label: 'Alquiler' },
+      { id: 'utilities', label: 'Servicios' },
+      { id: 'internet', label: 'Internet' },
+      { id: 'phone', label: 'Celular' },
+      { id: 'insurance', label: 'Seguro' },
+      { id: 'transport', label: 'Transporte' },
+      { id: 'debt', label: 'Deudas' },
+      { id: 'subscriptions', label: 'Suscripciones' },
+    ],
+  },
+  {
+    id: 'guilt_free',
+    label: 'Gastos Sin Culpa',
+    recommendedMin: 20,
+    recommendedMax: 35,
+    color: '#F59E0B',
+    subcategories: [
+      { id: 'restaurants', label: 'Restaurantes' },
+      { id: 'coffee', label: 'Café' },
+      { id: 'travel', label: 'Viajes' },
+      { id: 'entertainment', label: 'Entretenimiento' },
+      { id: 'clothes', label: 'Ropa' },
+      { id: 'hobbies', label: 'Hobbies' },
+      { id: 'gifts', label: 'Regalos' },
+      { id: 'tech', label: 'Tecnología' },
+    ],
+  },
+  {
+    id: 'savings',
+    label: 'Ahorros',
+    recommendedMin: 5,
+    recommendedMax: 10,
+    color: '#10B981',
+    subcategories: [
+      { id: 'emergency_fund', label: 'Fondo de Emergencia' },
+      { id: 'house_savings', label: 'Vivienda' },
+      { id: 'travel_savings', label: 'Viaje' },
+      { id: 'education_savings', label: 'Estudios' },
+      { id: 'annual_goal', label: 'Meta Anual' },
+    ],
+  },
+  {
+    id: 'investments',
+    label: 'Inversiones',
+    recommendedMin: 5,
+    recommendedMax: 10,
+    color: '#06B6D4',
+    subcategories: [
+      { id: 'index_funds', label: 'Fondos Indexados' },
+      { id: 'etfs', label: 'ETFs' },
+      { id: 'stocks', label: 'Acciones' },
+      { id: 'mutual_funds', label: 'Fondos Mutuos' },
+      { id: 'real_estate', label: 'Bienes Raíces' },
+      { id: 'business', label: 'Negocio' },
+    ],
+  },
+  {
+    id: 'other',
+    label: 'Otros',
+    recommendedMin: 0,
+    recommendedMax: 5,
+    color: '#6B7280',
+    subcategories: [
+      { id: 'unexpected', label: 'Imprevistos' },
+      { id: 'repairs', label: 'Reparaciones' },
+      { id: 'family_support', label: 'Ayuda Familiar' },
+      { id: 'donations', label: 'Donaciones' },
+      { id: 'misc', label: 'Varios' },
+    ],
+  },
+]
+
+const inputClass = `placeholder:text-gray-400 text-[#212529] focus:outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`
+const selectClass = `w-full p-2 rounded-md border border-gray-300 bg-white text-[#6c757d] text-sm transition-colors focus:ring-3 focus:ring-[#DCE9DF] focus:ring-offset-0 focus:outline-none`
+const labelClass = `text-xs text-[#1F3B2E] px-1`
+
 export const TransactionInputBar = ({
   expenseFormData,
   onFormChange,
   onSubmit,
 }: TransactionInputBarProps) => {
-  const inputClass = `placeholder:text-gray-400 text-[#212529] focus:outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
+    null,
+  )
+  const activeCategory =
+    spendingPlan.find((cat) => cat.id === selectedCategoryId) ??
+    spendingPlan.find((cat) => cat.id === 'other')!
+  const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false)
+  const [selectedCategory, setSelectedCategory] = useState('Categoría')
+  const [isSubcategoryMenuOpen, setIsSubcategoryMenuOpen] = useState(false)
+  const [selectedSubcategory, setSelectedSubcategory] = useState('Subcategoría')
+  const ref = useRef<HTMLDivElement>(null)
 
-  const selectClass = `w-full p-2 rounded-md border border-gray-300 bg-white text-[#6c757d] text-sm transition-colors focus:ring-3 focus:ring-[#DCE9DF] focus:ring-offset-0 focus:outline-none`
-
-  const labelClass = `text-xs text-[#1F3B2E] px-1`
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setIsCategoryMenuOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
 
   return (
     <div className="w-[95vw] md:max-w-[70vw] mx-auto bg-white/90  border border-white shadow-2xl rounded-2xl py-2 shadow-[#1F3B2E]/20 px-3 backdrop-blur-xl">
@@ -55,44 +156,80 @@ export const TransactionInputBar = ({
         {/* ROW 2 on mobile: Category + Subcategory + Date + Button */}
         <div className="flex flex-row gap-2 w-full sm:contents items-end">
           {/* Category */}
-          <button className="flex-1 bg-primary/10 dark:bg-primary/20 text-primary px-3 py-2 rounded-lg flex items-center justify-center gap-1">
-            <span className="text-[11px] font-bold uppercase truncate">
-              Categoría
-            </span>
-          </button>
-          <div className="flex flex-col gap-0.5 flex-1">
-            <select
-              name="category"
-              defaultValue="Gastos fijos"
-              className={selectClass}
-              onChange={onFormChange}
+          <div className="relative ">
+            <button
+              className="flex flex-row flex-1 items-center justify-center bg-[#1F3B2E]/10 text-primary rounded-lg p-2 cursor-pointer min-w-[120px]"
+              onClick={() => setIsCategoryMenuOpen((prev) => !prev)}
             >
-              <option value="" disabled hidden>
-                Selecciona una categoría
-              </option>
-              <option value="Gastos fijos">Gastos fijos</option>
-              <option value="Gastos libres">Gastos sin culpa</option>
-              <option value="Ahorros">Ahorros</option>
-              <option value="Inversión">Inversión</option>
-            </select>
+              <Image
+                src="/img/icons/dots-three-outline-vertical.png"
+                height={18}
+                width={18}
+                alt="category icon"
+                className=""
+              />
+              <span className="text-xs font-bold truncate">
+                {selectedCategory}
+              </span>
+            </button>
+            {isCategoryMenuOpen && (
+              <div className="absolute left-0 bottom-full mb-1 w-40 bg-white rounded-lg shadow-lg z-50 overflow-hidden">
+                {spendingPlan.map((cat) => (
+                  <button
+                    key={cat.id}
+                    onClick={() => {
+                      setSelectedCategoryId(cat.id)
+                      setSelectedCategory(cat.label)
+                      setIsCategoryMenuOpen(false)
+                      onFormChange({
+                        target: { name: 'category', value: cat.label },
+                      } as React.ChangeEvent<HTMLInputElement>)
+                    }}
+                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Subcategory */}
-          <div className="flex flex-col gap-0.5 flex-1">
-            <select
-              name="subcategory"
-              defaultValue=""
-              className={selectClass}
-              onChange={onFormChange}
+          <div className="relative ">
+            <button
+              className="flex flex-row flex-1 items-center justify-center bg-[#1F3B2E]/10 text-primary rounded-lg p-2 cursor-pointer min-w-[140px]"
+              onClick={() => setIsSubcategoryMenuOpen((prev) => !prev)}
             >
-              <option value="" disabled hidden>
-                Selecciona una subcategoría
-              </option>
-              <option value="Gastos fijos">Gastos fijos</option>
-              <option value="Gastos libres">Gastos sin culpa</option>
-              <option value="Ahorros">Ahorros</option>
-              <option value="Inversión">Inversión</option>
-            </select>
+              <Image
+                src="/img/icons/dot-outline.png"
+                height={18}
+                width={18}
+                alt="category icon"
+                className=""
+              />
+              <span className="text-xs font-bold truncate">
+                {selectedSubcategory}
+              </span>
+            </button>
+            {isSubcategoryMenuOpen && (
+              <div className="absolute left-0 bottom-full mb-1 w-40 bg-white rounded-lg shadow-lg z-50 overflow-hidden">
+                {activeCategory.subcategories.map((subcat) => (
+                  <button
+                    key={subcat.id}
+                    onClick={() => {
+                      setSelectedSubcategory(subcat.label)
+                      setIsSubcategoryMenuOpen(false)
+                      onFormChange({
+                        target: { name: 'subcategory', value: subcat.id },
+                      } as React.ChangeEvent<HTMLInputElement>)
+                    }}
+                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    {subcat.label}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Date */}

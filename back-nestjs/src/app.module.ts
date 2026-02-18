@@ -23,7 +23,7 @@ import { JwtModule } from '@nestjs/jwt';
       // password: process.env.DB_PASS,
       // database: process.env.DB_NAME,
 
-      synchronize: true,
+      synchronize: false,
       logging: ['error'],
       dropSchema: false,
       autoLoadEntities: true,

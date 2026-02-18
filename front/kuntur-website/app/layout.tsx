@@ -27,7 +27,8 @@ const alfa = Outfit({
 })
 
 export const metadata: Metadata = {
-  title: 'Kuntur',
+  title:
+    'web application/stitch/projects/11838665511402007380/screens/913daec92a3a410a897c7915bc268cb2',
   description: 'Personal finance app',
 }
 

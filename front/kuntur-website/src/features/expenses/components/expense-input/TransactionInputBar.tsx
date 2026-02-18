@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import { ExpenseForm } from '../../types/expense.form'
 import { useEffect, useRef, useState } from 'react'
+import 'react-day-picker/dist/style.css'
+import { DayPicker } from 'react-day-picker'
 
 interface TransactionInputBarProps {
   expenseFormData: ExpenseForm
@@ -110,6 +112,7 @@ export const TransactionInputBar = ({
   const [isSubcategoryMenuOpen, setIsSubcategoryMenuOpen] = useState(false)
   const [selectedSubcategory, setSelectedSubcategory] = useState('Subcategoría')
   const ref = useRef<HTMLDivElement>(null)
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false)
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -154,7 +157,7 @@ export const TransactionInputBar = ({
         </div>
 
         {/* ROW 2 on mobile: Category + Subcategory + Date + Button */}
-        <div className="flex flex-row gap-2 w-full sm:contents items-end">
+        <div className="flex flex-row gap-2 w-full sm:contents items-end justify-between">
           {/* Category */}
           <div className="relative ">
             <button
@@ -231,20 +234,47 @@ export const TransactionInputBar = ({
               </div>
             )}
           </div>
-
           {/* Date */}
-          <div className="flex flex-col gap-0.5 flex-1">
-            <input
-              type="date"
-              name="date"
-              value={
-                expenseFormData.date || new Date().toISOString().split('T')[0]
-              }
-              onChange={onFormChange}
-              className={selectClass}
-            />
-          </div>
 
+          <div className="relative">
+            {/* Your custom button */}
+            <button
+              className="flex flex-row items-center justify-center bg-[#1F3B2E]/10 text-primary gap-1 rounded-lg p-2 cursor-pointer "
+              onClick={() => setIsDatePickerOpen((prev) => !prev)}
+            >
+              <span className="hidden sm:block text-xs font-bold truncate">
+                {expenseFormData.date || 'Fecha'}
+              </span>
+              <Image
+                src="/img/icons/calendar-blank.png"
+                height={18}
+                width={18}
+                alt="calendar icon"
+              />
+            </button>
+
+            {/* DayPicker dropdown */}
+            {isDatePickerOpen && (
+              <div className="absolute bottom-full mb-1 bg-white rounded-lg shadow-lg z-50 p-2">
+                <DayPicker
+                  mode="single"
+                  selected={
+                    expenseFormData.date
+                      ? new Date(expenseFormData.date + 'T12:00:00')
+                      : undefined
+                  }
+                  onSelect={(date) => {
+                    if (!date) return
+                    const iso = date.toLocaleDateString('en-CA')
+                    onFormChange({
+                      target: { name: 'date', value: iso },
+                    } as React.ChangeEvent<HTMLInputElement>)
+                    setIsDatePickerOpen(false)
+                  }}
+                />
+              </div>
+            )}
+          </div>
           {/* Submit */}
           <button
             className="flex items-center justify-center bg-[#1F3B2E] rounded-full text-white h-10 w-10 shrink-0 cursor-pointer"

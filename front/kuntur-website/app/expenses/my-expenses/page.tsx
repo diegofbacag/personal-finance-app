@@ -451,7 +451,7 @@ export default function MyExpensesPage() {
           </div>
         </section>
         {/* INPUT FORM ----------------------------*/}
-        <section className="fixed bottom-5 md:bottom-10 md:left-[11.6rem] w-[calc(95vw)] md:w-[calc(100vw)]  md:w-[calc(100vw-11.6rem)] text-sm shadow-short">
+        <section className="fixed bottom-5 md:bottom-6 md:left-[11.6rem] w-[calc(95vw)] md:w-[calc(100vw)]  md:w-[calc(100vw-11.6rem)] text-sm shadow-short">
           <TransactionInputBar
             expenseFormData={expenseFormData}
             onFormChange={handleExpenseFormInputChange}

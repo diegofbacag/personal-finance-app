@@ -55,7 +55,7 @@ const formatDate = (isoDate: string) => {
     'nov',
     'dic',
   ]
-  return `${Number(day)} ${months[Number(month) - 1]}. ${year}`
+  return `${Number(day)} ${months[Number(month) - 1]}.`
 }
 
 const formatDateShort = (isoDate: string) => {
@@ -245,7 +245,7 @@ export default function MyExpensesPage() {
         </header>
 
         <div className="flex flex-row items-center justify-between gap-2">
-          <div className=" p-3 px-4 rounded-2xl border-[1px] border-[#00000014] bg-white">
+          <div className="p-3 px-4 rounded-2xl border-[1px] border-[#00000014] bg-white">
             <p className="text-sm text-black  tracking-wider ">{`Total: S/ ${centsToDecimal(
               filteredExpenses.reduce((sum, expense) => {
                 return sum + expense.amount
@@ -353,10 +353,10 @@ export default function MyExpensesPage() {
                       } `}
                     >
                       <td
-                        className={` text-left pl-6 font-medium  ${!isLast ? 'border-b-[1px] border-[#00000014]' : ''}`}
+                        className={` text-left pl-2 md:pl-6 font-medium  ${!isLast ? 'border-b-[1px] border-[#00000014]' : ''}`}
                       >
-                        <span className="flex items-center gap-3 text-[black]">
-                          <span className="w-2 h-2 rounded-full bg-[#E53935] flex-none"></span>
+                        <span className="flex items-center gap-2 text-[black]">
+                          <span className="w-2 h-2 rounded-full bg-[#E53935] flex-none tracking-tight"></span>
                           {/* Amount */}
                           {`S/ ${centsToDecimal(e.amount)}`}
                         </span>
@@ -444,7 +444,7 @@ export default function MyExpensesPage() {
                       </td>
 
                       <td
-                        className={`${!isLast ? 'border-b-[1px] border-[#00000014]' : ''} text-right pr-6 font-medium text-[#dc3545] `}
+                        className={`${!isLast ? 'border-b-[1px] border-[#00000014]' : ''} text-right pr-2 md:pr-6 font-medium text-[#dc3545] `}
                       >
                         <button
                           className="cursor-pointer"
@@ -459,13 +459,15 @@ export default function MyExpensesPage() {
                             }
                           }}
                         >
-                          <Image
-                            src="/img/icons/trash.png"
-                            height={17}
-                            width={17}
-                            alt="trash icon"
-                            style={{ filter: 'grayscale(50%)' }}
-                          />
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="17"
+                            height="17"
+                            fill="#000000"
+                            viewBox="0 0 256 256"
+                          >
+                            <path d="M216,48H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM192,208H64V64H192ZM80,24a8,8,0,0,1,8-8h80a8,8,0,0,1,0,16H88A8,8,0,0,1,80,24Z"></path>
+                          </svg>
                         </button>
                       </td>
                     </tr>

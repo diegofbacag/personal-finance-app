@@ -47,7 +47,7 @@ export default function Home() {
               </button>
             </Link>
             <Link href="/auth">
-              <button className="bg-[#0E9053] text-white px-5 py-2 rounded-lg text-sm font-bold shadow-lg shadow-[#0E9053]/20 hover:scale-[1.02] transition-all">
+              <button className="bg-[#0E9053] cursor-pointer text-white px-5 py-2 rounded-lg text-sm font-bold shadow-lg shadow-[#0E9053]/20 hover:scale-[1.02] transition-all">
                 Empezar gratis
               </button>
             </Link>
@@ -66,7 +66,7 @@ export default function Home() {
               </div>
               <div className="space-y-6">
                 <h1 className="text-5xl lg:text-7xl font-black leading-[1.1] tracking-tight">
-                  La app de gastos para personas que{' '}
+                  La app de gastos para personas que
                   <span className="text-[#0E9053]">
                     odian las apps de gastos.
                   </span>
@@ -78,7 +78,7 @@ export default function Home() {
               </div>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/auth">
-                  <button className="h-14 px-8 bg-[#0E9053] text-white rounded-xl font-bold text-lg shadow-xl shadow-[#0E9053]/25 hover:translate-y-[-2px] transition-all cursor-pointer">
+                  <button className="h-14 px-8 bg-[#0E9053] cursor-pointer text-white rounded-xl font-bold text-lg shadow-xl shadow-[#0E9053]/25 hover:translate-y-[-2px] transition-all cursor-pointer">
                     Abrir cuenta gratis
                   </button>
                 </Link>
@@ -363,7 +363,7 @@ export default function Home() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Link href="/auth">
-                  <button className="w-full sm:w-auto px-10 py-4 bg-white text-[#0E9053] rounded-xl font-black text-lg hover:bg-gray-100 transition-all shadow-xl">
+                  <button className="w-full sm:w-auto cursor-pointer px-10 py-4 bg-white text-[#0E9053] rounded-xl font-black text-lg hover:bg-gray-100 transition-all shadow-xl">
                     Abrir cuenta gratis
                   </button>
                 </Link>
@@ -379,7 +379,7 @@ export default function Home() {
         </section>
       </main>
       {/* <!-- Footer --> */}
-      <footer className="bg-white dark:bg-[#0c0c16] py-16 px-6 lg:px-10 border-t border-[#e7e7f3] dark:border-[#2a2a3c]">
+      <footer className="bg-white dark:bg-[#0c0c16] py-10 px-6 lg:px-10 border-t border-[#e7e7f3] dark:border-[#2a2a3c]">
         {/* <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-12">
           <div className="col-span-2 space-y-6">
             <div className="flex items-center gap-2">
@@ -502,12 +502,12 @@ export default function Home() {
             </ul>
           </div>
         </div> */}
-        <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-[#e7e7f3] dark:border-[#2a2a3c] flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-gray-400">
-            © 2024 Kuntur Inc. Todos los derechos reservados.
-          </p>
+        <p className="text-xs text-gray-400">
+          © 2024 Kuntur Inc. Todos los derechos reservados.
+        </p>
+        {/* <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-[#e7e7f3] dark:border-[#2a2a3c] flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2"></div>
-        </div>
+        </div> */}
       </footer>
     </body>
   )

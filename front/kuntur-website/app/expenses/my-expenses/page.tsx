@@ -451,13 +451,23 @@ export default function MyExpensesPage() {
                       >
                         <button
                           className="cursor-pointer"
-                          onClick={() => {
-                            if (confirm('¿Eliminar este gasto?')) {
-                              setExpenseHistory((prev) =>
-                                prev.filter((exp) => exp.id !== e.id),
-                              )
-                              if (!e.id?.startsWith('demo')) {
-                                deleteExpense(e.id!)
+                          onClick={async () => {
+                            if (!confirm('¿Eliminar este gasto?')) return
+
+                            const id = e.id
+
+                            // Optimistic update
+                            setExpenseHistory((prev) =>
+                              prev.filter((exp) => exp.id !== id),
+                            )
+
+                            if (!String(id).startsWith('demo')) {
+                              try {
+                                await deleteExpense(id!)
+                              } catch (error) {
+                                alert('Error eliminando gasto')
+                                // rollback
+                                setExpenseHistory((prev) => [...prev, e])
                               }
                             }
                           }}

@@ -47,7 +47,7 @@ export default function Home() {
               </button>
             </Link>
             <Link href="/auth">
-              <button className="bg-[#0E9053] text-white px-5 py-2 rounded-lg text-sm font-bold shadow-lg shadow-[#0E9053]/20 hover:scale-[1.02] transition-all">
+              <button className="bg-[#0E9053] cursor-pointer text-white px-5 py-2 rounded-lg text-sm font-bold shadow-lg shadow-[#0E9053]/20 hover:scale-[1.02] transition-all">
                 Empezar gratis
               </button>
             </Link>
@@ -78,7 +78,7 @@ export default function Home() {
               </div>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/auth">
-                  <button className="h-14 px-8 bg-[#0E9053] text-white rounded-xl font-bold text-lg shadow-xl shadow-[#0E9053]/25 hover:translate-y-[-2px] transition-all cursor-pointer">
+                  <button className="h-14 px-8 bg-[#0E9053] cursor-pointer text-white rounded-xl font-bold text-lg shadow-xl shadow-[#0E9053]/25 hover:translate-y-[-2px] transition-all cursor-pointer">
                     Abrir cuenta gratis
                   </button>
                 </Link>
@@ -363,7 +363,7 @@ export default function Home() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Link href="/auth">
-                  <button className="w-full sm:w-auto px-10 py-4 bg-white text-[#0E9053] rounded-xl font-black text-lg hover:bg-gray-100 transition-all shadow-xl">
+                  <button className="w-full sm:w-auto cursor-pointer px-10 py-4 bg-white text-[#0E9053] rounded-xl font-black text-lg hover:bg-gray-100 transition-all shadow-xl">
                     Abrir cuenta gratis
                   </button>
                 </Link>

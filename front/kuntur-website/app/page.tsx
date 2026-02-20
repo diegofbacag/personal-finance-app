@@ -66,7 +66,7 @@ export default function Home() {
               </div>
               <div className="space-y-6">
                 <h1 className="text-5xl lg:text-7xl font-black leading-[1.1] tracking-tight">
-                  La app de gastos para personas que{' '}
+                  La app de gastos para personas que
                   <span className="text-[#0E9053]">
                     odian las apps de gastos.
                   </span>
@@ -379,7 +379,7 @@ export default function Home() {
         </section>
       </main>
       {/* <!-- Footer --> */}
-      <footer className="bg-white dark:bg-[#0c0c16] py-16 px-6 lg:px-10 border-t border-[#e7e7f3] dark:border-[#2a2a3c]">
+      <footer className="bg-white dark:bg-[#0c0c16] py-10 px-6 lg:px-10 border-t border-[#e7e7f3] dark:border-[#2a2a3c]">
         {/* <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-12">
           <div className="col-span-2 space-y-6">
             <div className="flex items-center gap-2">
@@ -502,12 +502,12 @@ export default function Home() {
             </ul>
           </div>
         </div> */}
-        <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-[#e7e7f3] dark:border-[#2a2a3c] flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-gray-400">
-            © 2024 Kuntur Inc. Todos los derechos reservados.
-          </p>
+        <p className="text-xs text-gray-400">
+          © 2024 Kuntur Inc. Todos los derechos reservados.
+        </p>
+        {/* <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-[#e7e7f3] dark:border-[#2a2a3c] flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2"></div>
-        </div>
+        </div> */}
       </footer>
     </body>
   )

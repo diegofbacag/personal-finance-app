@@ -463,7 +463,7 @@ export default function MyExpensesPage() {
 
                             if (!String(id).startsWith('demo')) {
                               try {
-                                await deleteExpense(id)
+                                await deleteExpense(id!)
                               } catch (error) {
                                 alert('Error eliminando gasto')
                                 // rollback

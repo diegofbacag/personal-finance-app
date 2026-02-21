@@ -19,13 +19,13 @@ export class CashFlowScenarioService {
     private cashFlowScenarioRepository: Repository<CashFlowScenario>,
   ) {}
 
-  async findOne(id: string, userId: string) {
+  async findOne(userId: string) {
     const existing = await this.cashFlowScenarioRepository.findOne({
-      where: { id, user: { id: userId } },
+      where: { user: { id: userId } },
     });
 
     if (!existing) {
-      throw new NotFoundException(`CashFlowScenario ${id} not found`);
+      throw new NotFoundException(`User not found`);
     }
 
     return existing;

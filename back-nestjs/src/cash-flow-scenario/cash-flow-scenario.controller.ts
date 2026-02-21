@@ -18,10 +18,10 @@ export class CashFlowScenarioController {
     private readonly cashFlowScenarioService: CashFlowScenarioService,
   ) {}
 
-  @Get(':id')
-  findOne(@Req() req, @Param('id') id: string) {
+  @Get()
+  findOne(@Req() req) {
     const userId: string = req.user.sub;
-    return this.cashFlowScenarioService.findOne(id, userId);
+    return this.cashFlowScenarioService.findOne(userId);
   }
 
   @Put()

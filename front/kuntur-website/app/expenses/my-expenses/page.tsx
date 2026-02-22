@@ -315,6 +315,156 @@ export default function MyExpensesPage() {
             )}
           </div>
         </div>
+
+        <section
+          aria-label="Expenses cards"
+          className="flex flex-col justify-center pb-28 gap-2"
+        >
+          <p className="text-gray-600 text-xs">13 feb</p>
+          <div className="flex flex-row items-center justify-between bg-white w-full p-2 rounded-2xl gap-2">
+            <div className="flex flex-row gap-2">
+              <div className="flex items-center justify-center bg-black rounded-2xl h-10 w-10">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="32"
+                  height="32"
+                  fill="#ffffff"
+                  viewBox="0 0 256 256"
+                >
+                  <path d="M35.58,98.06a16,16,0,0,1-3.23-13.44C39.78,49.5,80,24,128,24s88.22,25.5,95.65,60.62A16,16,0,0,1,207.93,104H48.07A16,16,0,0,1,35.58,98.06Zm193.68,54.42-41.13,15L151,152.57a8,8,0,0,0-5.94,0l-37,14.81L71,152.57a8,8,0,0,0-5.7-.09l-44,16a8,8,0,0,0,5.47,15L40,178.69V184a40,40,0,0,0,40,40h96a40,40,0,0,0,40-40v-9.67l18.73-6.81a8,8,0,1,0-5.47-15ZM24,136H232a8,8,0,0,0,0-16H24a8,8,0,0,0,0,16Z"></path>
+                </svg>
+              </div>
+
+              <div className="flex flex-col items-start justify-center gap-1">
+                <p className="font-bold text-xs">Starbucks</p>
+                <div className="flex flex-row items-center justify-center text-gray-800 text-xs gap-1">
+                  <div className="flex items-center justify-center gap-1 bg-[#0E9053]/15 rounded-lg p-1 md:p-1 text-xs font-bold text-[#1F3B2E] w-fit truncate">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="#000000"
+                      viewBox="0 0 256 256"
+                    >
+                      <path d="M104,40H56A16,16,0,0,0,40,56v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,104,40Zm0,64H56V56h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm0,64H152V56h48v48Zm-96,32H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,104,136Zm0,64H56V152h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,200,136Zm0,64H152V152h48v48Z"></path>
+                    </svg>
+                    Gasto fijo
+                  </div>
+
+                  <div className="flex items-center gap-1 p-1 md:p-1 bg-[#0E9053]/8 text-xs font-bold text-[#1F3B2E] truncate rounded-lg w-fit ">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="#000000"
+                      viewBox="0 0 256 256"
+                    >
+                      <path d="M72,60A12,12,0,1,1,60,48,12,12,0,0,1,72,60Zm56-12a12,12,0,1,0,12,12A12,12,0,0,0,128,48Zm68,24a12,12,0,1,0-12-12A12,12,0,0,0,196,72ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Zm68,0a12,12,0,1,0,12,12A12,12,0,0,0,128,116Zm68,0a12,12,0,1,0,12,12A12,12,0,0,0,196,116ZM60,184a12,12,0,1,0,12,12A12,12,0,0,0,60,184Zm68,0a12,12,0,1,0,12,12A12,12,0,0,0,128,184Zm68,0a12,12,0,1,0,12,12A12,12,0,0,0,196,184Z"></path>
+                    </svg>
+                    Restaurantes
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="text-sm">S/ 125.24</div>
+          </div>
+          <p className="text-gray-600 text-xs">15 feb</p>
+          <div className="flex flex-row items-center justify-between bg-white w-full p-2 rounded-2xl gap-2">
+            <div className="flex flex-row gap-2">
+              <div className="flex items-center justify-center bg-black rounded-2xl h-10 w-10">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="32"
+                  height="32"
+                  fill="#ffffff"
+                  viewBox="0 0 256 256"
+                >
+                  <path d="M35.58,98.06a16,16,0,0,1-3.23-13.44C39.78,49.5,80,24,128,24s88.22,25.5,95.65,60.62A16,16,0,0,1,207.93,104H48.07A16,16,0,0,1,35.58,98.06Zm193.68,54.42-41.13,15L151,152.57a8,8,0,0,0-5.94,0l-37,14.81L71,152.57a8,8,0,0,0-5.7-.09l-44,16a8,8,0,0,0,5.47,15L40,178.69V184a40,40,0,0,0,40,40h96a40,40,0,0,0,40-40v-9.67l18.73-6.81a8,8,0,1,0-5.47-15ZM24,136H232a8,8,0,0,0,0-16H24a8,8,0,0,0,0,16Z"></path>
+                </svg>
+              </div>
+
+              <div className="flex flex-col items-start justify-center gap-1">
+                <p className="font-bold text-xs">Starbucks</p>
+                <div className="flex flex-row items-center justify-center text-gray-800 text-xs gap-1">
+                  <div className="flex items-center justify-center gap-1 bg-[#0E9053]/15 rounded-lg p-1 md:p-1 text-xs font-bold text-[#1F3B2E] w-fit truncate">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="#000000"
+                      viewBox="0 0 256 256"
+                    >
+                      <path d="M104,40H56A16,16,0,0,0,40,56v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,104,40Zm0,64H56V56h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm0,64H152V56h48v48Zm-96,32H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,104,136Zm0,64H56V152h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,200,136Zm0,64H152V152h48v48Z"></path>
+                    </svg>
+                    Gasto fijo
+                  </div>
+
+                  <div className="flex items-center gap-1 p-1 md:p-1 bg-[#0E9053]/8 text-xs font-bold text-[#1F3B2E] truncate rounded-lg w-fit ">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="#000000"
+                      viewBox="0 0 256 256"
+                    >
+                      <path d="M72,60A12,12,0,1,1,60,48,12,12,0,0,1,72,60Zm56-12a12,12,0,1,0,12,12A12,12,0,0,0,128,48Zm68,24a12,12,0,1,0-12-12A12,12,0,0,0,196,72ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Zm68,0a12,12,0,1,0,12,12A12,12,0,0,0,128,116Zm68,0a12,12,0,1,0,12,12A12,12,0,0,0,196,116ZM60,184a12,12,0,1,0,12,12A12,12,0,0,0,60,184Zm68,0a12,12,0,1,0,12,12A12,12,0,0,0,128,184Zm68,0a12,12,0,1,0,12,12A12,12,0,0,0,196,184Z"></path>
+                    </svg>
+                    Restaurantes
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="text-sm">S/ 125.24</div>
+          </div>
+
+          <div className="flex flex-row items-center justify-between bg-white w-full p-2 rounded-2xl gap-2">
+            <div className="flex flex-row gap-2">
+              <div className="flex items-center justify-center bg-black rounded-2xl h-10 w-10">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="32"
+                  height="32"
+                  fill="#ffffff"
+                  viewBox="0 0 256 256"
+                >
+                  <path d="M35.58,98.06a16,16,0,0,1-3.23-13.44C39.78,49.5,80,24,128,24s88.22,25.5,95.65,60.62A16,16,0,0,1,207.93,104H48.07A16,16,0,0,1,35.58,98.06Zm193.68,54.42-41.13,15L151,152.57a8,8,0,0,0-5.94,0l-37,14.81L71,152.57a8,8,0,0,0-5.7-.09l-44,16a8,8,0,0,0,5.47,15L40,178.69V184a40,40,0,0,0,40,40h96a40,40,0,0,0,40-40v-9.67l18.73-6.81a8,8,0,1,0-5.47-15ZM24,136H232a8,8,0,0,0,0-16H24a8,8,0,0,0,0,16Z"></path>
+                </svg>
+              </div>
+
+              <div className="flex flex-col items-start justify-center gap-1">
+                <p className="font-bold text-xs">Starbucks</p>
+                <div className="flex flex-row items-center justify-center text-gray-800 text-xs gap-1">
+                  <div className="flex items-center justify-center gap-1 bg-[#0E9053]/15 rounded-lg p-1 md:p-1 text-xs font-bold text-[#1F3B2E] w-fit truncate">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="#000000"
+                      viewBox="0 0 256 256"
+                    >
+                      <path d="M104,40H56A16,16,0,0,0,40,56v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,104,40Zm0,64H56V56h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm0,64H152V56h48v48Zm-96,32H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,104,136Zm0,64H56V152h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,200,136Zm0,64H152V152h48v48Z"></path>
+                    </svg>
+                    Gasto fijo
+                  </div>
+
+                  <div className="flex items-center gap-1 p-1 md:p-1 bg-[#0E9053]/8 text-xs font-bold text-[#1F3B2E] truncate rounded-lg w-fit ">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="#000000"
+                      viewBox="0 0 256 256"
+                    >
+                      <path d="M72,60A12,12,0,1,1,60,48,12,12,0,0,1,72,60Zm56-12a12,12,0,1,0,12,12A12,12,0,0,0,128,48Zm68,24a12,12,0,1,0-12-12A12,12,0,0,0,196,72ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Zm68,0a12,12,0,1,0,12,12A12,12,0,0,0,128,116Zm68,0a12,12,0,1,0,12,12A12,12,0,0,0,196,116ZM60,184a12,12,0,1,0,12,12A12,12,0,0,0,60,184Zm68,0a12,12,0,1,0,12,12A12,12,0,0,0,128,184Zm68,0a12,12,0,1,0,12,12A12,12,0,0,0,196,184Z"></path>
+                    </svg>
+                    Restaurantes
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="text-sm">S/ 125.24</div>
+          </div>
+        </section>
         <section
           aria-label="Expenses table"
           className="flex flex-row justify-center pb-28"

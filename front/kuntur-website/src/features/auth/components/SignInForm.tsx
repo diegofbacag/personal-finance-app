@@ -1,6 +1,6 @@
 import { Button } from '@/src/components/ui/Button'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { emailSignIn } from '../services/auth.service'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
@@ -15,12 +15,20 @@ export const SignInForm = ({ onBack }: SignInFormProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const emailRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    emailRef.current?.focus()
+  }, [])
+
+  const handleFormChange = (e) => {
     const { name, value } = e.target
     setForm((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmitForm = async () => {
+  const handleSubmitForm = async (e: React.FormEvent) => {
+    e.preventDefault()
+
     if (isLoading) return
 
     try {
@@ -75,10 +83,11 @@ export const SignInForm = ({ onBack }: SignInFormProps) => {
         </p>
       </div>
 
-      <div className="flex flex-col gap-2 w-full">
+      <form className="flex flex-col gap-2 w-full" onSubmit={handleSubmitForm}>
         <div className="flex flex-col gap-1 w-full">
           <p className="text-[#5c5c5c] text-sm">Correo electrónico</p>
           <input
+            ref={emailRef}
             name="email"
             type="email"
             value={form.email}
@@ -102,20 +111,20 @@ export const SignInForm = ({ onBack }: SignInFormProps) => {
           />
         </div>
         <p className="text-xs text-[#c1121f]">{error}</p>
-      </div>
 
-      <div className="flex flex-col items-center w-full gap-2 disabled:bg-[#9ca3af] disabled:text-white disabled:cursor-not-allowed">
-        <Button
-          text={isLoading ? 'Ingresando…' : 'Iniciar sesión'}
-          variant="dark"
-          onClick={handleSubmitForm}
-          className="w-full"
-          disabled={isLoading}
-        />
-        <p className="text-xs text-[#5c5c5c]">
-          {isLoading && 'La primera carga puede tardar hasta 50 segundos.'}
-        </p>
-      </div>
+        <div className="flex flex-col items-center w-full gap-2 disabled:bg-[#9ca3af] disabled:text-white disabled:cursor-not-allowed">
+          <Button
+            text={isLoading ? 'Ingresando…' : 'Iniciar sesión'}
+            variant="dark"
+            className="w-full"
+            disabled={isLoading}
+            type="submit"
+          />
+          <p className="text-xs text-[#5c5c5c]">
+            {isLoading && 'La primera carga puede tardar hasta 50 segundos.'}
+          </p>
+        </div>
+      </form>
     </>
   )
 }

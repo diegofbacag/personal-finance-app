@@ -40,10 +40,11 @@ export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
   return (
     <aside className="hidden md:flex sticky top-0 h-screen  flex-col justify-between w-50 bg-[#f5f5f5] font-poppins border-r-[1px] border-[#00000014]">
       <div className="pt-3 px-4">
-        <div className="flex items-center justify-between mb-4 pb-3 border-b-[1px] border-[#00000014]">
+        <div className="flex items-center  mb-4 pb-3 border-b-[1px] border-[#00000014]">
+          <Image src="/svg/k.svg" alt="logo image" height={20} width={20} />
           <Link href="/">
             <p className="font-alpha font-bold text-[#1F3B2E] text-md tracking-wide ">
-              Kuntur
+              untur
             </p>
           </Link>
 

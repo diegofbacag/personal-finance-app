@@ -6,6 +6,7 @@ interface ButtonProps {
   children?: React.ReactNode
   className?: string
   disabled?: boolean
+  type?: 'button' | 'submit' | 'reset' | undefined
 }
 
 export const Button = ({
@@ -16,6 +17,7 @@ export const Button = ({
   size = 'md',
   className = '',
   disabled = false,
+  type = 'button',
 }: ButtonProps) => {
   const sizeClasses = {
     sm: 'h-8 px-1 text-sm',
@@ -27,8 +29,8 @@ export const Button = ({
     'flex items-center justify-center rounded-lg font-sans font-medium text-sm transition-colors'
 
   const variantStyles = {
-    light: 'bg-[#dbf2d9] text-[#0E9053]',
-    dark: 'bg-[#0E9053] text-white',
+    light: 'bg-[#dbf2d9] text-[#1F3B2E]',
+    dark: 'bg-[#1F3B2E] text-white',
   }
 
   const disabledStyles = 'bg-[#9bd6b8] text-white cursor-not-allowed opacity-80'
@@ -37,7 +39,7 @@ export const Button = ({
 
   return (
     <button
-      type="button"
+      type={type}
       disabled={disabled}
       onClick={disabled ? undefined : onClick}
       className={`

@@ -3,21 +3,16 @@ import Image from 'next/image'
 import Link from 'next/link'
 export default function Home() {
   return (
-    <body className="font-display bg-background-light dark:bg-background-dark text-[#0e0e1b] dark:text-white antialiased">
+    <main className="font-display bg-background-light dark:bg-background-dark text-[#0e0e1b] dark:text-white antialiased">
       {/* <!-- Top Navigation Bar --> */}
-      <header className="sticky top-0 z-50 w-full bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-[#e7e7f3] dark:border-[#2a2a3c]">
+      <header className="sticky top-0 z-50 w-full bg-background-white/80 backdrop-blur-md border-b border-[#e7e7f3] dark:border-[#2a2a3c]">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-16">
-          <div className="flex items-center gap-2">
-            <div className="text-[#0E9053] size-6 flex items-center justify-center">
-              <Image
-                src="/img/kuntur-logo.jpeg"
-                alt="logo image"
-                height={40}
-                width={40}
-              />
+          <div className="flex items-center gap-0">
+            <div className="text-[#0E9053] size-8 flex items-center justify-center">
+              <Image src="/svg/k.svg" alt="logo image" height={60} width={60} />
             </div>
-            <span className="text-[#0E9053] font-sans text-2xl leading-none font-bold">
-              Kuntur
+            <span className="text-[#1F3B2E] font-sans text-2xl leading-none font-bold">
+              untur
             </span>
           </div>
           <nav className="hidden md:flex items-center gap-8">
@@ -47,7 +42,7 @@ export default function Home() {
               </button>
             </Link>
             <Link href="/auth">
-              <button className="bg-[#0E9053] cursor-pointer text-white px-5 py-2 rounded-lg text-sm font-bold shadow-lg shadow-[#0E9053]/20 hover:scale-[1.02] transition-all">
+              <button className="bg-[#1F3B2E] cursor-pointer text-white px-5 py-2 rounded-lg text-sm font-bold shadow-lg shadow-[#1F3B2E]/20 hover:scale-[1.02] transition-all">
                 Empezar gratis
               </button>
             </Link>
@@ -509,6 +504,6 @@ export default function Home() {
           <div className="flex items-center gap-2"></div>
         </div> */}
       </footer>
-    </body>
+    </main>
   )
 }

@@ -12,4 +12,7 @@ export class UpsertCashFlowScenarioDto {
   @IsString()
   @IsNotEmpty()
   category: string;
+
+  @IsString()
+  subcategory?: string;
 }

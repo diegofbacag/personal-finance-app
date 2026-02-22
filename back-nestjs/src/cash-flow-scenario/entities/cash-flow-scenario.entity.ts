@@ -27,6 +27,9 @@ export class CashFlowScenario {
   @Column({ type: 'varchar', length: 100, nullable: false })
   category: string;
 
+  @Column({ type: 'varchar', length: 100, nullable: true })
+  subcategory: string;
+
   @OneToOne(() => User, (user) => user.cashFlowScenario, {
     onDelete: 'CASCADE',
   })

@@ -7,49 +7,49 @@ datasource db {
   provider = "postgresql"
 }
 
-model cash_flow_scenarios {
-  id          String                             @id(map: "PK_9df29b0dfdc09ce73e9098e5426") @default(cuid()) @db.Uuid
-  amount      Int?                               @default(0)
-  direction   cash_flow_scenarios_direction_enum
-  category    String                             @db.VarChar(100)
-  created_at  DateTime                           @default(now()) @db.Timestamp(6)
-  user_id     String?                            @unique(map: "REL_03dbfc1f62c30b624feb12220c") @db.Uuid
-  subcategory String?                            @db.VarChar(100)
-  users       users?                             @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_03dbfc1f62c30b624feb12220c2")
+ model User {
+  id String @id @default(uuid())
+  first_name String @db.VarChar(50)
+  created_at DateTime @default(now())
+  credential Credential?
+  transactions Transaction[]
+  }
 
-  @@map("cash-flow-scenarios")
-}
+  model Credential {
+    id String @id @default(uuid())
+    email String @unique @db.VarChar(255)
+    password String @db.VarChar(255)
+    created_at DateTime @default(now())
+    user User @relation(fields: [userId], references: [id])
+    userId String @unique
+  }
 
-model credentials {
-  email    String  @unique(map: "UQ_c286aa8e09ecff5cc756ee83214") @db.VarChar(120)
-  password String  @db.VarChar(100)
-  id       String  @id(map: "PK_1e38bc43be6697cdda548ad27a6") @default(cuid()) @db.Uuid
-  user_id  String? @unique(map: "UQ_c68a6c53e95a7dc357f4ebce8f0") @db.Uuid
-  users    users?  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_c68a6c53e95a7dc357f4ebce8f0")
-}
+  model Transaction {
+    id String @id @default(uuid())
+    amount Int
+    date String
+    tag String
+    created_at DateTime @default(now())
+    user User @relation(fields: [userId], references: [id])
+    userId String @unique
+    subcategory Subcategory @relation(fields: [subcategoryId], references: [id])
+    subcategoryId Int @unique
+  }
 
-model expense {
-  id          Int               @id(map: "PK_edd925b450e13ea36197c9590fc") @default(autoincrement())
-  category    String            @db.VarChar
-  subcategory String            @db.VarChar
-  description String            @db.VarChar
-  date        DateTime          @db.Date
-  deleted_at  DateTime?         @db.Timestamp(6)
-  user_id     String?           @db.Uuid
-  createdAt   DateTime          @default(now()) @db.Timestamp(6)
-  type        expense_type_enum
-  amount      Int               @default(0)
-  users       users?            @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_8aed1abe692b31639ccde1b0416")
-}
+  model Subcategory {
+    id Int @id @default(autoincrement())
+    name String
+    created_at DateTime @default(now())
+    transactions Transaction[]
+    category Category @relation(fields: [categoryId], references: [id])
+    categoryId Int @unique
+  }
 
-model users {
-  id                  String               @id(map: "PK_a3ffb1c0c8416b9fc6f907b7433") @default(cuid()) @db.Uuid
-  cash_flow_scenarios cash_flow_scenarios?
-  credentials         credentials?
-  expense             expense[]
-}
+  model Category{
+    id Int @id @default(autoincrement())
+    name String @unique
+    code String @unique
+    created_at DateTime @default(now())
+    subcategory Subcategory?
+  }
 
-enum expense_type_enum {
-  income
-  expense
-}

@@ -2,7 +2,7 @@ generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
 }
-
+//faltan los enums
 datasource db {
   provider = "postgresql"
 }
@@ -27,22 +27,28 @@ datasource db {
   model Transaction {
     id String @id @default(uuid())
     amount Int
+    description String
     date String
     tag String
     created_at DateTime @default(now())
     user User @relation(fields: [userId], references: [id])
-    userId String @unique
+    userId String
     subcategory Subcategory @relation(fields: [subcategoryId], references: [id])
-    subcategoryId Int @unique
+    subcategoryId Int
   }
 
   model Subcategory {
     id Int @id @default(autoincrement())
+    code String
     name String
     created_at DateTime @default(now())
     transactions Transaction[]
+
     category Category @relation(fields: [categoryId], references: [id])
-    categoryId Int @unique
+    categoryId Int 
+
+    @@unique([code, categoryId])
+    @@unique([name, categoryId])
   }
 
   model Category{
@@ -50,6 +56,6 @@ datasource db {
     name String @unique
     code String @unique
     created_at DateTime @default(now())
-    subcategory Subcategory?
+    subcategory Subcategory[]
   }
 

@@ -45,3 +45,15 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: error }, { status: 500 })
   }
 }
+
+export async function GET() {
+  try {
+    const transactions = await prisma.transaction.findMany({
+      include: { subcategory: { include: { category: true } } },
+    })
+
+    return NextResponse.json({ data: transactions }, { status: 200 })
+  } catch (error) {
+    return NextResponse.json({ error: error }, { status: 500 })
+  }
+}

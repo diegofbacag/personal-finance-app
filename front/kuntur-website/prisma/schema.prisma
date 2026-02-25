@@ -2,7 +2,7 @@ generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
 }
-//faltan los enums
+
 datasource db {
   provider = "postgresql"
 }

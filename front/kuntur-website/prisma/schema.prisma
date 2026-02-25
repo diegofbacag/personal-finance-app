@@ -49,13 +49,6 @@ model users {
   expense             expense[]
 }
 
-enum cash_flow_scenarios_direction_enum {
-  inflow
-  outflow
-
-  @@map("cash-flow-scenarios_direction_enum")
-}
-
 enum expense_type_enum {
   income
   expense

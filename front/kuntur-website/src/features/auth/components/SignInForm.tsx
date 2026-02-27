@@ -1,9 +1,12 @@
-import { Button } from '@/src/components/ui/Button'
-import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
-import { emailSignIn } from '../services/auth.service'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+
 import axios from 'axios'
+import { signIn } from 'next-auth/react'
+
+import { Button } from '@/src/components/ui/Button'
+import { emailSignIn } from '../services/auth.service'
 
 interface SignInFormProps {
   onBack: () => void
@@ -35,8 +38,22 @@ export const SignInForm = ({ onBack }: SignInFormProps) => {
       setError(null)
       setIsLoading(true)
 
-      const data = await emailSignIn(form)
-      localStorage.setItem('accessToken', data.access_token)
+      const result = await signIn('credentials', {
+        email: form.email,
+        password: form.password,
+        redirect: false,
+      })
+
+      if (!result || result.error) {
+        if (result?.error === 'CredentialsSignin') {
+          setError('Correo o contraseña incorrectos.')
+        } else {
+          setError('Algo salió mal. Inténtalo de nuevo.')
+        }
+
+        setIsLoading(false)
+        return
+      }
 
       router.push('/expenses/my-expenses')
     } catch (error: unknown) {

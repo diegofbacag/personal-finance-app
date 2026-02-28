@@ -146,8 +146,9 @@ export default function MyExpensesPage() {
     async function fetchExpenses() {
       console.log('fetchExpenses')
       try {
-        const responseExpenseDto: ResponseExpenseDto[] = await getExpenses()
-        setExpenseHistory(responseExpenseDto)
+        const response = await getExpenses()
+
+        setExpenseHistory(response.data)
       } catch (error) {
         console.log('error', error)
       } finally {
@@ -165,11 +166,11 @@ export default function MyExpensesPage() {
     setExpenseFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const submitExpenseFormData = async () => {
-    if (!isLoggedIn) {
-      alert('Debes iniciar sesión para registrar un movimiento.')
-      return
-    }
+  const submitTransactionForm = async () => {
+    // if (!isLoggedIn) {
+    //   alert('Debes iniciar sesión para registrar un movimiento.')
+    //   return
+    // }
 
     const newExpense: Expense = {
       id: `temp-${Date.now()}`,
@@ -178,8 +179,9 @@ export default function MyExpensesPage() {
       subcategory: expenseFormData.subcategory || undefined,
       description: expenseFormData.description || undefined,
       date: expenseFormData.date,
-      type: TransactionType.EXPENSE,
     }
+
+    console.log('new expense', newExpense)
 
     setExpenseHistory((prev) => [...prev, newExpense])
 
@@ -191,7 +193,7 @@ export default function MyExpensesPage() {
       setExpenseHistory((prev) =>
         prev.map((e) => (e.id === newExpense.id ? savedExpense : e)),
       )
-    } catch (error) {
+    } catch (error: unknown) {
       setExpenseHistory((prev) => prev.filter((e) => e.id !== newExpense.id))
       alert('Error al guardar el gasto.')
     }
@@ -356,7 +358,7 @@ export default function MyExpensesPage() {
           <TransactionInputBar
             expenseFormData={expenseFormData}
             onFormChange={handleExpenseFormInputChange}
-            onSubmit={submitExpenseFormData}
+            onSubmit={submitTransactionForm}
           />
         </section>
       </div>

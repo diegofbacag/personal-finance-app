@@ -3,6 +3,7 @@ import { ExpenseForm } from '../../types/expense.form'
 import { useEffect, useRef, useState } from 'react'
 import 'react-day-picker/dist/style.css'
 import { DayPicker } from 'react-day-picker'
+import { CATEGORIES } from '../../types/transactions.types'
 
 interface TransactionInputBarProps {
   expenseFormData: ExpenseForm
@@ -101,19 +102,18 @@ export const TransactionInputBar = ({
   onFormChange,
   onSubmit,
 }: TransactionInputBarProps) => {
-  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
-    null,
-  )
-  const activeCategory =
-    spendingPlan.find((cat) => cat.id === selectedCategoryId) ??
-    spendingPlan.find((cat) => cat.id === 'other')!
+  const [selectedCategoryCode, setSelectedCategoryCode] = useState<
+    string | null
+  >(null)
+
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState('Categoría')
+
   const [isSubcategoryMenuOpen, setIsSubcategoryMenuOpen] = useState(false)
   const [selectedSubcategory, setSelectedSubcategory] = useState('Subcategoría')
   const ref = useRef<HTMLDivElement>(null)
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false)
-
+  const activeCategory = CATEGORIES[selectedCategoryCode]
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
@@ -181,15 +181,15 @@ export const TransactionInputBar = ({
             </button>
             {isCategoryMenuOpen && (
               <div className="absolute left-0 bottom-full mb-1 w-40 bg-white rounded-lg shadow-lg z-50 overflow-hidden">
-                {spendingPlan.map((cat) => (
+                {Object.values(CATEGORIES).map((cat) => (
                   <button
-                    key={cat.id}
+                    key={cat.code}
                     onClick={() => {
-                      setSelectedCategoryId(cat.id)
+                      setSelectedCategoryCode(cat.code)
                       setSelectedCategory(cat.label)
                       setIsCategoryMenuOpen(false)
                       onFormChange({
-                        target: { name: 'category', value: cat.label },
+                        target: { name: 'category', value: cat.code },
                       } as React.ChangeEvent<HTMLInputElement>)
                     }}
                     className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -222,14 +222,14 @@ export const TransactionInputBar = ({
             </button>
             {isSubcategoryMenuOpen && (
               <div className="absolute left-0 bottom-full mb-1 w-40 bg-white rounded-lg shadow-lg z-50 overflow-hidden">
-                {activeCategory.subcategories.map((subcat) => (
+                {Object.values(activeCategory.subcategories).map((subcat) => (
                   <button
-                    key={subcat.id}
+                    key={subcat.code}
                     onClick={() => {
                       setSelectedSubcategory(subcat.label)
                       setIsSubcategoryMenuOpen(false)
                       onFormChange({
-                        target: { name: 'subcategory', value: subcat.label },
+                        target: { name: 'subcategory', value: subcat.code },
                       } as React.ChangeEvent<HTMLInputElement>)
                     }}
                     className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"

@@ -7,6 +7,7 @@ import { signIn } from 'next-auth/react'
 
 import { Button } from '@/src/components/ui/Button'
 import { emailSignIn } from '../services/auth.service'
+import { Logo } from '@/src/components/ui/Logo'
 
 interface SignInFormProps {
   onBack: () => void
@@ -83,12 +84,7 @@ export const SignInForm = ({ onBack }: SignInFormProps) => {
       </div>
 
       <div>
-        <Image
-          src="/img/kuntur-logo.jpeg"
-          alt="logo image"
-          height={40}
-          width={40}
-        />
+        <Logo height={40} width={40} />
       </div>
 
       <div className="flex flex-col items-center justify-center gap-1">

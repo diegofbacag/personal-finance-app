@@ -1,4 +1,5 @@
 'use client'
+import { Logo } from '@/src/components/ui/Logo'
 import Image from 'next/image'
 import Link from 'next/link'
 export default function Home() {
@@ -9,7 +10,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-16">
           <div className="flex items-center gap-0">
             <div className="text-[#0E9053] size-8 flex items-center justify-center">
-              <Image src="/svg/k.svg" alt="logo image" height={60} width={60} />
+              <Logo height={60} width={60} />
             </div>
             <span className="text-[#1F3B2E] font-sans text-2xl leading-none font-bold">
               untur

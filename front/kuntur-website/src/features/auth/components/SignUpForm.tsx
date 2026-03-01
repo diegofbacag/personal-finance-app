@@ -6,6 +6,7 @@ import { emailSignUp } from '../services/auth.service'
 import { useRouter } from 'next/navigation'
 import axios, { AxiosError } from 'axios'
 import { PassThrough } from 'stream'
+import { Logo } from '@/src/components/ui/Logo'
 
 interface SignUpFormProps {
   onBack: () => void
@@ -115,12 +116,7 @@ export const SignUpForm = ({ onBack }: SignUpFormProps) => {
         />
       </div>
       <div>
-        <Image
-          src="/img/kuntur-logo.jpeg"
-          alt="logo image"
-          height={40}
-          width={40}
-        />
+        <Logo height={40} width={40} />
       </div>
       <div className="flex flex-col items-center justify-center gap-1">
         <p className="text-[#5c5c5c] font-alfa text-xl leading-none">

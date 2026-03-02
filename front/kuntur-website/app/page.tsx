@@ -1,4 +1,5 @@
 'use client'
+import { Button } from '@/src/components/ui/Button'
 import { Logo } from '@/src/components/ui/Logo'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -9,7 +10,7 @@ export default function Home() {
       <header className="sticky top-0 z-50 w-full bg-background-white/80 backdrop-blur-md border-b border-[#e7e7f3] dark:border-[#2a2a3c]">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-16">
           <div className="flex items-center gap-0">
-            <div className="text-[#0E9053] size-8 flex items-center justify-center">
+            <div className="text-primary size-8 flex items-center justify-center">
               <Logo height={60} width={60} />
             </div>
             <span className="text-[#1F3B2E] font-sans text-2xl leading-none font-bold">
@@ -18,19 +19,19 @@ export default function Home() {
           </div>
           <nav className="hidden md:flex items-center gap-8">
             {/* <a
-              className="text-sm font-medium hover:text-[#0E9053] transition-colors"
+              className="text-sm font-medium hover:text-primary transition-colors"
               href="#"
             >
               Funciones
             </a>
             <a
-              className="text-sm font-medium hover:text-[#0E9053] transition-colors"
+              className="text-sm font-medium hover:text-primary transition-colors"
               href="#"
             >
               Metodología
             </a>
             <a
-              className="text-sm font-medium hover:text-[#0E9053] transition-colors"
+              className="text-sm font-medium hover:text-primary transition-colors"
               href="#"
             >
               Precios
@@ -38,14 +39,10 @@ export default function Home() {
           </nav>
           <div className="flex items-center gap-3">
             <Link href="/auth">
-              <button className="px-4 py-2 text-sm font-semibold text-[#0e0e1b] dark:text-white hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-all cursor-pointer">
-                Iniciar sesión
-              </button>
+              <Button variant="none">Iniciar sesión</Button>
             </Link>
             <Link href="/auth">
-              <button className="bg-[#1F3B2E] cursor-pointer text-white px-5 py-2 rounded-lg text-sm font-bold shadow-lg shadow-[#1F3B2E]/20 hover:scale-[1.02] transition-all">
-                Empezar gratis
-              </button>
+              <Button>Empezar gratis</Button>
             </Link>
           </div>
         </div>
@@ -55,16 +52,16 @@ export default function Home() {
         <section className="relative overflow-hidden pt-16 pb-20 lg:pt-24 lg:pb-32 px-6 lg:px-10">
           <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="flex flex-col gap-8">
-              <div className="inline-flex items-center gap-2 bg-[#0E9053]/10 text-[#0E9053] px-3 py-1 rounded-full w-fit">
-                <span className="text-xs font-bold uppercase tracking-wide ">
+              <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full w-fit">
+                <span className="text-primary text-xs font-bold uppercase tracking-wide ">
                   Finanzas personales Sin complicaciones
                 </span>
               </div>
               <div className="space-y-6">
                 <h1 className="text-5xl lg:text-7xl font-black leading-[1.1] tracking-tight">
                   La app de gastos para personas que
-                  <span className="text-[#0E9053]">
-                    odian las apps de gastos.
+                  <span className="text-primary">
+                    {` odian las apps de gastos.`}
                   </span>
                 </h1>
                 <p className="text-lg lg:text-xl text-gray-600 dark:text-gray-400 max-w-lg leading-relaxed">
@@ -74,9 +71,9 @@ export default function Home() {
               </div>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/auth">
-                  <button className="h-14 px-8 bg-[#0E9053] cursor-pointer text-white rounded-xl font-bold text-lg shadow-xl shadow-[#0E9053]/25 hover:translate-y-[-2px] transition-all cursor-pointer">
-                    Abrir cuenta gratis
-                  </button>
+                  {/* <button className="h-14 px-8 bg-primary cursor-pointer text-white rounded-xl font-bold text-lg shadow-xl shadow-primary/25 hover:translate-y-[-2px] transition-all cursor-pointer"> */}
+
+                  <Button size="lg">Abrir cuenta gratis</Button>
                 </Link>
                 {/* <div className="flex items-center gap-3 px-4">
                   <div className="flex -space-x-2">
@@ -101,7 +98,7 @@ export default function Home() {
             </div>
             {/* <!-- App Mockup Visual --> */}
             <div className="relative">
-              <div className="absolute -inset-4 bg-[#0E9053]/10 blur-3xl rounded-full opacity-50"></div>
+              <div className="absolute -inset-4 bg-primary/10 blur-3xl rounded-full opacity-50"></div>
               <div className="relative bg-white dark:bg-[#1e1e35] rounded-3xl shadow-2xl border border-white/20 p-2 overflow-hidden ring-1 ring-black/5">
                 <div className="bg-background-light dark:bg-background-dark rounded-2xl p-6 lg:p-8 space-y-8">
                   {/* <!-- Dashboard UI Simulation --> */}
@@ -112,7 +109,7 @@ export default function Home() {
                       </p>
                       <h3 className="text-3xl font-black">$4,280.00</h3>
                     </div>
-                    <div className="bg-[#0E9053]/10 p-2 rounded-lg text-[#0E9053]">
+                    <div className="bg-primary/10 p-2 rounded-lg text-primary">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="28"
@@ -126,14 +123,14 @@ export default function Home() {
                   </div>
                   {/* <!-- Mockup Chart --> */}
                   <div
-                    className="h-48 w-full bg-gradient-to-t from-[#0E9053]/5 to-transparent rounded-xl flex items-end justify-between px-4 pb-2 gap-2"
+                    className="h-48 w-full bg-gradient-to-t from-primary/5 to-transparent rounded-xl flex items-end justify-between px-4 pb-2 gap-2"
                     data-alt="Gráfico de barras de gastos mensuales"
                   >
-                    <div className="w-full bg-[#0E9053]/20 h-[40%] rounded-t-sm"></div>
-                    <div className="w-full bg-[#0E9053]/40 h-[65%] rounded-t-sm"></div>
-                    <div className="w-full bg-[#0E9053]/30 h-[50%] rounded-t-sm"></div>
-                    <div className="w-full bg-[#0E9053] h-[90%] rounded-t-sm"></div>
-                    <div className="w-full bg-[#0E9053]/60 h-[75%] rounded-t-sm"></div>
+                    <div className="w-full bg-primary/20 h-[40%] rounded-t-sm"></div>
+                    <div className="w-full bg-primary/40 h-[65%] rounded-t-sm"></div>
+                    <div className="w-full bg-primary/30 h-[50%] rounded-t-sm"></div>
+                    <div className="w-full bg-primary h-[90%] rounded-t-sm"></div>
+                    <div className="w-full bg-primary/60 h-[75%] rounded-t-sm"></div>
                   </div>
                   <div className="space-y-4">
                     <div className="flex justify-between items-center p-3 bg-white dark:bg-[#2a2a3c] rounded-xl shadow-sm border border-black/5">
@@ -199,7 +196,7 @@ export default function Home() {
                   sacrificar el rigor financiero.
                 </p>
               </div>
-              {/* <button className="text-[#0E9053] font-bold flex items-center gap-2 group">
+              {/* <button className="text-primary font-bold flex items-center gap-2 group">
                 Ver todas las funciones
                 <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">
                   arrow_forward
@@ -208,8 +205,8 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* <!-- Feature 1 --> */}
-              <div className="p-8 rounded-2xl bg-background-light dark:bg-[#1e1e35] border border-black/5 hover:border-[#0E9053]/20 transition-all group">
-                <div className="size-12 bg-[#0E9053] text-white rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-[#0E9053]/20">
+              <div className="p-8 rounded-2xl bg-background-light dark:bg-[#1e1e35] border border-black/5 hover:border-primary/20 transition-all group">
+                <div className="size-12 bg-primary text-white rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-primary/20">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="28"
@@ -229,8 +226,8 @@ export default function Home() {
                 </p>
               </div>
               {/* <!-- Feature 2 --> */}
-              <div className="p-8 rounded-2xl bg-background-light dark:bg-[#1e1e35] border border-black/5 hover:border-[#0E9053]/20 transition-all group">
-                <div className="size-12 bg-[#0E9053] text-white rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-[#0E9053]/20">
+              <div className="p-8 rounded-2xl bg-background-light dark:bg-[#1e1e35] border border-black/5 hover:border-primary/20 transition-all group">
+                <div className="size-12 bg-primary text-white rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-primary/20">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="28"
@@ -250,8 +247,8 @@ export default function Home() {
                 </p>
               </div>
               {/* <!-- Feature 3 --> */}
-              <div className="p-8 rounded-2xl bg-background-light dark:bg-[#1e1e35] border border-black/5 hover:border-[#0E9053]/20 transition-all group">
-                <div className="size-12 bg-[#0E9053] text-white rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-[#0E9053]/20">
+              <div className="p-8 rounded-2xl bg-background-light dark:bg-[#1e1e35] border border-black/5 hover:border-primary/20 transition-all group">
+                <div className="size-12 bg-primary text-white rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-primary/20">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="28"
@@ -279,7 +276,7 @@ export default function Home() {
           <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
             <div className="w-full lg:w-1/2">
               <div
-                className="relative bg-[#0E9053]/5 rounded-3xl p-8 lg:p-12"
+                className="relative bg-primary/5 rounded-3xl p-8 lg:p-12"
                 data-alt="Visualización abstracta de gestión de capital"
               >
                 <img
@@ -288,7 +285,7 @@ export default function Home() {
                   data-alt="Captura de pantalla de dashboard analítico moderno"
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuCItBivHGrNEvzs8T8e9LY_4fMBANrFCVHQ0IEBv4Ee1qy9KAxI6RReEdnzQ0BuuQiVsOinCYb61Vl74eSQQBFzgzLegbseZIzbtMvH7KFgdX7BqtMWHMq4_-GwLuSSI_KGWY7geAyEAtMSkb1X17G3mBC9ndSEgv8Qv4dCxdykXKEeicnxowIr5AUd0w8N-upzulF26USNZPNfPooSYoYdDdRKxlJjz3tF-klwOZoEk27jiZje-hGaMgmo3IXX-1Rc0z4ALaDH-kqy"
                 />
-                <div className="absolute -top-10 -right-10 size-40 bg-[#0E9053]/20 rounded-full blur-3xl"></div>
+                <div className="absolute -top-10 -right-10 size-40 bg-primary/20 rounded-full blur-3xl"></div>
               </div>
             </div>
             <div className="w-full lg:w-1/2 space-y-8">
@@ -297,7 +294,7 @@ export default function Home() {
               </h2>
               <ul className="space-y-6">
                 <li className="flex gap-4">
-                  <div className="flex-shrink-0 size-6 bg-[#0E9053]/10 text-[#0E9053] rounded-full flex items-center justify-center">
+                  <div className="flex-shrink-0 size-6 bg-primary/10 text-primary rounded-full flex items-center justify-center">
                     <span className="material-symbols-outlined text-sm">
                       check
                     </span>
@@ -313,7 +310,7 @@ export default function Home() {
                   </div>
                 </li>
                 <li className="flex gap-4">
-                  <div className="flex-shrink-0 size-6 bg-[#0E9053]/10 text-[#0E9053] rounded-full flex items-center justify-center">
+                  <div className="flex-shrink-0 size-6 bg-primary/10 text-primary rounded-full flex items-center justify-center">
                     <span className="material-symbols-outlined text-sm">
                       check
                     </span>
@@ -329,7 +326,7 @@ export default function Home() {
                   </div>
                 </li>
               </ul>
-              <button className="bg-[#0E9053] text-white h-12 px-6 rounded-lg font-bold hover:bg-[#0E9053]/90 transition-all">
+              <button className="bg-primary text-white h-12 px-6 rounded-lg font-bold hover:bg-primary/90 transition-all">
                 Ver demostración interactiva
               </button>
             </div>
@@ -337,7 +334,7 @@ export default function Home() {
         </section> */}
         {/* <!-- CTA Section --> */}
         <section className="py-24 px-6 lg:px-10">
-          <div className="max-w-5xl mx-auto bg-[#0E9053] rounded-[2rem] p-10 lg:p-20 text-center text-white relative overflow-hidden shadow-2xl shadow-[#0E9053]/40">
+          <div className="max-w-5xl mx-auto bg-primary rounded-[2rem] p-10 lg:p-20 text-center text-white relative overflow-hidden shadow-2xl shadow-primary/40">
             <div className="absolute top-0 right-0 p-10 opacity-20 translate-x-1/4 -translate-y-1/4">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -353,15 +350,15 @@ export default function Home() {
               <h2 className="text-4xl lg:text-5xl font-black">
                 ¿Listo para dominar tus finanzas?
               </h2>
-              <p className="text-[#0E9053]-100 text-lg lg:text-xl max-w-2xl mx-auto opacity-90">
+              <p className="text-primary-100 text-lg lg:text-xl max-w-2xl mx-auto opacity-90">
                 Únete a miles de personas que ya han recuperado el control de su
                 dinero con Kuntur. Empieza gratis hoy mismo.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Link href="/auth">
-                  <button className="w-full sm:w-auto cursor-pointer px-10 py-4 bg-white text-[#0E9053] rounded-xl font-black text-lg hover:bg-gray-100 transition-all shadow-xl">
+                  <Button size="lg" variant="white" className="font-bold">
                     Abrir cuenta gratis
-                  </button>
+                  </Button>
                 </Link>
                 {/* <button className="w-full sm:w-auto px-10 py-4 bg-transparent border-2 border-white/30 text-white rounded-xl font-bold text-lg hover:bg-white/10 transition-all">
                   Agendar demo
@@ -379,8 +376,8 @@ export default function Home() {
         {/* <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-12">
           <div className="col-span-2 space-y-6">
             <div className="flex items-center gap-2">
-              <div className="text-[#0E9053] size-6 flex items-center justify-center">
-                <div className="text-[#0E9053] size-6 flex items-center justify-center">
+              <div className="text-primary size-6 flex items-center justify-center">
+                <div className="text-primary size-6 flex items-center justify-center">
                   <Image
                     src="/img/kuntur-logo.jpeg"
                     alt="logo image"
@@ -388,7 +385,7 @@ export default function Home() {
                     width={40}
                   />
                 </div>
-                <span className="text-[#0E9053] font-sans text-2xl leading-none font-bold">
+                <span className="text-primary font-sans text-2xl leading-none font-bold">
                   Kuntur
                 </span>
               </div>
@@ -399,13 +396,13 @@ export default function Home() {
             </p>
             <div className="flex gap-4">
               <a
-                className="text-gray-400 hover:text-[#0E9053] transition-colors"
+                className="text-gray-400 hover:text-primary transition-colors"
                 href="#"
               >
                 <span className="material-symbols-outlined">public</span>
               </a>
               <a
-                className="text-gray-400 hover:text-[#0E9053] transition-colors"
+                className="text-gray-400 hover:text-primary transition-colors"
                 href="#"
               >
                 <span className="material-symbols-outlined">mail</span>
@@ -419,7 +416,7 @@ export default function Home() {
             <ul className="space-y-3">
               <li>
                 <a
-                  className="text-gray-600 dark:text-gray-400 hover:text-[#0E9053] transition-colors text-sm"
+                  className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors text-sm"
                   href="#"
                 >
                   Funciones
@@ -427,7 +424,7 @@ export default function Home() {
               </li>
               <li>
                 <a
-                  className="text-gray-600 dark:text-gray-400 hover:text-[#0E9053] transition-colors text-sm"
+                  className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors text-sm"
                   href="#"
                 >
                   Seguridad
@@ -435,7 +432,7 @@ export default function Home() {
               </li>
               <li>
                 <a
-                  className="text-gray-600 dark:text-gray-400 hover:text-[#0E9053] transition-colors text-sm"
+                  className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors text-sm"
                   href="#"
                 >
                   Precios
@@ -450,7 +447,7 @@ export default function Home() {
             <ul className="space-y-3">
               <li>
                 <a
-                  className="text-gray-600 dark:text-gray-400 hover:text-[#0E9053] transition-colors text-sm"
+                  className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors text-sm"
                   href="#"
                 >
                   Sobre nosotros
@@ -458,7 +455,7 @@ export default function Home() {
               </li>
               <li>
                 <a
-                  className="text-gray-600 dark:text-gray-400 hover:text-[#0E9053] transition-colors text-sm"
+                  className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors text-sm"
                   href="#"
                 >
                   Blog
@@ -466,7 +463,7 @@ export default function Home() {
               </li>
               <li>
                 <a
-                  className="text-gray-600 dark:text-gray-400 hover:text-[#0E9053] transition-colors text-sm"
+                  className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors text-sm"
                   href="#"
                 >
                   Contacto
@@ -481,7 +478,7 @@ export default function Home() {
             <ul className="space-y-3">
               <li>
                 <a
-                  className="text-gray-600 dark:text-gray-400 hover:text-[#0E9053] transition-colors text-sm"
+                  className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors text-sm"
                   href="#"
                 >
                   Privacidad
@@ -489,7 +486,7 @@ export default function Home() {
               </li>
               <li>
                 <a
-                  className="text-gray-600 dark:text-gray-400 hover:text-[#0E9053] transition-colors text-sm"
+                  className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors text-sm"
                   href="#"
                 >
                   Términos

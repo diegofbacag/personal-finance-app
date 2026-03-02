@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import { ContinueWithGoogleButton } from './ContinueWithGoogleButton'
 import { Button } from '@/src/components/ui/Button'
+import { Logo } from '@/src/components/ui/Logo'
+import Link from 'next/link'
 
 interface AuthHomeProps {
   onSignIn?: () => void
@@ -11,7 +13,7 @@ export const AuthHome = ({ onSignIn, onSignUp }: AuthHomeProps) => {
   return (
     <>
       <div>
-        <Image src="/svg/k.svg" alt="logo image" height={60} width={60} />
+        <Logo height={60} width={60} />
       </div>
       <div className="flex flex-col items-center justify-center gap-4">
         <p className="text-[#1F3B2E] font-sans text-4xl leading-none font-bold">

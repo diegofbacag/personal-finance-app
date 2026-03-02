@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 interface LogoProps {
   height: number
@@ -7,6 +8,8 @@ interface LogoProps {
 
 export const Logo = ({ height, width }: LogoProps) => {
   return (
-    <Image src="/svg/k.svg" alt="kuntur logo" height={height} width={width} />
+    <Link href={'/'}>
+      <Image src="/svg/k.svg" alt="kuntur logo" height={height} width={width} />
+    </Link>
   )
 }

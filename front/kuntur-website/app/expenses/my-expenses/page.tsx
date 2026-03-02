@@ -277,9 +277,9 @@ export default function MyExpensesPage() {
                 }, 0),
               )}`}</p>
             </div>
-            <div className="flex flex-col gap-1 rounded-2xl p-8 bg-white">
+            <div className="flex flex-col gap-1 rounded-2xl p-8 bg-primary text-white">
               <p className="text-[#666666] text-sm">Gasto Total</p>
-              <p className="text-3xl text-black font-bold ">{`S/ ${centsToDecimal(
+              <p className="text-3xl  font-bold ">{`S/ ${centsToDecimal(
                 filteredExpenses.reduce((sum, expense) => {
                   return sum + expense.amount
                 }, 0),

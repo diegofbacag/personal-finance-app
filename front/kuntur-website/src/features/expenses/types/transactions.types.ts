@@ -27,8 +27,8 @@ export const CATEGORIES = {
       OTHERS: { code: 'OTHERS', label: 'Otros' },
     },
   },
-  GUILT_FREE_EXPENSES: {
-    code: 'GUILT_FREE_EXPENSES',
+  VARIABLE_EXPENSES: {
+    code: 'VARIABLE_EXPENSES',
     label: 'Gastos Sin Culpa',
     subcategories: {
       RESTAURANTS: { code: 'RESTAURANTS', label: 'Restaurantes' },

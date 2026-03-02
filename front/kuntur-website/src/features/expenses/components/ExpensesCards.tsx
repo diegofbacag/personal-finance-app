@@ -58,9 +58,9 @@ export const ExpensesCards = ({
                 <div className="flex flex-col items-start justify-center gap-0 text-xs text-[#1F3B2E]">
                   <p className="font-bold text-sm">{e.description}</p>
                   <div className="flex flex-row items-center justify-center text-gray-800 text-xs gap-1">
-                    <p className="">{e.category}</p>
+                    <p className="">{e.category_name}</p>
                     <span>•</span>
-                    <p className="">{e.subcategory}</p>
+                    <p className="">{e.subcategory_name}</p>
                   </div>
                 </div>
               </div>

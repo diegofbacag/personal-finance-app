@@ -11,6 +11,19 @@ export interface Expense {
   type: TransactionType
 }
 
+export interface TransactionTest {
+  id: string
+  amount: number
+  date: string
+  created_at: Date
+  description?: string
+  subcategory_code: string
+  subcategory_name: string
+  category_code: string
+  category_name: string
+  tag?: string
+}
+
 export type Transaction<C extends CategoryCode = CategoryCode> = {
   id?: string
   amount: number

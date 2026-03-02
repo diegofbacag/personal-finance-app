@@ -10,5 +10,4 @@ export const mapFormToCreateExpenseDTO = (
   subcategory: expense.subcategory || undefined,
   description: expense.description || undefined,
   date: expense.date,
-  type: TransactionType.EXPENSE,
 })

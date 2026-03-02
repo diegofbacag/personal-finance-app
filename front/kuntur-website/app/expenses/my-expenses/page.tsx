@@ -1,6 +1,3 @@
-//color gris label
-//  text-[#6c757d]
-
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
@@ -13,7 +10,10 @@ import {
   getExpenses,
 } from '@/src/features/expenses/services/expenses.service'
 import { ExpenseForm } from '@/src/features/expenses/types/expense.form'
-import { Expense } from '@/src/features/expenses/types/expense.model'
+import {
+  Expense,
+  TransactionTest,
+} from '@/src/features/expenses/types/expense.model'
 import { mapFormToCreateExpenseDTO } from '@/src/features/expenses/mappers/expense.mapper'
 import {
   ResponseExpenseDto,
@@ -23,6 +23,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { TransactionInputBar } from '@/src/features/expenses/components/expense-input/TransactionInputBar'
 import { ExpensesCards } from '@/src/features/expenses/components/ExpensesCards'
+import { TransactionForm } from '@/src/features/expenses/types/transaction.form'
 
 const MONTHS = [
   { label: 'Ene', value: 0, name: 'Enero' },
@@ -75,35 +76,6 @@ export function centsToDecimal(cents: number): string {
   return (cents / 100).toFixed(2)
 }
 
-const mockExpenses: Expense[] = [
-  {
-    id: 'demo-1',
-    amount: 4590, // 45.90 en centavos
-    category: 'Gastos libres',
-    subcategory: 'Comer afuera',
-    description: 'Cena en restaurante (Prueba)',
-    date: '2026-02-15',
-    type: TransactionType.EXPENSE,
-  },
-  {
-    id: 'demo-2',
-    amount: 1200, // 12.00 en centavos
-    category: 'Gastos fijos',
-    subcategory: 'Transporte',
-    description: 'Taxi al trabajo (Prueba)',
-    date: '2026-02-14',
-    type: TransactionType.EXPENSE,
-  },
-  {
-    id: 'demo-3',
-    amount: 8999, // 89.99 en centavos
-    category: 'Gastos libres',
-    subcategory: 'Entretenimiento',
-    description: 'Suscripción mensual streaming (Prueba)',
-    date: '2026-02-13',
-    type: TransactionType.EXPENSE,
-  },
-]
 function getLocalDateISO() {
   const today = new Date()
   const year = today.getFullYear()
@@ -120,16 +92,15 @@ export default function MyExpensesPage() {
   )
   const currentYear = new Date().getFullYear()
 
-  const [expenseFormData, setExpenseFormData] = useState<ExpenseForm>({
+  const [expenseFormData, setExpenseFormData] = useState<TransactionForm>({
     amount: '',
-    category: '',
-    subcategory: '',
+    category_code: 'VARIABLE_EXPENSES',
+    subcategory_code: 'OTHERS',
     description: '',
     date: getLocalDateISO(),
-    type: TransactionType.EXPENSE,
   })
 
-  const [expenseHistory, setExpenseHistory] = useState<Expense[]>(mockExpenses)
+  const [expenseHistory, setExpenseHistory] = useState<TransactionTest[]>([])
   const [isMonthMenuOpen, setIsMonthMenuOpen] = useState<boolean>(false)
 
   useEffect(() => {
@@ -147,8 +118,9 @@ export default function MyExpensesPage() {
       console.log('fetchExpenses')
       try {
         const response = await getExpenses()
+        console.log('fetch expenses result', response.data.transactions)
 
-        setExpenseHistory(response.data)
+        setExpenseHistory(response.data.transactions)
       } catch (error) {
         console.log('error', error)
       } finally {
@@ -171,6 +143,7 @@ export default function MyExpensesPage() {
     //   alert('Debes iniciar sesión para registrar un movimiento.')
     //   return
     // }
+    console.log('SUMITEANDO')
 
     const newExpense: Expense = {
       id: `temp-${Date.now()}`,
@@ -186,9 +159,12 @@ export default function MyExpensesPage() {
     setExpenseHistory((prev) => [...prev, newExpense])
 
     try {
-      const savedExpense: Expense = await createExpense(
+      const response = await createExpense(
         mapFormToCreateExpenseDTO(newExpense),
       )
+      const savedExpense = response.transaction
+
+      console.log('saved expense', savedExpense)
 
       setExpenseHistory((prev) =>
         prev.map((e) => (e.id === newExpense.id ? savedExpense : e)),
@@ -213,6 +189,7 @@ export default function MyExpensesPage() {
     const expenseToRestore = expenseHistory.find((e) => e.id === id)
 
     setExpenseHistory((prev) => prev.filter((e) => e.id !== id))
+    console.log('historia', expenseHistory)
 
     try {
       await deleteExpense(id)

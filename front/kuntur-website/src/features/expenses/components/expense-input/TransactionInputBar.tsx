@@ -3,7 +3,7 @@ import { ExpenseForm } from '../../types/expense.form'
 import { useEffect, useRef, useState } from 'react'
 import 'react-day-picker/dist/style.css'
 import { DayPicker } from 'react-day-picker'
-import { CATEGORIES } from '../../types/transactions.types'
+import { CATEGORIES, CategoryCode } from '../../types/transactions.types'
 
 interface TransactionInputBarProps {
   expenseFormData: ExpenseForm
@@ -12,86 +12,6 @@ interface TransactionInputBarProps {
   ) => void
   onSubmit: () => void
 }
-
-export const spendingPlan = [
-  {
-    id: 'fixed_costs',
-    label: 'Gastos Fijos',
-    recommendedMin: 50,
-    recommendedMax: 60,
-    color: '#4F46E5',
-    subcategories: [
-      { id: 'rent', label: 'Alquiler' },
-      { id: 'utilities', label: 'Servicios' },
-      { id: 'internet', label: 'Internet' },
-      { id: 'phone', label: 'Celular' },
-      { id: 'insurance', label: 'Seguro' },
-      { id: 'transport', label: 'Transporte' },
-      { id: 'debt', label: 'Deudas' },
-      { id: 'subscriptions', label: 'Suscripciones' },
-    ],
-  },
-  {
-    id: 'guilt_free',
-    label: 'Gastos Sin Culpa',
-    recommendedMin: 20,
-    recommendedMax: 35,
-    color: '#F59E0B',
-    subcategories: [
-      { id: 'restaurants', label: 'Restaurantes' },
-      { id: 'coffee', label: 'Café' },
-      { id: 'travel', label: 'Viajes' },
-      { id: 'entertainment', label: 'Entretenimiento' },
-      { id: 'clothes', label: 'Ropa' },
-      { id: 'hobbies', label: 'Hobbies' },
-      { id: 'gifts', label: 'Regalos' },
-      { id: 'tech', label: 'Tecnología' },
-    ],
-  },
-  {
-    id: 'savings',
-    label: 'Ahorros',
-    recommendedMin: 5,
-    recommendedMax: 10,
-    color: '#10B981',
-    subcategories: [
-      { id: 'emergency_fund', label: 'Fondo de Emergencia' },
-      { id: 'house_savings', label: 'Vivienda' },
-      { id: 'travel_savings', label: 'Viaje' },
-      { id: 'education_savings', label: 'Estudios' },
-      { id: 'annual_goal', label: 'Meta Anual' },
-    ],
-  },
-  {
-    id: 'investments',
-    label: 'Inversiones',
-    recommendedMin: 5,
-    recommendedMax: 10,
-    color: '#06B6D4',
-    subcategories: [
-      { id: 'index_funds', label: 'Fondos Indexados' },
-      { id: 'etfs', label: 'ETFs' },
-      { id: 'stocks', label: 'Acciones' },
-      { id: 'mutual_funds', label: 'Fondos Mutuos' },
-      { id: 'real_estate', label: 'Bienes Raíces' },
-      { id: 'business', label: 'Negocio' },
-    ],
-  },
-  {
-    id: 'other',
-    label: 'Otros',
-    recommendedMin: 0,
-    recommendedMax: 5,
-    color: '#6B7280',
-    subcategories: [
-      { id: 'unexpected', label: 'Imprevistos' },
-      { id: 'repairs', label: 'Reparaciones' },
-      { id: 'family_support', label: 'Ayuda Familiar' },
-      { id: 'donations', label: 'Donaciones' },
-      { id: 'misc', label: 'Varios' },
-    ],
-  },
-]
 
 const inputClass = `placeholder:text-gray-400 text-[#212529] focus:outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`
 const selectClass = `w-full p-2 rounded-md border border-gray-300 bg-white text-[#6c757d] text-sm transition-colors focus:ring-3 focus:ring-[#DCE9DF] focus:ring-offset-0 focus:outline-none`
@@ -102,18 +22,18 @@ export const TransactionInputBar = ({
   onFormChange,
   onSubmit,
 }: TransactionInputBarProps) => {
-  const [selectedCategoryCode, setSelectedCategoryCode] = useState<
-    string | null
-  >(null)
+  const [selectedCategoryCode, setSelectedCategoryCode] =
+    useState<CategoryCode | null>(null)
 
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false)
-  const [selectedCategory, setSelectedCategory] = useState('Categoría')
 
   const [isSubcategoryMenuOpen, setIsSubcategoryMenuOpen] = useState(false)
   const [selectedSubcategory, setSelectedSubcategory] = useState('Subcategoría')
   const ref = useRef<HTMLDivElement>(null)
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false)
-  const activeCategory = CATEGORIES[selectedCategoryCode]
+
+  const defaultCategory = CATEGORIES['VARIABLE_EXPENSES']
+
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
@@ -176,7 +96,9 @@ export const TransactionInputBar = ({
                 <path d="M104,40H56A16,16,0,0,0,40,56v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,104,40Zm0,64H56V56h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm0,64H152V56h48v48Zm-96,32H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,104,136Zm0,64H56V152h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,200,136Zm0,64H152V152h48v48Z"></path>
               </svg>
               <span className="text-xs font-bold text-[#1F3B2E] truncate">
-                {selectedCategory}
+                {selectedCategoryCode
+                  ? (CATEGORIES[selectedCategoryCode].label ?? 'Categoría')
+                  : 'Categoría'}
               </span>
             </button>
             {isCategoryMenuOpen && (
@@ -186,7 +108,6 @@ export const TransactionInputBar = ({
                     key={cat.code}
                     onClick={() => {
                       setSelectedCategoryCode(cat.code)
-                      setSelectedCategory(cat.label)
                       setIsCategoryMenuOpen(false)
                       onFormChange({
                         target: { name: 'category', value: cat.code },
@@ -194,7 +115,11 @@ export const TransactionInputBar = ({
                     }}
                     className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >
-                    {cat.label}
+                    {selectedCategoryCode
+                      ? CATEGORIES[selectedCategoryCode].subcategories[
+                          selectedSubcategoryCode
+                        ].label
+                      : 'Subcategoría'}
                   </button>
                 ))}
               </div>
@@ -222,7 +147,11 @@ export const TransactionInputBar = ({
             </button>
             {isSubcategoryMenuOpen && (
               <div className="absolute left-0 bottom-full mb-1 w-40 bg-white rounded-lg shadow-lg z-50 overflow-hidden">
-                {Object.values(activeCategory.subcategories).map((subcat) => (
+                {Object.values(
+                  selectedCategoryCode
+                    ? CATEGORIES[selectedCategoryCode].subcategories
+                    : defaultCategory.subcategories,
+                ).map((subcat) => (
                   <button
                     key={subcat.code}
                     onClick={() => {

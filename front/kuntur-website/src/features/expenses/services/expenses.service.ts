@@ -10,10 +10,7 @@ export const getExpenses = async () => {
 }
 
 export const createExpense = async (dto: CreateExpenseDto) => {
-  // const accessToken = localStorage.getItem('accessToken')
-  const { data } = await axios.post(`${apiUrl}/transactions`, dto, {
-    // headers: { Authorization: `Bearer ${accessToken}` },
-  })
+  const { data } = await axios.post(`${apiUrl}/transactions`, dto)
   console.log('create expense', data)
   return data
 }

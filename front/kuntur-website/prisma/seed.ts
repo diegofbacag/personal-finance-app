@@ -2,7 +2,7 @@ import { prisma } from '../lib/prisma'
 
 const CATEGORIES = {
   FIXED_EXPENSES: 'Gastos Fijos',
-  GUILT_FREE_EXPENSES: 'Gastos Sin Culpa',
+  VARIABLE_EXPENSES: 'Gastos Libres',
   INCOME: 'Ingresos',
   INVESTMENTS: 'Inversiones',
   SAVINGS: 'Ahorros',
@@ -26,7 +26,7 @@ const SUBCATEGORIES: Record<
     { name: 'Otros', code: 'OTHERS' },
   ],
 
-  GUILT_FREE_EXPENSES: [
+  VARIABLE_EXPENSES: [
     { name: 'Restaurantes', code: 'RESTAURANTS' },
     { name: 'Entretenimiento', code: 'ENTERTAINMENT' },
     { name: 'Hobbies', code: 'HOBBIES' },

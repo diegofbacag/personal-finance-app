@@ -16,6 +16,6 @@ export const createTransaction = async (dto: CreateTransactionDto) => {
   return mapTransactionDtoToTransaction(transaction)
 }
 
-export const deleteTransactions = async (id: string) => {
+export const deleteTransaction = async (id: string) => {
   await axios.delete(`/api/transactions/${id}`)
 }

@@ -6,10 +6,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 import {
-  createExpense,
   createTransaction,
-  deleteExpense,
-  getExpenses,
+  deleteTransaction,
   getTransactions,
 } from '@/src/features/transactions/services/transactions.service'
 import { Transaction } from '@/src/features/transactions/types/transaction.model'
@@ -188,7 +186,7 @@ export default function MyExpensesPage() {
     console.log('historia', transactionHistory)
 
     try {
-      await deleteExpense(id)
+      await deleteTransaction(id)
     } catch {
       alert('Error eliminando gasto')
 

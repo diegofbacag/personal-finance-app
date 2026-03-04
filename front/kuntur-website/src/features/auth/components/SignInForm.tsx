@@ -132,9 +132,9 @@ export const SignInForm = ({ onBack }: SignInFormProps) => {
             disabled={isLoading}
             type="submit"
           />
-          <p className="text-xs text-[#5c5c5c]">
+          {/* <p className="text-xs text-[#5c5c5c]">
             {isLoading && 'La primera carga puede tardar hasta 50 segundos.'}
-          </p>
+          </p> */}
         </div>
       </form>
     </>

@@ -240,16 +240,16 @@ export default function MyExpensesPage() {
         </header> */}
         <div className="flex flex-col  gap-3">
           <div className="flex flex-row gap-4 items-center justify-start">
-            <div className="flex flex-col gap-1 rounded-2xl p-8 bg-white">
+            {/* <div className="flex flex-col gap-1 rounded-2xl p-8 bg-white">
               <p className="text-[#666666] text-sm">Gasto Total</p>
               <p className="text-3xl text-black font-bold  ">{`S/ ${centsToDecimal(
                 filteredExpenses.reduce((sum, expense) => {
                   return sum + expense.amount
                 }, 0),
               )}`}</p>
-            </div>
+            </div> */}
             <div className="flex flex-col gap-1 rounded-2xl p-8 bg-primary text-white">
-              <p className="text-[#666666] text-sm">Gasto Total</p>
+              <p className="text-white text-sm">Gasto Total</p>
               <p className="text-3xl  font-bold ">{`S/ ${centsToDecimal(
                 filteredExpenses.reduce((sum, expense) => {
                   return sum + expense.amount
@@ -328,7 +328,7 @@ export default function MyExpensesPage() {
             </div>
           </div>
         </div>
-
+        <p className="text-black text-sm font-bold">Transacciones</p>
         <ExpensesCards
           filteredExpenses={filteredExpenses}
           onDeleteButtonClick={handleDeleteExpense}

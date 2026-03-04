@@ -11,7 +11,7 @@ export default function AuthPage() {
   const [authMode, setAuthMode] = useState<AuthMode>('home')
 
   return (
-    <div className="flex min-h-screen items-center justify-center font-sans relative overflow-hidden bg-[#04644f] premium-bg bg-[#f5f5f5]">
+    <div className="flex min-h-screen items-center justify-center font-sans relative overflow-hidden premium-bg bg-primary">
       {/* Blobs */}
       <div className="blob blob1"></div>
       <div className="blob blob2"></div>

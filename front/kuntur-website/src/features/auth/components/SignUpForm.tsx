@@ -1,16 +1,19 @@
 import { Button } from '@/src/components/ui/Button'
-
+import { signIn } from 'next-auth/react'
 import Image from 'next/image'
 import { useState } from 'react'
 import { emailSignUp } from '../services/auth.service'
 import { useRouter } from 'next/navigation'
 import axios, { AxiosError } from 'axios'
+import { PassThrough } from 'stream'
+import { Logo } from '@/src/components/ui/Logo'
 
 interface SignUpFormProps {
   onBack: () => void
 }
 
 export interface Credentials {
+  first_name: string
   email: string
   password: string
 }
@@ -18,6 +21,7 @@ export interface Credentials {
 export const SignUpForm = ({ onBack }: SignUpFormProps) => {
   const router = useRouter()
   const [credentials, setCredentials] = useState<Credentials>({
+    first_name: '',
     email: '',
     password: '',
   })
@@ -30,6 +34,10 @@ export const SignUpForm = ({ onBack }: SignUpFormProps) => {
   }
 
   const validateForm = () => {
+    if (!credentials.first_name.trim()) {
+      return 'Ingresa tu nombre.'
+    }
+
     if (!credentials.email.trim()) {
       return 'Ingresa tu correo electrónico.'
     }
@@ -57,15 +65,36 @@ export const SignUpForm = ({ onBack }: SignUpFormProps) => {
       setError(null)
       setIsLoading(true)
 
-      const data = await emailSignUp(credentials)
-      localStorage.setItem('accessToken', data.access_token)
+      await emailSignUp(credentials)
 
-      router.push('/expenses/my-expenses')
+      const result = await signIn('credentials', {
+        email: credentials.email,
+        password: credentials.password,
+        redirect: false,
+      })
+
+      console.log('Resultado sign up form:', result)
+
+      if (!result?.ok) {
+        setError('La cuenta fue creada, pero no se pudo iniciar sesión.')
+        setIsLoading(false)
+        return
+      }
+
+      console.log('Resultado sign up form:', result)
+
+      router.push('/app/transactions')
     } catch (error: unknown) {
       let message = 'Algo salió mal. Inténtalo de nuevo.'
 
       if (axios.isAxiosError(error)) {
-        message = error.response?.data?.message ?? message
+        const status = error.response?.status
+
+        if (status === 409) {
+          message = 'Este correo ya está registrado. Intenta iniciar sesión.'
+        } else {
+          message = error.response?.data?.message ?? message
+        }
       }
 
       setError(message)
@@ -87,12 +116,7 @@ export const SignUpForm = ({ onBack }: SignUpFormProps) => {
         />
       </div>
       <div>
-        <Image
-          src="/img/kuntur-logo.jpeg"
-          alt="logo image"
-          height={40}
-          width={40}
-        />
+        <Logo height={40} width={40} />
       </div>
       <div className="flex flex-col items-center justify-center gap-1">
         <p className="text-[#5c5c5c] font-alfa text-xl leading-none">
@@ -103,6 +127,16 @@ export const SignUpForm = ({ onBack }: SignUpFormProps) => {
         </p>
       </div>
       <div className="flex flex-col gap-1 w-full">
+        <div className="flex flex-col gap-1 w-full">
+          <p className="text-[#5c5c5c] text-sm">Nombre</p>
+          <input
+            name="first_name"
+            className="p-2 text-[#5c5c5c] rounded-2xl h-12 text-sm border-2 border-[#eaeaea] w-full focus:border-[#5c5c5c] focus:outline-none"
+            placeholder="Ingresa tu nombre"
+            onChange={handleSignUpFormChange}
+            value={credentials.first_name}
+          />
+        </div>
         <div className="flex flex-col gap-1 w-full">
           <p className="text-[#5c5c5c] text-sm">Correo electrónico</p>
           <input

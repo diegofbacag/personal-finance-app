@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+ model User {
+  id String @id @default(uuid())
+  first_name String @db.VarChar(50)
+  created_at DateTime @default(now())
+  credential Credential?
+  transactions Transaction[]
+
+  
+  @@map("users")
+  }
+
+  model Credential {
+    id String @id @default(uuid())
+    email String @unique @db.VarChar(255)
+    password String @db.VarChar(255)
+    created_at DateTime @default(now())
+    user User @relation(fields: [userId], references: [id])
+    userId String @unique
+
+    @@map("credentials")
+  }
+
+  model Transaction {
+    id String @id @default(uuid())
+    amount Int
+    description String?
+    date String
+    tag String?
+    created_at DateTime @default(now())
+    deleted_at DateTime?
+    user User @relation(fields: [userId], references: [id])
+    userId String
+    subcategory Subcategory @relation(fields: [subcategoryId], references: [id])
+    subcategoryId Int
+
+    @@map("transactions")
+  }
+
+  model Subcategory {
+    id Int @id @default(autoincrement())
+    code String
+    name String
+    created_at DateTime @default(now())
+    transactions Transaction[]
+
+    category Category @relation(fields: [categoryId], references: [id])
+    categoryId Int 
+
+    @@unique([code, categoryId])
+    @@unique([name, categoryId])
+    @@map("subcategories")
+  }
+
+  model Category{
+    id Int @id @default(autoincrement())
+    name String @unique
+    code String @unique
+    created_at DateTime @default(now())
+    subcategory Subcategory[]
+
+    @@map("categories")
+  }
+

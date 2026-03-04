@@ -4,6 +4,7 @@ import { SidebarItem } from './SidebarItem'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { signOut, useSession } from 'next-auth/react'
 
 interface SidebarProps {
   isOpen: boolean
@@ -11,16 +12,14 @@ interface SidebarProps {
 }
 
 export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
-  const [isLoggedIn] = useState<boolean>(() => {
-    if (typeof window !== 'undefined') {
-      return !!localStorage.getItem('accessToken')
-    }
-    return false
-  })
+  const { data: session, status } = useSession()
+
   const router = useRouter()
   const handleLogout = () => {
-    localStorage.removeItem('accessToken')
-    router.push('/')
+    if (session?.user) {
+      signOut({ callbackUrl: '/' })
+    }
+    router.push('/auth')
   }
 
   if (!isOpen) {
@@ -40,10 +39,11 @@ export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
   return (
     <aside className="hidden md:flex sticky top-0 h-screen  flex-col justify-between w-50 bg-[#f5f5f5] font-poppins border-r-[1px] border-[#00000014]">
       <div className="pt-3 px-4">
-        <div className="flex items-center justify-between mb-4 pb-3 border-b-[1px] border-[#00000014]">
+        <div className="flex items-center  mb-4 pb-3 border-b-[1px] border-[#00000014]">
+          <Image src="/svg/k.svg" alt="logo image" height={20} width={20} />
           <Link href="/">
             <p className="font-alpha font-bold text-[#1F3B2E] text-md tracking-wide ">
-              Kuntur
+              untur
             </p>
           </Link>
 
@@ -96,11 +96,15 @@ export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
               height={16}
               width={16}
               alt="avatar icon"
-              className={!isLoggedIn ? 'scale-x-[-1]' : ''}
+              className={!session?.user ? 'scale-x-[-1]' : ''}
             />
           </div>
           <p className="text-sm font-alfa text-[#5c5c5c] leading-none">
-            {isLoggedIn ? 'Cerrar Sesión' : 'Iniciar Sesión'}
+            {status === 'loading'
+              ? 'Cargando...'
+              : session?.user
+                ? 'Cerrar Sesión'
+                : 'Iniciar Sesión'}
           </p>
         </div>
       </div>

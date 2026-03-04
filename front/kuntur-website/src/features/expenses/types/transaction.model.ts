@@ -22,15 +22,15 @@ export interface tempTransaction {
 }
 
 export interface Transaction {
-  id: string
   amount: number
   date: string
   created_at: Date
   description?: string
-  subcategory_code: string
-  subcategory_name: string
-  category_code: string
-  category_name: string
+  id: string
+  subcategory_id: string
+  subcategory_label: string
+  category_id: string
+  category_label: string
   tag?: string
 }
 

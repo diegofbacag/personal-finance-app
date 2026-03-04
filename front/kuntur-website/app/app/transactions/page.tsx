@@ -11,14 +11,16 @@ import {
   getExpenses,
 } from '@/src/features/expenses/services/expenses.service'
 import {
-  newTransaction,
+  Transaction,
   tempTransaction,
 } from '@/src/features/expenses/types/transaction.model'
-import { mapFormToCreateExpenseDTO } from '@/src/features/expenses/mappers/expense.mapper'
 import { TransactionInputBar } from '@/src/features/expenses/components/expense-input/TransactionInputBar'
 import { ExpensesCards } from '@/src/features/expenses/components/ExpensesCards'
 import { TransactionForm } from '@/src/features/expenses/types/transaction.form'
-import { CreateTransactionDto } from '@/src/features/expenses/types/transaction.dto'
+import {
+  CreateTransactionDto,
+  TransactionDto,
+} from '@/src/features/expenses/types/transaction.dto'
 
 const MONTHS = [
   { label: 'Ene', value: 0, name: 'Enero' },
@@ -98,7 +100,9 @@ export default function MyExpensesPage() {
 
   console.log('transaction form', transactionForm)
 
-  const [expenseHistory, setExpenseHistory] = useState<Transaction[]>([])
+  const [transactionHistory, setTransactionHistory] = useState<Transaction[]>(
+    [],
+  )
   const [isMonthMenuOpen, setIsMonthMenuOpen] = useState<boolean>(false)
 
   useEffect(() => {
@@ -118,7 +122,7 @@ export default function MyExpensesPage() {
         const response = await getExpenses()
         console.log('fetch expenses result', response.data.transactions)
 
-        setExpenseHistory(response.data.transactions)
+        setTransactionHistory(response.data.transactions)
       } catch (error) {
         console.log('error', error)
       } finally {
@@ -142,8 +146,7 @@ export default function MyExpensesPage() {
     //   return
     // }
 
-    const tempTransaction: tempTransaction = {
-      id: `temp-${Date.now()}`,
+    const dto: CreateTransactionDto = {
       amount: decimalToCents(transactionForm.amount),
       description: transactionForm.description || undefined,
       category_id: transactionForm.category_id || undefined,
@@ -151,29 +154,28 @@ export default function MyExpensesPage() {
       date: transactionForm.date,
     }
 
-    setExpenseHistory((prev) => [...prev, tempTransaction])
+    // setTransactionHistory((prev) => [...prev, tempTransaction])
 
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { id, ...dto }: { id: string } & tempTransaction = tempTransaction
-
       const response = await createExpense(dto)
-      const savedExpense = response.transaction
+      const savedTransaction: Transaction = response
 
-      console.log('saved expense', savedExpense)
+      console.log('saved expense', savedTransaction)
 
-      setExpenseHistory((prev) =>
-        prev.map((e) => (e.id === newTransaction.id ? savedExpense : e)),
-      )
+      setTransactionHistory((prev) => [...prev, savedTransaction])
+
+      // setTransactionHistory((prev) =>
+      //   prev.map((e) => (e.id === newTransaction.id ? savedTransaction : e)),
+      // )
     } catch (error: unknown) {
-      setExpenseHistory((prev) =>
-        prev.filter((e) => e.id !== newTransaction.id),
-      )
+      // setTransactionHistory((prev) =>
+      //   prev.filter((e) => e.id !== newTransaction.id),
+      // )
       alert('Error al guardar el gasto.')
     }
   }
 
-  const filteredExpenses = expenseHistory.filter((expense) => {
+  const filteredExpenses = transactionHistory.filter((expense) => {
     const [year, month] = expense.date.split('-').map(Number)
 
     return month - 1 === selectedMonth && year === currentYear
@@ -184,10 +186,10 @@ export default function MyExpensesPage() {
   const handleDeleteExpense = async (id: string) => {
     if (!confirm('¿Eliminar este gasto?')) return
 
-    const expenseToRestore = expenseHistory.find((e) => e.id === id)
+    const expenseToRestore = transactionHistory.find((e) => e.id === id)
 
-    setExpenseHistory((prev) => prev.filter((e) => e.id !== id))
-    console.log('historia', expenseHistory)
+    setTransactionHistory((prev) => prev.filter((e) => e.id !== id))
+    console.log('historia', transactionHistory)
 
     try {
       await deleteExpense(id)
@@ -195,14 +197,14 @@ export default function MyExpensesPage() {
       alert('Error eliminando gasto')
 
       if (expenseToRestore) {
-        setExpenseHistory((prev) => [...prev, expenseToRestore])
+        setTransactionHistory((prev) => [...prev, expenseToRestore])
       }
     }
   }
 
   useEffect(() => {
     tableEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [expenseHistory])
+  }, [transactionHistory])
 
   const handleLogout = () => {
     localStorage.removeItem('accessToken')

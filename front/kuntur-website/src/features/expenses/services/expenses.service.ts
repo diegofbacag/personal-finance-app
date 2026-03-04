@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-import { CreateTransactionDto } from '../types/transaction.dto'
+import { CreateTransactionDto, TransactionDto } from '../types/transaction.dto'
+import { mapTransactionDtoToTransaction } from '../mappers/transaction.mapper'
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
@@ -12,7 +13,8 @@ export const getExpenses = async () => {
 
 export const createExpense = async (dto: CreateTransactionDto) => {
   const { data } = await axios.post(`${apiUrl}/transactions`, dto)
-  return data
+  const transaction: TransactionDto = data.transaction
+  return mapTransactionDtoToTransaction(transaction)
 }
 
 export const deleteExpense = async (id: string) => {

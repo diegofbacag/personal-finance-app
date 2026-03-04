@@ -301,7 +301,7 @@ export default function MyExpensesPage() {
                     <div
                       className="cursor-pointer"
                       onClick={() => {
-                        setSelectedMonth(3)
+                        setSelectedMonth(2)
                         setIsMonthMenuOpen(false)
                       }}
                     >

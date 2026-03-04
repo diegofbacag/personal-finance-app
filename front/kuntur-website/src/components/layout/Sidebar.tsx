@@ -16,7 +16,10 @@ export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
 
   const router = useRouter()
   const handleLogout = () => {
-    signOut({ callbackUrl: '/' })
+    if (session?.user) {
+      signOut({ callbackUrl: '/' })
+    }
+    router.push('/auth')
   }
 
   if (!isOpen) {

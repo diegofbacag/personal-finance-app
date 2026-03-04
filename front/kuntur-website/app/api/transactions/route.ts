@@ -17,11 +17,20 @@ interface TransactionDto {
   tag?: string
 }
 
+interface CreateTransactionDto {
+  amount: number
+  description?: string | null
+  subcategory_id?: string | null
+  category_id?: string | null
+  date: string
+  tag?: string | null
+}
+
 export async function GET() {
   try {
     const session = await getServerSession(authOptions)
 
-    if (!session || !session?.user?.id) {
+    if (!session?.user?.id) {
       return new Response('Unauthorized', { status: 401 })
     }
 
@@ -56,34 +65,38 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
+    //Auth
     const session = await getServerSession(authOptions)
-
     if (!session || !session?.user?.id) {
       return new Response('Unauthorized', { status: 401 })
     }
 
-    const body = await request.json()
-    const { amount, description, date, tag, subcategory, category } = body
+    //Parse
+    const body: CreateTransactionDto = await request.json()
+    const { amount, date } = body
 
-    console.log('body', body)
+    const description = body.description ?? null
+    const categoryCode = body.category_id ?? 'VARIABLE_EXPENSES'
+    const subcategoryCode = body.subcategory_id ?? 'OTHERS'
+    const tag = body.tag ?? null
 
-    const foundCategory = await prisma.category.findUniqueOrThrow({
-      where: { code: category },
+    //Service
+    const category = await prisma.category.findUniqueOrThrow({
+      where: { code: categoryCode },
     })
-
-    console.log('category', category)
 
     const transaction = await prisma.transaction.create({
       data: {
         amount,
         description,
         date,
+        tag,
         user: { connect: { id: session.user.id } },
         subcategory: {
           connect: {
             code_categoryId: {
-              code: subcategory,
-              categoryId: foundCategory.id,
+              code: subcategoryCode,
+              categoryId: category.id,
             },
           },
         },

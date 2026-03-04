@@ -1,9 +1,9 @@
-import { CategoryCode, SubcategoryCode } from './transactions.types'
+import { CategoryId, SubcategoryId } from '../constants/categories'
 
-export interface TransactionForm<C extends CategoryCode = CategoryCode> {
+export interface TransactionForm<C extends CategoryId = CategoryId> {
   amount: string
   description?: string
-  category_code: C
-  subcategory_code: SubcategoryCode<C> | 'Subcategoría'
+  category_id?: C | null
+  subcategory_id?: SubcategoryId<C> | null
   date: string
 }

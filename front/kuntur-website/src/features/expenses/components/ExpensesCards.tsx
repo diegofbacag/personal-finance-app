@@ -1,5 +1,5 @@
-import { centsToDecimal, formatDate } from '@/app/expenses/my-expenses/page'
-import { Expense } from '../types/expense.model'
+import { centsToDecimal, formatDate } from '@/app/app/transactions/page'
+import { Expense } from '../types/transaction.model'
 
 interface ExpensesCardsProps {
   filteredExpenses: Expense[]
@@ -56,7 +56,9 @@ export const ExpensesCards = ({
                 </div>
 
                 <div className="flex flex-col items-start justify-center gap-0 text-xs text-[#1F3B2E]">
-                  <p className="font-bold text-sm">{e.description}</p>
+                  <p className="font-bold text-sm">
+                    {e.description ?? 'Otros'}
+                  </p>
                   <div className="flex flex-row items-center justify-center text-gray-800 text-xs gap-1">
                     <p className="">{e.category_name}</p>
                     <span>•</span>

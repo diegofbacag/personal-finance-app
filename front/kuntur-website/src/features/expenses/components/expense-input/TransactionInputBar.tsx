@@ -8,9 +8,10 @@ import {
   CategoryId,
   getCategoryById,
 } from '@/src/features/expenses/constants/categories'
+import { TransactionForm } from '../../types/transaction.form'
 
 interface TransactionInputBarProps {
-  expenseFormData: ExpenseForm
+  transactionForm: TransactionForm
   onFormChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => void
@@ -21,7 +22,7 @@ const inputClass = `placeholder:text-gray-400 text-[#212529] focus:outline-none 
   [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`
 
 export const TransactionInputBar = ({
-  expenseFormData,
+  transactionForm,
   onFormChange,
   onSubmit,
 }: TransactionInputBarProps) => {
@@ -57,11 +58,11 @@ export const TransactionInputBar = ({
     setIsCategoryMenuOpen(false)
 
     onFormChange({
-      target: { name: 'category', value: categoryId },
+      target: { name: 'category_id', value: categoryId },
     } as React.ChangeEvent<HTMLInputElement>)
 
     onFormChange({
-      target: { name: 'subcategory', value: '' },
+      target: { name: 'subcategory_id', value: '' },
     } as React.ChangeEvent<HTMLInputElement>)
   }
 
@@ -70,7 +71,7 @@ export const TransactionInputBar = ({
     setIsSubcategoryMenuOpen(false)
 
     onFormChange({
-      target: { name: 'subcategory', value: subcategoryId },
+      target: { name: 'subcategory_id', value: subcategoryId },
     } as React.ChangeEvent<HTMLInputElement>)
   }
 
@@ -201,7 +202,7 @@ export const TransactionInputBar = ({
               onClick={() => setIsDatePickerOpen((prev) => !prev)}
             >
               <span className="hidden sm:block text-xs font-bold truncate">
-                {expenseFormData.date || 'Fecha'}
+                {transactionForm.date || 'Fecha'}
               </span>
               <Image
                 src="/img/icons/calendar-blank.png"
@@ -222,8 +223,8 @@ export const TransactionInputBar = ({
                     } as React.CSSProperties
                   }
                   selected={
-                    expenseFormData.date
-                      ? new Date(expenseFormData.date + 'T12:00:00')
+                    transactionForm.date
+                      ? new Date(transactionForm.date + 'T12:00:00')
                       : undefined
                   }
                   onSelect={(date) => {

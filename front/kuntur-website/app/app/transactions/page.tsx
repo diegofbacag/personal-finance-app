@@ -1,26 +1,17 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-
 import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 import {
   createExpense,
   deleteExpense,
   getExpenses,
 } from '@/src/features/expenses/services/expenses.service'
-import { ExpenseForm } from '@/src/features/expenses/types/expense.form'
-import {
-  Expense,
-  TransactionTest,
-} from '@/src/features/expenses/types/expense.model'
+import { newTransaction } from '@/src/features/expenses/types/transaction.model'
 import { mapFormToCreateExpenseDTO } from '@/src/features/expenses/mappers/expense.mapper'
-import {
-  ResponseExpenseDto,
-  TransactionType,
-} from '@/src/features/expenses/types/expense.dto'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { TransactionInputBar } from '@/src/features/expenses/components/expense-input/TransactionInputBar'
 import { ExpensesCards } from '@/src/features/expenses/components/ExpensesCards'
 import { TransactionForm } from '@/src/features/expenses/types/transaction.form'
@@ -84,6 +75,7 @@ function getLocalDateISO() {
 
   return `${year}-${month}-${day}`
 }
+
 export default function MyExpensesPage() {
   const router = useRouter()
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
@@ -92,15 +84,17 @@ export default function MyExpensesPage() {
   )
   const currentYear = new Date().getFullYear()
 
-  const [expenseFormData, setExpenseFormData] = useState<TransactionForm>({
+  const [transactionForm, setTransactionForm] = useState<TransactionForm>({
     amount: '',
-    category_code: 'VARIABLE_EXPENSES',
-    subcategory_code: 'OTHERS',
+    category_id: null,
+    subcategory_id: null,
     description: '',
     date: getLocalDateISO(),
   })
 
-  const [expenseHistory, setExpenseHistory] = useState<TransactionTest[]>([])
+  console.log('transaction form', transactionForm)
+
+  const [expenseHistory, setExpenseHistory] = useState<Transaction[]>([])
   const [isMonthMenuOpen, setIsMonthMenuOpen] = useState<boolean>(false)
 
   useEffect(() => {
@@ -135,7 +129,7 @@ export default function MyExpensesPage() {
   ) => {
     const { name, value } = e.target
     console.log(name, value)
-    setExpenseFormData((prev) => ({ ...prev, [name]: value }))
+    setTransactionForm((prev) => ({ ...prev, [name]: value }))
   }
 
   const submitTransactionForm = async () => {
@@ -143,34 +137,33 @@ export default function MyExpensesPage() {
     //   alert('Debes iniciar sesión para registrar un movimiento.')
     //   return
     // }
-    console.log('SUMITEANDO')
 
-    const newExpense: Expense = {
-      id: `temp-${Date.now()}`,
-      amount: decimalToCents(expenseFormData.amount),
-      category: expenseFormData.category || undefined,
-      subcategory: expenseFormData.subcategory || undefined,
-      description: expenseFormData.description || undefined,
-      date: expenseFormData.date,
+    const newTransaction: newTransaction = {
+      // id: `temp-${Date.now()}`,
+      amount: decimalToCents(transactionForm.amount),
+      description: transactionForm.description || undefined,
+      category_id: transactionForm.category_id || undefined,
+      subcategory_id: transactionForm.subcategory_id || undefined,
+      date: transactionForm.date,
     }
 
-    console.log('new expense', newExpense)
+    console.log('new expense', newTransaction)
 
-    setExpenseHistory((prev) => [...prev, newExpense])
+    setExpenseHistory((prev) => [...prev, newTransaction])
 
     try {
-      const response = await createExpense(
-        mapFormToCreateExpenseDTO(newExpense),
-      )
+      const response = await createExpense(newTransaction)
       const savedExpense = response.transaction
 
       console.log('saved expense', savedExpense)
 
       setExpenseHistory((prev) =>
-        prev.map((e) => (e.id === newExpense.id ? savedExpense : e)),
+        prev.map((e) => (e.id === newTransaction.id ? savedExpense : e)),
       )
     } catch (error: unknown) {
-      setExpenseHistory((prev) => prev.filter((e) => e.id !== newExpense.id))
+      setExpenseHistory((prev) =>
+        prev.filter((e) => e.id !== newTransaction.id),
+      )
       alert('Error al guardar el gasto.')
     }
   }
@@ -333,7 +326,7 @@ export default function MyExpensesPage() {
         />
         <section className="fixed bottom-4 md:bottom-6 md:left-[11.6rem] w-[calc(95vw)] md:w-[calc(100vw)]  md:w-[calc(100vw-11.6rem)] text-sm shadow-short">
           <TransactionInputBar
-            expenseFormData={expenseFormData}
+            transactionForm={transactionForm}
             onFormChange={handleExpenseFormInputChange}
             onSubmit={submitTransactionForm}
           />

@@ -19,7 +19,7 @@ import { CreateTransactionDto } from '@/src/features/expenses/types/transaction.
 const MONTHS = [
   { label: 'Ene', value: 0, name: 'Enero' },
   { label: 'Feb', value: 1, name: 'Febrero' },
-  { label: 'Mar', value: 2 },
+  { label: 'Mar', value: 2, name: 'Marco' },
   { label: 'Abr', value: 3 },
   { label: 'May', value: 4 },
   { label: 'Jun', value: 5 },

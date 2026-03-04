@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import { ExpenseForm } from '../../types/expense.form'
 import { useEffect, useRef, useState } from 'react'
 import 'react-day-picker/dist/style.css'
 import { DayPicker } from 'react-day-picker'

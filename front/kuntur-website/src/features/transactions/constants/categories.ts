@@ -29,7 +29,7 @@ export const CATEGORIES = [
   },
   {
     id: 'VARIABLE_EXPENSES' as const,
-    label: 'Gastos Sin Culpa',
+    label: 'Gastos Libres',
     subcategories: [
       { id: 'RESTAURANTS' as const, label: 'Restaurantes' },
       { id: 'ENTERTAINMENT' as const, label: 'Entretenimiento' },

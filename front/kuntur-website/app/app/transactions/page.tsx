@@ -298,7 +298,15 @@ export default function MyExpensesPage() {
                     >
                       Feb
                     </div>
-                    <div className="cursor-pointer">Mar</div>
+                    <div
+                      className="cursor-pointer"
+                      onClick={() => {
+                        setSelectedMonth(3)
+                        setIsMonthMenuOpen(false)
+                      }}
+                    >
+                      Mar
+                    </div>
                   </div>
                   <div className="grid grid-cols-3 gap-3">
                     <div>Abr</div>

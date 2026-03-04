@@ -4,6 +4,7 @@ import { SidebarItem } from './SidebarItem'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { signOut, useSession } from 'next-auth/react'
 
 interface SidebarProps {
   isOpen: boolean
@@ -11,16 +12,11 @@ interface SidebarProps {
 }
 
 export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
-  const [isLoggedIn] = useState<boolean>(() => {
-    if (typeof window !== 'undefined') {
-      return !!localStorage.getItem('accessToken')
-    }
-    return false
-  })
+  const { data: session, status } = useSession()
+
   const router = useRouter()
   const handleLogout = () => {
-    localStorage.removeItem('accessToken')
-    router.push('/')
+    signOut({ callbackUrl: '/' })
   }
 
   if (!isOpen) {
@@ -97,11 +93,15 @@ export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
               height={16}
               width={16}
               alt="avatar icon"
-              className={!isLoggedIn ? 'scale-x-[-1]' : ''}
+              className={!session?.user ? 'scale-x-[-1]' : ''}
             />
           </div>
           <p className="text-sm font-alfa text-[#5c5c5c] leading-none">
-            {isLoggedIn ? 'Cerrar Sesión' : 'Iniciar Sesión'}
+            {status === 'loading'
+              ? 'Cargando...'
+              : session?.user
+                ? 'Cerrar Sesión'
+                : 'Iniciar Sesión'}
           </p>
         </div>
       </div>

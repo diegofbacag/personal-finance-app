@@ -1,5 +1,5 @@
 import { centsToDecimal, formatDate } from '@/app/app/transactions/page'
-import { Expense, Transaction } from '../types/transaction.model'
+import { Transaction } from '../types/transaction.model'
 
 interface ExpensesCardsProps {
   filteredExpenses: Transaction[]
@@ -14,7 +14,7 @@ export const ExpensesCards = ({
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   )
 
-  const groupedByDate = sortedExpenses.reduce<Record<string, Expense[]>>(
+  const groupedByDate = sortedExpenses.reduce<Record<string, Transaction[]>>(
     (acc, expense) => {
       const date = formatDate(expense.date)
 
@@ -60,9 +60,9 @@ export const ExpensesCards = ({
                     {e.description ?? 'Otros'}
                   </p>
                   <div className="flex flex-row items-center justify-center text-gray-800 text-xs gap-1">
-                    <p className="">{e.category_name}</p>
+                    <p className="">{e.category_label}</p>
                     <span>•</span>
-                    <p className="">{e.subcategory_name}</p>
+                    <p className="">{e.subcategory_label}</p>
                   </div>
                 </div>
               </div>

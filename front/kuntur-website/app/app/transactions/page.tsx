@@ -10,11 +10,15 @@ import {
   deleteExpense,
   getExpenses,
 } from '@/src/features/expenses/services/expenses.service'
-import { newTransaction } from '@/src/features/expenses/types/transaction.model'
+import {
+  newTransaction,
+  tempTransaction,
+} from '@/src/features/expenses/types/transaction.model'
 import { mapFormToCreateExpenseDTO } from '@/src/features/expenses/mappers/expense.mapper'
 import { TransactionInputBar } from '@/src/features/expenses/components/expense-input/TransactionInputBar'
 import { ExpensesCards } from '@/src/features/expenses/components/ExpensesCards'
 import { TransactionForm } from '@/src/features/expenses/types/transaction.form'
+import { CreateTransactionDto } from '@/src/features/expenses/types/transaction.dto'
 
 const MONTHS = [
   { label: 'Ene', value: 0, name: 'Enero' },
@@ -138,8 +142,8 @@ export default function MyExpensesPage() {
     //   return
     // }
 
-    const newTransaction: newTransaction = {
-      // id: `temp-${Date.now()}`,
+    const tempTransaction: tempTransaction = {
+      id: `temp-${Date.now()}`,
       amount: decimalToCents(transactionForm.amount),
       description: transactionForm.description || undefined,
       category_id: transactionForm.category_id || undefined,
@@ -147,12 +151,13 @@ export default function MyExpensesPage() {
       date: transactionForm.date,
     }
 
-    console.log('new expense', newTransaction)
-
-    setExpenseHistory((prev) => [...prev, newTransaction])
+    setExpenseHistory((prev) => [...prev, tempTransaction])
 
     try {
-      const response = await createExpense(newTransaction)
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { id, ...dto }: { id: string } & tempTransaction = tempTransaction
+
+      const response = await createExpense(dto)
       const savedExpense = response.transaction
 
       console.log('saved expense', savedExpense)

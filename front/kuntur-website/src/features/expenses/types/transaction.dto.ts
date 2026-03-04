@@ -1,3 +1,12 @@
+export interface CreateTransactionDto {
+  amount: number
+  description?: string | null
+  subcategory_id?: string | null
+  category_id?: string | null
+  date: string
+  tag?: string | null
+}
+
 export interface TransactionDto {
   amount: number
   date: string

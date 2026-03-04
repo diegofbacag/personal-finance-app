@@ -11,7 +11,7 @@ export interface Expense {
   type: TransactionType
 }
 
-export interface newTransaction {
+export interface tempTransaction {
   id: string
   amount: number
   description?: string

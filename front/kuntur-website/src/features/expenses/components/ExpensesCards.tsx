@@ -1,8 +1,8 @@
 import { centsToDecimal, formatDate } from '@/app/app/transactions/page'
-import { Expense } from '../types/transaction.model'
+import { Expense, Transaction } from '../types/transaction.model'
 
 interface ExpensesCardsProps {
-  filteredExpenses: Expense[]
+  filteredExpenses: Transaction[]
   onDeleteButtonClick: (id: string) => void
 }
 

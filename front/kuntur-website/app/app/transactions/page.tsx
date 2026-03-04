@@ -10,17 +10,11 @@ import {
   deleteExpense,
   getExpenses,
 } from '@/src/features/expenses/services/expenses.service'
-import {
-  Transaction,
-  tempTransaction,
-} from '@/src/features/expenses/types/transaction.model'
+import { Transaction } from '@/src/features/expenses/types/transaction.model'
 import { TransactionInputBar } from '@/src/features/expenses/components/expense-input/TransactionInputBar'
 import { ExpensesCards } from '@/src/features/expenses/components/ExpensesCards'
 import { TransactionForm } from '@/src/features/expenses/types/transaction.form'
-import {
-  CreateTransactionDto,
-  TransactionDto,
-} from '@/src/features/expenses/types/transaction.dto'
+import { CreateTransactionDto } from '@/src/features/expenses/types/transaction.dto'
 
 const MONTHS = [
   { label: 'Ene', value: 0, name: 'Enero' },

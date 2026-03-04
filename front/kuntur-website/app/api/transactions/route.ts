@@ -35,7 +35,7 @@ export async function GET() {
     }
 
     const transactions = await prisma.transaction.findMany({
-      where: { userId: session.user.id },
+      where: { userId: session.user.id, deleted_at: null },
       include: { subcategory: { include: { category: true } } },
     })
 
@@ -124,5 +124,29 @@ export async function POST(request: Request) {
     return NextResponse.json({ transaction: transactionDto }, { status: 201 })
   } catch (error) {
     return NextResponse.json({ error: error }, { status: 500 })
+  }
+}
+
+export async function DELETE(
+  _request: Request,
+  { params }: { params: { id: string } },
+) {
+  try {
+    const session = await getServerSession(authOptions)
+
+    if (!session?.user?.id) {
+      return new Response('Unauthorized', { status: 401 })
+    }
+
+    const id = params.id
+
+    await prisma.transaction.update({
+      where: { id, userId: session.user.id },
+      data: { deleted_at: new Date() },
+    })
+
+    return NextResponse.json({ success: true })
+  } catch (error) {
+    return NextResponse.json({ error }, { status: 500 })
   }
 }

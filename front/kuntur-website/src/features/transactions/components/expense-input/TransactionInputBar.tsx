@@ -6,7 +6,7 @@ import {
   CATEGORIES,
   CategoryId,
   getCategoryById,
-} from '@/src/features/expenses/constants/categories'
+} from '@/src/features/transactions/constants/categories'
 import { TransactionForm } from '../../types/transaction.form'
 
 interface TransactionInputBarProps {

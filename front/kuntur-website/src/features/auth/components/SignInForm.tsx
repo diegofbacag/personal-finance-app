@@ -55,7 +55,7 @@ export const SignInForm = ({ onBack }: SignInFormProps) => {
         return
       }
 
-      router.push('/expenses/my-expenses')
+      router.push('/app/transactions')
     } catch (error: unknown) {
       let message = 'Algo salió mal. Inténtalo de nuevo.'
 

@@ -4,21 +4,18 @@ import { CreateTransactionDto, TransactionDto } from '../types/transaction.dto'
 import { mapTransactionDtoToTransaction } from '../mappers/transaction.mapper'
 import { baseUrl } from '@/lib/config'
 
-export const getExpenses = async () => {
+export const getTransactions = async () => {
   const { data } = await axios.get(`/api/transactions`)
   console.log('getExpenses service: ', data)
   return data
 }
 
-export const createExpense = async (dto: CreateTransactionDto) => {
+export const createTransaction = async (dto: CreateTransactionDto) => {
   const { data } = await axios.post(`/api/transactions`, dto)
   const transaction: TransactionDto = data.transaction
   return mapTransactionDtoToTransaction(transaction)
 }
 
-export const deleteExpense = async (id: string) => {
-  const accessToken = localStorage.getItem('accessToken')
-  await axios.delete(`/api/expenses/${id}`, {
-    headers: { Authorization: `Bearer ${accessToken}` },
-  })
+export const deleteTransactions = async (id: string) => {
+  await axios.delete(`/api/transactions/${id}`)
 }

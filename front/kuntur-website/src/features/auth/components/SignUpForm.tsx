@@ -83,7 +83,7 @@ export const SignUpForm = ({ onBack }: SignUpFormProps) => {
 
       console.log('Resultado sign up form:', result)
 
-      router.push('/expenses/my-expenses')
+      router.push('/app/transactions')
     } catch (error: unknown) {
       let message = 'Algo salió mal. Inténtalo de nuevo.'
 

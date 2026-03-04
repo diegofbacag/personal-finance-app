@@ -7,19 +7,21 @@ import { useRouter } from 'next/navigation'
 
 import {
   createExpense,
+  createTransaction,
   deleteExpense,
   getExpenses,
-} from '@/src/features/expenses/services/expenses.service'
-import { Transaction } from '@/src/features/expenses/types/transaction.model'
-import { TransactionInputBar } from '@/src/features/expenses/components/expense-input/TransactionInputBar'
-import { ExpensesCards } from '@/src/features/expenses/components/ExpensesCards'
-import { TransactionForm } from '@/src/features/expenses/types/transaction.form'
-import { CreateTransactionDto } from '@/src/features/expenses/types/transaction.dto'
+  getTransactions,
+} from '@/src/features/transactions/services/transactions.service'
+import { Transaction } from '@/src/features/transactions/types/transaction.model'
+import { TransactionInputBar } from '@/src/features/transactions/components/expense-input/TransactionInputBar'
+import { ExpensesCards } from '@/src/features/transactions/components/ExpensesCards'
+import { TransactionForm } from '@/src/features/transactions/types/transaction.form'
+import { CreateTransactionDto } from '@/src/features/transactions/types/transaction.dto'
 
 const MONTHS = [
   { label: 'Ene', value: 0, name: 'Enero' },
   { label: 'Feb', value: 1, name: 'Febrero' },
-  { label: 'Mar', value: 2, name: 'Marco' },
+  { label: 'Mar', value: 2, name: 'Marzo' },
   { label: 'Abr', value: 3 },
   { label: 'May', value: 4 },
   { label: 'Jun', value: 5 },
@@ -113,7 +115,7 @@ export default function MyExpensesPage() {
     async function fetchExpenses() {
       console.log('fetchExpenses')
       try {
-        const response = await getExpenses()
+        const response = await getTransactions()
         console.log('fetch expenses result', response.data.transactions)
 
         setTransactionHistory(response.data.transactions)
@@ -151,7 +153,7 @@ export default function MyExpensesPage() {
     // setTransactionHistory((prev) => [...prev, tempTransaction])
 
     try {
-      const response = await createExpense(dto)
+      const response = await createTransaction(dto)
       const savedTransaction: Transaction = response
 
       console.log('saved expense', savedTransaction)

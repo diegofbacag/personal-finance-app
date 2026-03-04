@@ -25,7 +25,7 @@ export const SignInForm = ({ onBack }: SignInFormProps) => {
     emailRef.current?.focus()
   }, [])
 
-  const handleFormChange = (e) => {
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setForm((prev) => ({ ...prev, [name]: value }))
   }

@@ -5,8 +5,8 @@ import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 
 export async function DELETE(
-  request: NextRequest,
-  context: { params: Promise<{ id: string }> },
+  _request: Request,
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -15,7 +15,7 @@ export async function DELETE(
       return new Response('Unauthorized', { status: 401 })
     }
 
-    const { id } = await context.params
+    const { id } = await params
 
     await prisma.transaction.update({
       where: { id, userId: session.user.id },

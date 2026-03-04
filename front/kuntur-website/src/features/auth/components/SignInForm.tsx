@@ -6,7 +6,6 @@ import axios from 'axios'
 import { signIn } from 'next-auth/react'
 
 import { Button } from '@/src/components/ui/Button'
-import { emailSignIn } from '../services/auth.service'
 import { Logo } from '@/src/components/ui/Logo'
 
 interface SignInFormProps {

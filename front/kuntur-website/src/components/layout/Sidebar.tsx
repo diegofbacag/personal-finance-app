@@ -18,8 +18,9 @@ export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
   const handleLogout = () => {
     if (session?.user) {
       signOut({ callbackUrl: '/' })
+    } else {
+      router.push('/auth')
     }
-    router.push('/auth')
   }
 
   if (!isOpen) {

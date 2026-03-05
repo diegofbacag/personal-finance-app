@@ -173,6 +173,36 @@ export default function MyExpensesPage() {
     return month - 1 === selectedMonth && year === currentYear
   })
 
+  const totals = filteredExpenses.reduce(
+    (acc, transaction) => {
+      const type = transaction.category_id
+
+      if (type === 'VARIABLE_EXPENSES' || type === 'FIXED_EXPENSES') {
+        acc.expenses += transaction.amount
+      }
+
+      if (type === 'INCOME') {
+        acc.income += transaction.amount
+      }
+
+      if (type === 'SAVINGS') {
+        acc.savings += transaction.amount
+      }
+
+      if (type === 'INVESTMENTS') {
+        acc.investments += transaction.amount
+      }
+
+      return acc
+    },
+    {
+      expenses: 0,
+      income: 0,
+      savings: 0,
+      investments: 0,
+    },
+  )
+
   const tableEndRef = useRef<HTMLDivElement | null>(null)
 
   const handleDeleteExpense = async (id: string) => {
@@ -230,8 +260,8 @@ export default function MyExpensesPage() {
           </div>
         </div>
       </div>
-      <div className="relative flex flex-col w-[95vw] md:w-[68vw] gap-2 px-6 py-6">
-        <header className="align-top items-center justify-between mb-6">
+      <div className="relative flex flex-col w-[95vw] md:w-[80vw] gap-2 px-4 py-4">
+        <header className="align-top items-center justify-between mb-2">
           <p className="text-text-muted uppercase tracking-[0.15em] text-[10px] font-bold mb-1">
             Movimientos del mes
           </p>
@@ -240,28 +270,38 @@ export default function MyExpensesPage() {
           </h1>
         </header>
         {/* MAIN ANALYTICS */}
-        <section className="grid grid-cols-3 gap-3 mb-8">
-          <div className="p-3 bg-white border border-border-subtle rounded-xl flex flex-col justify-between">
-            <p className="text-[9px] text-text-muted uppercase tracking-wider font-bold mb-2">
-              Ingresos
-            </p>
-            <p className="text-sm font-bold text-text-main">S/120.20</p>
+        <section className="grid grid-cols-2 gap-3 mb-8">
+          <div className="flex flex-col gap-2">
+            <div className="p-3 bg-white border border-border-subtle rounded-xl flex flex-col justify-between">
+              <p className="text-[9px] text-text-muted uppercase tracking-wider font-bold mb-2">
+                Ingresos
+              </p>
+              <p className="text-xl font-bold text-text-main">
+                {`S/${centsToDecimal(totals.income)}`}
+              </p>
+            </div>
+            <div className="p-3 bg-primary border border-border-subtle rounded-xl flex flex-col justify-between">
+              <p className="text-[9px] text-white uppercase tracking-wider font-bold mb-2">
+                Gastos
+              </p>
+              <p className="text-xl font-bold text-white">
+                {`S/${centsToDecimal(totals.expenses)}`}
+              </p>
+            </div>
           </div>
-          <div className="p-3 bg-white border border-border-subtle rounded-xl flex flex-col justify-between">
-            <p className="text-[9px] text-text-muted uppercase tracking-wider font-bold mb-2">
-              Gastos
-            </p>
-            <p className="text-sm font-bold text-text-main">{`S/${centsToDecimal(
-              filteredExpenses.reduce((sum, expense) => {
-                return sum + expense.amount
-              }, 0),
-            )}`}</p>
-          </div>
-          <div className="p-3 bg-white border border-border-subtle rounded-xl flex flex-col justify-between">
-            <p className="text-[9px] text-text-muted uppercase tracking-wider font-bold mb-2">
-              Ahorros & Inversiones
-            </p>
-            <p className="text-sm font-bold text-text-accent">S/1202.20</p>
+          <div className="flex flex-col gap-2">
+            <div className="p-3 bg-white border border-border-subtle rounded-xl flex flex-col justify-between">
+              <p className="text-[9px] text-text-muted uppercase tracking-wider font-bold mb-2">
+                Ahorros
+              </p>
+              <p className="text-xl font-bold text-text-accent">{`S/${centsToDecimal(totals.savings)}`}</p>
+            </div>
+            <div className="p-3 bg-white border border-border-subtle rounded-xl flex flex-col justify-between">
+              <p className="text-[9px] text-text-muted uppercase tracking-wider font-bold mb-2">
+                Inversiones
+              </p>
+              <p className="text-xl font-bold text-text-accent">{`S/${centsToDecimal(totals.investments)}`}</p>
+            </div>
           </div>
         </section>
 
@@ -272,7 +312,7 @@ export default function MyExpensesPage() {
         <section className="flex items-center gap-3 mb-6 ">
           <div className="relative inline-block">
             <button
-              className="flex items-center gap-2 px-4 py-2 bg-neutral-soft border border-border-subtle rounded-full whitespace-nowrap"
+              className="flex items-center gap-2 px-4 py-2 bg-white border border-border-subtle rounded-full whitespace-nowrap"
               onClick={() => setIsMonthMenuOpen((prev) => !prev)}
             >
               <span className="text-xs font-semibold text-text-main">
@@ -339,7 +379,7 @@ export default function MyExpensesPage() {
               </div>
             )}
           </div>
-          <button className="flex items-center gap-2 px-4 py-2 bg-neutral-soft border border-border-subtle rounded-full whitespace-nowrap">
+          <button className="flex items-center gap-2 px-4 py-2 bg-white border border-border-subtle rounded-full whitespace-nowrap">
             <span className="text-xs font-semibold text-text-main">
               Categorías
             </span>
@@ -358,9 +398,7 @@ export default function MyExpensesPage() {
 
         {/* TRANSACION CARDS */}
         <section>
-          <h2 className="text-lg font-serif italic font-medium mb-4">
-            Movimientos
-          </h2>
+          <h2 className="text-sm text-text-main font-bold mb-2">Movimientos</h2>
           <ExpensesCards
             filteredExpenses={filteredExpenses}
             onDeleteButtonClick={handleDeleteExpense}

@@ -238,7 +238,7 @@ export default function MyExpensesPage() {
             Movimientos del mes
           </p>
           <h1 className="items-center text-2xl font-inter font-bold tracking-tight text-text-main mt-0 align-top leading-none w-full">
-            Resumen de Enero
+            Resumen de {MONTHS[selectedMonth].name}
           </h1>
         </header>
         {/* MAIN ANALYTICS */}
@@ -368,16 +368,15 @@ export default function MyExpensesPage() {
             onDeleteButtonClick={handleDeleteExpense}
           />
         </section>
-
-        {/* INPUT BAR */}
-        <section className="fixed bottom-4 md:bottom-6 md:left-[11.6rem] w-[calc(95vw)] md:w-[calc(100vw)]  md:w-[calc(100vw-11.6rem)] text-sm shadow-short">
-          <TransactionInputBar
-            transactionForm={transactionForm}
-            onFormChange={handleExpenseFormInputChange}
-            onSubmit={submitTransactionForm}
-          />
-        </section>
       </div>
+      {/* INPUT BAR */}
+      <section className="fixed bottom-0 sm:bottom-6 md:left-[11.6rem] w-[100vw] md:w-[calc(100vw)]  md:w-[calc(100vw-11.6rem)] text-sm shadow-short sm:bg-transparent bg-white ">
+        <TransactionInputBar
+          transactionForm={transactionForm}
+          onFormChange={handleExpenseFormInputChange}
+          onSubmit={submitTransactionForm}
+        />
+      </section>
     </main>
   )
 }

@@ -1,5 +1,12 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono, Poppins, Outfit } from 'next/font/google'
+import {
+  Geist,
+  Geist_Mono,
+  Poppins,
+  Outfit,
+  Inter,
+  Lora,
+} from 'next/font/google'
 import './globals.css'
 import Providers from './providers'
 
@@ -27,6 +34,20 @@ const alfa = Outfit({
   variable: '--font-alfa',
 })
 
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  display: 'swap',
+  variable: '--font-inter',
+})
+
+const lora = Lora({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  variable: '--font-serif',
+})
+
 export const metadata: Metadata = {
   title: 'Kuntur | Finanzas personales sin complicaciones',
   description: 'Personal finance app',
@@ -39,9 +60,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} ${alfa.variable} antialiased`}
-      >
+      <body className={`${inter.variable} ${lora.variable} antialiased`}>
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -205,7 +205,7 @@ export default function MyExpensesPage() {
     router.push('/')
   }
   return (
-    <main className="flex flex-col   font-poppins bg-[#FAFAFA] min-h-screen h-full items-center">
+    <main className="flex flex-col bg-background min-h-screen h-full items-center">
       <div className="flex items-center justify-between md:hidden bg-white w-full h-10 px-3 border-b-[1px] border-[#00000014]">
         <Link href="/">
           <p className="font-alpha font-bold text-[#1F3B2E] text-md tracking-wide ">
@@ -232,107 +232,144 @@ export default function MyExpensesPage() {
           </div>
         </div>
       </div>
-      <div className="relative flex flex-col w-[95vw] md:w-[68vw] gap-2 py-10">
-        {/* <header className="flex align-top items-center justify-between">
-          <h1 className="items-center text-xl border-b font-bold text-black mt-0 align-top leading-none w-full">
-            Mis movimientos
+      <div className="relative flex flex-col w-[95vw] md:w-[68vw] gap-2 px-6 py-6">
+        <header className="align-top items-center justify-between mb-6">
+          <p className="text-text-muted uppercase tracking-[0.15em] text-[10px] font-bold mb-1">
+            Movimientos del mes
+          </p>
+          <h1 className="items-center text-2xl font-inter font-bold tracking-tight text-text-main mt-0 align-top leading-none w-full">
+            Resumen de Enero
           </h1>
-        </header> */}
-        <div className="flex flex-col  gap-3">
-          <div className="flex flex-row gap-4 items-center justify-start">
-            {/* <div className="flex flex-col gap-1 rounded-2xl p-8 bg-white">
-              <p className="text-[#666666] text-sm">Gasto Total</p>
-              <p className="text-3xl text-black font-bold  ">{`S/ ${centsToDecimal(
-                filteredExpenses.reduce((sum, expense) => {
-                  return sum + expense.amount
-                }, 0),
-              )}`}</p>
-            </div> */}
-            <div className="flex flex-col gap-1 rounded-2xl p-8 bg-primary text-white">
-              <p className="text-white text-sm">Gasto Total</p>
-              <p className="text-3xl  font-bold ">{`S/ ${centsToDecimal(
-                filteredExpenses.reduce((sum, expense) => {
-                  return sum + expense.amount
-                }, 0),
-              )}`}</p>
-            </div>
+        </header>
+        {/* MAIN ANALYTICS */}
+        <section className="grid grid-cols-3 gap-3 mb-8">
+          <div className="p-3 bg-white border border-border-subtle rounded-xl flex flex-col justify-between">
+            <p className="text-[9px] text-text-muted uppercase tracking-wider font-bold mb-2">
+              Ingresos
+            </p>
+            <p className="text-sm font-bold text-text-main">S/120.20</p>
           </div>
+          <div className="p-3 bg-white border border-border-subtle rounded-xl flex flex-col justify-between">
+            <p className="text-[9px] text-text-muted uppercase tracking-wider font-bold mb-2">
+              Gastos
+            </p>
+            <p className="text-sm font-bold text-text-main">{`S/${centsToDecimal(
+              filteredExpenses.reduce((sum, expense) => {
+                return sum + expense.amount
+              }, 0),
+            )}`}</p>
+          </div>
+          <div className="p-3 bg-white border border-border-subtle rounded-xl flex flex-col justify-between">
+            <p className="text-[9px] text-text-muted uppercase tracking-wider font-bold mb-2">
+              Ahorros & Inversiones
+            </p>
+            <p className="text-sm font-bold text-text-accent">S/1202.20</p>
+          </div>
+        </section>
 
-          <div className="flex flex-row items-center justify-between gap-2">
-            <div className="relative inline-block">
-              <button
-                className="cursor-pointer flex items-center justify-center p-2 px-3 rounded-xl text-sm gap-1 tracking-wide bg-[#1F3B2E] text-white"
-                onClick={() => setIsMonthMenuOpen((prev) => !prev)}
+        {/* GRAPH */}
+        {/* <section>Cuadro</section> */}
+
+        {/* FILTERS */}
+        <section className="flex items-center gap-3 mb-6 ">
+          <div className="relative inline-block">
+            <button
+              className="flex items-center gap-2 px-4 py-2 bg-neutral-soft border border-border-subtle rounded-full whitespace-nowrap"
+              onClick={() => setIsMonthMenuOpen((prev) => !prev)}
+            >
+              <span className="text-xs font-semibold text-text-main">
+                {MONTHS[selectedMonth].name}
+              </span>
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                fill="#6b7280"
+                viewBox="0 0 256 256"
               >
-                <p>{MONTHS[selectedMonth].name}</p>
+                <path d="M216.49,104.49l-80,80a12,12,0,0,1-17,0l-80-80a12,12,0,0,1,17-17L128,159l71.51-71.52a12,12,0,0,1,17,17Z"></path>
+              </svg>
+            </button>
 
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="14"
-                  height="14"
-                  fill="#ffffff"
-                  viewBox="0 0 256 256"
-                >
-                  <path d="M216.49,104.49l-80,80a12,12,0,0,1-17,0l-80-80a12,12,0,0,1,17-17L128,159l71.51-71.52a12,12,0,0,1,17,17Z"></path>
-                </svg>
-              </button>
-
-              {isMonthMenuOpen && (
-                <div className="absolute left-0 mt-1 w-max bg-white rounded-md shadow-md border border-gray-200 z-10 p-3 text-sm ">
-                  <div className="grid grid-cols-3 gap-3">
-                    <div
-                      className="cursor-pointer"
-                      onClick={() => {
-                        setSelectedMonth(0)
-                        setIsMonthMenuOpen(false)
-                      }}
-                    >
-                      Ene
-                    </div>
-                    <div
-                      className="cursor-pointer"
-                      onClick={() => {
-                        setSelectedMonth(1)
-                        setIsMonthMenuOpen(false)
-                      }}
-                    >
-                      Feb
-                    </div>
-                    <div
-                      className="cursor-pointer"
-                      onClick={() => {
-                        setSelectedMonth(2)
-                        setIsMonthMenuOpen(false)
-                      }}
-                    >
-                      Mar
-                    </div>
+            {isMonthMenuOpen && (
+              <div className="absolute left-0 mt-1 w-max bg-white rounded-md shadow-md border border-gray-200 z-10 p-3 text-sm ">
+                <div className="grid grid-cols-3 gap-3">
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => {
+                      setSelectedMonth(0)
+                      setIsMonthMenuOpen(false)
+                    }}
+                  >
+                    Ene
                   </div>
-                  <div className="grid grid-cols-3 gap-3">
-                    <div>Abr</div>
-                    <div>May</div>
-                    <div>Jun</div>
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => {
+                      setSelectedMonth(1)
+                      setIsMonthMenuOpen(false)
+                    }}
+                  >
+                    Feb
                   </div>
-                  <div className="grid grid-cols-3 gap-3">
-                    <div>Jul</div>
-                    <div>Ago</div>
-                    <div>Sep</div>
-                  </div>
-                  <div className="grid grid-cols-3 gap-3">
-                    <div>Oct</div>
-                    <div>Nov</div>
-                    <div>Dic</div>
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => {
+                      setSelectedMonth(2)
+                      setIsMonthMenuOpen(false)
+                    }}
+                  >
+                    Mar
                   </div>
                 </div>
-              )}
-            </div>
+                <div className="grid grid-cols-3 gap-3">
+                  <div>Abr</div>
+                  <div>May</div>
+                  <div>Jun</div>
+                </div>
+                <div className="grid grid-cols-3 gap-3">
+                  <div>Jul</div>
+                  <div>Ago</div>
+                  <div>Sep</div>
+                </div>
+                <div className="grid grid-cols-3 gap-3">
+                  <div>Oct</div>
+                  <div>Nov</div>
+                  <div>Dic</div>
+                </div>
+              </div>
+            )}
           </div>
-        </div>
-        <p className="text-black text-sm font-bold">Transacciones</p>
-        <ExpensesCards
-          filteredExpenses={filteredExpenses}
-          onDeleteButtonClick={handleDeleteExpense}
-        />
+          <button className="flex items-center gap-2 px-4 py-2 bg-neutral-soft border border-border-subtle rounded-full whitespace-nowrap">
+            <span className="text-xs font-semibold text-text-main">
+              Categorías
+            </span>
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              fill="#6b7280"
+              viewBox="0 0 256 256"
+            >
+              <path d="M176,80a12,12,0,0,1,12-12h28a12,12,0,0,1,0,24H188A12,12,0,0,1,176,80ZM40,92h96v12a12,12,0,0,0,24,0V56a12,12,0,0,0-24,0V68H40a12,12,0,0,0,0,24Zm176,72H124a12,12,0,0,0,0,24h92a12,12,0,0,0,0-24ZM84,140a12,12,0,0,0-12,12v12H40a12,12,0,0,0,0,24H72v12a12,12,0,0,0,24,0V152A12,12,0,0,0,84,140Z"></path>
+            </svg>
+          </button>
+        </section>
+
+        {/* TRANSACION CARDS */}
+        <section>
+          <h2 className="text-lg font-serif italic font-medium mb-4">
+            Movimientos
+          </h2>
+          <ExpensesCards
+            filteredExpenses={filteredExpenses}
+            onDeleteButtonClick={handleDeleteExpense}
+          />
+        </section>
+
+        {/* INPUT BAR */}
         <section className="fixed bottom-4 md:bottom-6 md:left-[11.6rem] w-[calc(95vw)] md:w-[calc(100vw)]  md:w-[calc(100vw-11.6rem)] text-sm shadow-short">
           <TransactionInputBar
             transactionForm={transactionForm}

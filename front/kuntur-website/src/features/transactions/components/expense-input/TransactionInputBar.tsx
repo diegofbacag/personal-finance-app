@@ -88,7 +88,7 @@ export const TransactionInputBar = ({
   return (
     <div
       ref={ref}
-      className="w-[95vw] md:max-w-[70vw] mx-auto bg-white/90 border border-white shadow-2xl rounded-2xl py-2 shadow-[#1F3B2E]/20 px-3 backdrop-blur-xl"
+      className="w-[95vw] md:max-w-[70vw] mx-auto bg-white md:bg-white/90 border border-white md:shadow-2xl rounded-2xl py-3 sm:py-2 shadow-[#1F3B2E]/20 px-3 backdrop-blur-xl"
     >
       <div className="flex flex-col sm:flex-row items-end gap-2 w-full">
         {/* ROW 1: Amount + Description */}

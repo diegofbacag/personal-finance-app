@@ -113,10 +113,8 @@ export default function MyExpensesPage() {
     async function fetchExpenses() {
       console.log('fetchExpenses')
       try {
-        const response = await getTransactions()
-        console.log('fetch expenses result', response.data.transactions)
-
-        setTransactionHistory(response.data.transactions)
+        const transactions: Transaction[] = await getTransactions()
+        setTransactionHistory(transactions)
       } catch (error) {
         console.log('error', error)
       } finally {

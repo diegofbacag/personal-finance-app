@@ -8,11 +8,11 @@ export interface CreateTransactionDto {
 }
 
 export interface TransactionDto {
+  id: string
+  description?: string
   amount: number
   date: string
   created_at: Date
-  description?: string
-  id: string
   subcategory_code: string
   subcategory_name: string
   category_code: string

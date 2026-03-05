@@ -14,6 +14,8 @@ export const ExpensesCards = ({
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   )
 
+  console.log('missing expenses?', sortedExpenses)
+
   const groupedByDate = sortedExpenses.reduce<Record<string, Transaction[]>>(
     (acc, expense) => {
       const date = formatDate(expense.date)

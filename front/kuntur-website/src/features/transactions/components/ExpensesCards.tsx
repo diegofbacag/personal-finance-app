@@ -36,18 +36,16 @@ export const ExpensesCards = ({
       className="flex flex-col justify-center pb-28 gap-2"
     >
       {Object.entries(groupedByDate).map(([date, expenses]) => (
-        <div key={date} className="flex flex-col gap-0">
-          <p className="text-sm text-text-muted font-medium font-serif">
-            {date}
-          </p>
+        <div key={date} className="flex flex-col gap-2">
+          <p className="text-sm text-text-muted font-medium">{date}</p>
 
           {expenses.map((e) => (
             <div
               key={e.id}
-              className="flex items-center justify-between py-4 border-b border-border-subtle"
+              className="flex items-center justify-between p-2.5 rounded-2xl border-b border-border-subtle bg-white "
             >
               <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-lg bg-[#f1f5ee] flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg bg-[#f1f5ee] flex items-center justify-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="18"
@@ -63,7 +61,7 @@ export const ExpensesCards = ({
                   <p className="text-sm font-semibold text-text-main">
                     {e.description ?? 'Otros'}
                   </p>
-                  <div className="flex flex-row items-center justify-center text-xs text-text-muted font-medium font-serif gap-1">
+                  <div className="flex flex-row items-center justify-center text-xs text-text-muted font-medium gap-1">
                     <p className="">{e.category_label}</p>
                     <span>•</span>
                     <p className="">{e.subcategory_label}</p>

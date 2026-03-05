@@ -2,12 +2,12 @@ import axios from 'axios'
 
 import { CreateTransactionDto, TransactionDto } from '../types/transaction.dto'
 import { mapTransactionDtoToTransaction } from '../mappers/transaction.mapper'
-import { baseUrl } from '@/lib/config'
 
 export const getTransactions = async () => {
   const { data } = await axios.get(`/api/transactions`)
-  console.log('getExpenses service: ', data)
-  return data
+  const transactions: TransactionDto[] = data.transactions
+
+  return transactions.map(mapTransactionDtoToTransaction)
 }
 
 export const createTransaction = async (dto: CreateTransactionDto) => {

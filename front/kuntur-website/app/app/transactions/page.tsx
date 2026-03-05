@@ -15,6 +15,7 @@ import { TransactionInputBar } from '@/src/features/transactions/components/expe
 import { ExpensesCards } from '@/src/features/transactions/components/ExpensesCards'
 import { TransactionForm } from '@/src/features/transactions/types/transaction.form'
 import { CreateTransactionDto } from '@/src/features/transactions/types/transaction.dto'
+import { signOut, useSession } from 'next-auth/react'
 
 const MONTHS = [
   { label: 'Ene', value: 0, name: 'Enero' },
@@ -98,6 +99,16 @@ export default function MyExpensesPage() {
     [],
   )
   const [isMonthMenuOpen, setIsMonthMenuOpen] = useState<boolean>(false)
+
+  const { data: session, status } = useSession()
+
+  const handleLogout = () => {
+    if (session?.user) {
+      signOut({ callbackUrl: '/' })
+    } else {
+      router.push('/auth')
+    }
+  }
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken')
@@ -228,10 +239,6 @@ export default function MyExpensesPage() {
     tableEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [transactionHistory])
 
-  const handleLogout = () => {
-    localStorage.removeItem('accessToken')
-    router.push('/')
-  }
   return (
     <main className="flex flex-col bg-background min-h-screen h-full items-center">
       <div className="flex items-center justify-between md:hidden bg-white w-full h-10 px-3 border-b-[1px] border-[#00000014]">
@@ -255,7 +262,11 @@ export default function MyExpensesPage() {
               />
             </div>
             <p className="text-sm font-alfa text-[#5c5c5c] leading-none">
-              {isLoggedIn ? 'Cerrar Sesión' : 'Iniciar Sesión'}
+              {status === 'loading'
+                ? 'Cargando...'
+                : session?.user
+                  ? 'Cerrar Sesión'
+                  : 'Iniciar Sesión'}
             </p>
           </div>
         </div>

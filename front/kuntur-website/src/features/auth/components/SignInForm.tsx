@@ -83,7 +83,7 @@ export const SignInForm = ({ onBack }: SignInFormProps) => {
       </div>
 
       <div>
-        <Logo height={40} width={40} />
+        <Logo height={80} width={80} />
       </div>
 
       <div className="flex flex-col items-center justify-center gap-1">

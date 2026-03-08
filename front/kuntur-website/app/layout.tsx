@@ -49,7 +49,7 @@ const lora = Lora({
 })
 
 export const metadata: Metadata = {
-  title: 'Kuntur | Finanzas personales sin complicaciones',
+  title: 'Flou',
   description: 'Personal finance app',
 }
 
@@ -59,7 +59,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="es">
       <body className={`${inter.variable} ${lora.variable} antialiased`}>
         <Providers>{children}</Providers>
       </body>

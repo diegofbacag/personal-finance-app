@@ -13,12 +13,12 @@ export const AuthHome = ({ onSignIn, onSignUp }: AuthHomeProps) => {
   return (
     <>
       <div>
-        <Logo height={60} width={60} />
+        <Logo height={100} width={100} />
       </div>
       <div className="flex flex-col items-center justify-center gap-4">
-        <p className="text-[#1F3B2E] font-sans text-4xl leading-none font-bold">
+        {/* <p className="text-primary font-sans text-4xl leading-none font-bold">
           Kuntur
-        </p>
+        </p> */}
         <p className="text-[#5c5c5c] font-alfa text-md">
           Organiza tu dinero. Diseña tu futuro.
         </p>

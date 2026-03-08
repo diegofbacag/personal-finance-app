@@ -38,14 +38,16 @@ export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
     )
   }
   return (
-    <aside className="hidden md:flex sticky top-0 h-screen  flex-col justify-between w-50 bg-[#f5f5f5] font-poppins border-r-[1px] border-[#00000014]">
+    <aside className="hidden md:flex sticky top-0 h-screen font-sans flex-col justify-between w-50 bg-white  border-r-[1.5px] border-[#00000014]">
       <div className="pt-3 px-4">
-        <div className="flex items-center  mb-4 pb-3 border-b-[1px] border-[#00000014]">
-          <Image src="/svg/k.svg" alt="logo image" height={20} width={20} />
+        <div className="flex items-center pb-3 ">
           <Link href="/">
-            <p className="font-alpha font-bold text-[#1F3B2E] text-md tracking-wide ">
-              untur
-            </p>
+            <Image
+              src="/img/flou-logo2.png"
+              alt="logo image"
+              height={80}
+              width={60}
+            />
           </Link>
 
           {/* <button className="cursor-pointer" onClick={toggleSidebar}>
@@ -59,7 +61,7 @@ export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
         </div>
         <div>
           <div className="flex flex-col gap-2">
-            <div className="flex gap-2 items-center justify-start">
+            {/* <div className="flex gap-2 items-center justify-start">
               <Image
                 src="/img/icons/house-4.png"
                 height={14}
@@ -70,9 +72,9 @@ export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
               <p className="text-sm font-alfa text-[#5c5c5c] leading-none">
                 Movimientos
               </p>
-            </div>
+            </div> */}
 
-            <div className="pl-4">
+            <div className="">
               <SidebarItem
                 text="Mis movimientos"
                 active={true}

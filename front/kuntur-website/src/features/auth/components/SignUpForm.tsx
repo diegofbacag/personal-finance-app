@@ -116,7 +116,7 @@ export const SignUpForm = ({ onBack }: SignUpFormProps) => {
         />
       </div>
       <div>
-        <Logo height={40} width={40} />
+        <Logo height={80} width={80} />
       </div>
       <div className="flex flex-col items-center justify-center gap-1">
         <p className="text-[#5c5c5c] font-alfa text-xl leading-none">

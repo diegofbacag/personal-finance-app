@@ -9,7 +9,12 @@ interface LogoProps {
 export const Logo = ({ height, width }: LogoProps) => {
   return (
     <Link href={'/'}>
-      <Image src="/svg/k.svg" alt="kuntur logo" height={height} width={width} />
+      <Image
+        src="/img/flou-logo2.png"
+        alt="flou logo"
+        height={height}
+        width={width}
+      />
     </Link>
   )
 }

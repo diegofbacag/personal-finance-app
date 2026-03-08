@@ -30,13 +30,14 @@ export const Button = ({
     'flex items-center justify-center rounded-lg font-sans  transition-colors'
 
   const variantStyles = {
-    light: 'bg-[#dbf2d9] text-[#1F3B2E]',
+    light: 'bg-primary/15 text-primary',
     dark: 'bg-primary text-white',
     none: 'text-black',
     white: 'bg-white text-primary',
   }
 
-  const disabledStyles = 'bg-[#9bd6b8] text-white cursor-not-allowed opacity-80'
+  const disabledStyles =
+    'bg-primary/80 text-white cursor-not-allowed opacity-80'
 
   const enabledStyles = `cursor-pointer ${variantStyles[variant]}`
 

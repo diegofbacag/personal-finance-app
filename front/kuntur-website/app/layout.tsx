@@ -29,7 +29,7 @@ const poppins = Poppins({
 
 const alfa = Outfit({
   subsets: ['latin'],
-  weight: ['100', '200', '300', '400'],
+  weight: ['100', '200', '300', '400', '500', '600'],
   display: 'swap',
   variable: '--font-alfa',
 })
@@ -60,7 +60,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`${inter.variable} ${lora.variable} antialiased`}>
+      <body
+        className={`${inter.variable} ${lora.variable} ${alfa.variable} antialiased`}
+      >
         <Providers>{children}</Providers>
       </body>
     </html>

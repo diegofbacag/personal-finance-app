@@ -38,9 +38,9 @@ export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
     )
   }
   return (
-    <aside className="hidden md:flex sticky top-0 h-screen font-sans flex-col justify-between w-50 bg-white  border-r-[1.5px] border-[#00000014]">
-      <div className="pt-3 px-4">
-        <div className="flex items-center pb-3 ">
+    <aside className="hidden md:flex sticky top-0 h-screen font-sans flex-col justify-between w-50 bg-white border-r-[1.5px] border-[#00000014]">
+      <div className="pt-3 ">
+        <div className="flex items-center pb-3 px-4">
           <Link href="/">
             <Image
               src="/img/flou-logo2.png"
@@ -60,7 +60,7 @@ export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
           </button> */}
         </div>
         <div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 pl-2">
             {/* <div className="flex gap-2 items-center justify-start">
               <Image
                 src="/img/icons/house-4.png"
@@ -74,12 +74,37 @@ export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
               </p>
             </div> */}
 
-            <div className="">
+            <div className="flex flex-col gap-1 p-2">
+              <SidebarItem
+                text="Dashboard"
+                iconSrc={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="#1919e6"
+                    viewBox="0 0 256 256"
+                  >
+                    <path d="M122.34,109.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0,0-11.32l-40-40a8,8,0,0,0-11.32,0l-40,40a8,8,0,0,0,0,11.32ZM128,35.31,156.69,64,128,92.69,99.31,64Zm5.66,111a8,8,0,0,0-11.32,0l-40,40a8,8,0,0,0,0,11.32l40,40a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0,0-11.32ZM128,220.69,99.31,192,128,163.31,156.69,192Zm109.66-98.35-40-40a8,8,0,0,0-11.32,0l-40,40a8,8,0,0,0,0,11.32l40,40a8,8,0,0,0,11.32,0l40-40A8,8,0,0,0,237.66,122.34ZM192,156.69,163.31,128,192,99.31,220.69,128Zm-82.34-34.35-40-40a8,8,0,0,0-11.32,0l-40,40a8,8,0,0,0,0,11.32l40,40a8,8,0,0,0,11.32,0l40-40A8,8,0,0,0,109.66,122.34ZM64,156.69,35.31,128,64,99.31,92.69,128Z"></path>
+                  </svg>
+                }
+              />
               <SidebarItem
                 text="Mis movimientos"
                 active={true}
-                iconSrc={'/img/icons/swap-arrow.png'}
+                iconSrc={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="#1919e6"
+                    viewBox="0 0 256 256"
+                  >
+                    <path d="M80,40a40,40,0,1,0,40,40A40,40,0,0,0,80,40Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,80,104Zm96,16a40,40,0,1,0-40-40A40,40,0,0,0,176,120Zm0-64a24,24,0,1,1-24,24A24,24,0,0,1,176,56ZM80,136a40,40,0,1,0,40,40A40,40,0,0,0,80,136Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,80,200Zm136-24a8,8,0,0,1-8,8H184v24a8,8,0,0,1-16,0V184H144a8,8,0,0,1,0-16h24V144a8,8,0,0,1,16,0v24h24A8,8,0,0,1,216,176Z"></path>
+                  </svg>
+                }
               />
+
               {/* <SidebarItem
                 text="Dashboard"
                 iconSrc={'/img/icons/dashboard-2.png'}
@@ -102,7 +127,7 @@ export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
               className={!session?.user ? 'scale-x-[-1]' : ''}
             />
           </div>
-          <p className="text-sm font-alfa text-[#5c5c5c] leading-none">
+          <p className="text-sm font-alfa font-medium text-[#5c5c5c] leading-none">
             {status === 'loading'
               ? 'Cargando...'
               : session?.user

@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import 'react-day-picker/dist/style.css'
+import { es } from 'react-day-picker/locale'
 import { DayPicker } from 'react-day-picker'
 import {
   CATEGORIES,
@@ -88,14 +89,14 @@ export const TransactionInputBar = ({
   return (
     <div
       ref={ref}
-      className="w-[95vw] md:max-w-[70vw] mx-auto bg-white md:bg-white/90 border border-white md:shadow-2xl rounded-2xl py-3 sm:py-2 shadow-[#1F3B2E]/20 px-3 backdrop-blur-xl"
+      className="w-[95vw] md:max-w-[70vw] mx-auto bg-white md:bg-white/90 border border-white md:shadow-2xl rounded-2xl py-3 sm:py-2 shadow-[#1F3B2E]/20 px-2 sm:px-3 backdrop-blur-xl"
     >
       <div className="flex flex-col sm:flex-row items-end gap-2 w-full">
         {/* ROW 1: Amount + Description */}
         <div className="flex flex-row gap-2 w-full sm:contents">
           {/* Amount */}
           <div className="flex-[2] bg-gray-50 rounded-xl px-4 py-2 flex items-center h-[40px]">
-            <span className="text-[#1F3B2E] tracking-tight font-bold text-base mr-1">
+            <span className="text-primary tracking-tight font-bold text-base mr-1">
               S/
             </span>
             <input
@@ -126,19 +127,19 @@ export const TransactionInputBar = ({
           {/* Category */}
           <div className="relative">
             <button
-              className="flex flex-row gap-1 flex-1 items-center justify-center bg-[#0E9053]/15 text-primary rounded-lg p-3 cursor-pointer min-w-[120px] h-[40px]"
+              className="flex flex-row gap-1 flex-1 items-center justify-center bg-primary/20 rounded-lg p-3 cursor-pointer min-w-[120px] h-[40px]"
               onClick={() => setIsCategoryMenuOpen((prev) => !prev)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"
-                fill="#000000"
+                fill="#1919e6"
                 viewBox="0 0 256 256"
               >
                 <path d="M104,40H56A16,16,0,0,0,40,56v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,104,40Zm0,64H56V56h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm0,64H152V56h48v48Zm-96,32H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,104,136Zm0,64H56V152h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,200,136Zm0,64H152V152h48v48Z" />
               </svg>
-              <span className="text-xs font-bold text-[#1F3B2E] truncate">
+              <span className="text-xs font-bold text-primary truncate">
                 {categoryLabel}
               </span>
             </button>
@@ -161,7 +162,7 @@ export const TransactionInputBar = ({
           {/* Subcategory */}
           <div className="relative">
             <button
-              className="flex flex-row gap-1 flex-1 items-center justify-center bg-[#0E9053]/8 text-primary rounded-lg p-3 cursor-pointer min-w-[140px] h-[40px] disabled:opacity-50"
+              className="flex flex-row gap-1 flex-1 items-center justify-center bg-primary/10 text-[#3A3A37] rounded-lg p-3 cursor-pointer min-w-[140px] h-[40px] disabled:opacity-50"
               onClick={() => setIsSubcategoryMenuOpen((prev) => !prev)}
               disabled={!selectedCategoryId}
             >
@@ -169,12 +170,12 @@ export const TransactionInputBar = ({
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"
-                fill="#000000"
+                fill="#1919e6"
                 viewBox="0 0 256 256"
               >
                 <path d="M72,60A12,12,0,1,1,60,48,12,12,0,0,1,72,60Zm56-12a12,12,0,1,0,12,12A12,12,0,0,0,128,48Zm68,24a12,12,0,1,0-12-12A12,12,0,0,0,196,72ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Zm68,0a12,12,0,1,0,12,12A12,12,0,0,0,128,116Zm68,0a12,12,0,1,0,12,12A12,12,0,0,0,196,116ZM60,184a12,12,0,1,0,12,12A12,12,0,0,0,60,184Zm68,0a12,12,0,1,0,12,12A12,12,0,0,0,128,184Zm68,0a12,12,0,1,0,12,12A12,12,0,0,0,196,184Z" />
               </svg>
-              <span className="text-xs font-bold text-[#1F3B2E] truncate">
+              <span className="text-xs font-bold text-primary truncate">
                 {subcategoryLabel}
               </span>
             </button>
@@ -215,9 +216,10 @@ export const TransactionInputBar = ({
               <div className="absolute bottom-full right-0 mb-1 bg-white rounded-lg shadow-lg z-50 p-2">
                 <DayPicker
                   mode="single"
+                  locale={es}
                   style={
                     {
-                      '--rdp-accent-color': '#0E9053',
+                      '--rdp-accent-color': '#1919e6',
                       '--rdp-accent-background-color': '#DCE9DF',
                     } as React.CSSProperties
                   }
@@ -241,7 +243,7 @@ export const TransactionInputBar = ({
 
           {/* Submit */}
           <button
-            className="flex items-center justify-center bg-[#1F3B2E] rounded-full text-white h-10 w-10 shrink-0 cursor-pointer"
+            className="flex items-center justify-center bg-primary rounded-full text-white h-10 w-10 shrink-0 cursor-pointer"
             onClick={onSubmit}
           >
             <Image

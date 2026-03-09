@@ -29,7 +29,7 @@ const poppins = Poppins({
 
 const alfa = Outfit({
   subsets: ['latin'],
-  weight: ['100', '200', '300', '400'],
+  weight: ['100', '200', '300', '400', '500', '600'],
   display: 'swap',
   variable: '--font-alfa',
 })
@@ -49,7 +49,7 @@ const lora = Lora({
 })
 
 export const metadata: Metadata = {
-  title: 'Kuntur | Finanzas personales sin complicaciones',
+  title: 'flou',
   description: 'Personal finance app',
 }
 
@@ -59,8 +59,10 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} ${lora.variable} antialiased`}>
+    <html lang="es">
+      <body
+        className={`${inter.variable} ${lora.variable} ${alfa.variable} antialiased`}
+      >
         <Providers>{children}</Providers>
       </body>
     </html>

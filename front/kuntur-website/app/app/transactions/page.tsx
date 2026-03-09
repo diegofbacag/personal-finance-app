@@ -16,6 +16,10 @@ import { ExpensesCards } from '@/src/features/transactions/components/ExpensesCa
 import { TransactionForm } from '@/src/features/transactions/types/transaction.form'
 import { CreateTransactionDto } from '@/src/features/transactions/types/transaction.dto'
 import { signOut, useSession } from 'next-auth/react'
+import { StatCard } from '@/src/components/ui/StatCard'
+import { HighlightStatCard } from '@/src/components/ui/HighlightStatCard'
+import { LogoIcon } from '@/src/components/ui/LogoIcon'
+import { Logo } from '@/src/components/ui/Logo'
 
 const MONTHS = [
   { label: 'Ene', value: 0, name: 'Enero' },
@@ -240,13 +244,10 @@ export default function MyExpensesPage() {
   }, [transactionHistory])
 
   return (
-    <main className="flex flex-col bg-background min-h-screen h-full items-center">
+    <main className="flex flex-col bg-[#f6f6f8] min-h-screen h-full items-center">
       <div className="flex items-center justify-between md:hidden bg-white w-full h-10 px-3 border-b-[1px] border-[#00000014]">
-        <Link href="/">
-          <p className="font-alpha font-bold text-[#1F3B2E] text-md tracking-wide ">
-            Kuntur
-          </p>
-        </Link>
+        <LogoIcon height={30} width={30} />
+        <Logo height={30} width={30} />
         <div>
           <div
             className="flex flex-row items-center justify-center gap-1 py-4 cursor-pointer border-t-[1px] border-[#00000014] w-full"
@@ -280,18 +281,69 @@ export default function MyExpensesPage() {
             Resumen de {MONTHS[selectedMonth].name}
           </h1>
         </header>
+        {/* NEW MAIN ANALYTICS */}
+        <section className="overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden -mx-6 px-6 -my-6 py-6">
+          <div className="grid grid-cols-3 gap-4 mb-4 min-w-[600px]">
+            <StatCard
+              icon={
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="22"
+                  height="22"
+                  fill="#10B981"
+                  viewBox="0 0 256 256"
+                >
+                  <path d="M128,88a40,40,0,1,0,40,40A40,40,0,0,0,128,88Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,152ZM240,56H16a8,8,0,0,0-8,8V192a8,8,0,0,0,8,8H240a8,8,0,0,0,8-8V64A8,8,0,0,0,240,56ZM193.65,184H62.35A56.78,56.78,0,0,0,24,145.65v-35.3A56.78,56.78,0,0,0,62.35,72h131.3A56.78,56.78,0,0,0,232,110.35v35.3A56.78,56.78,0,0,0,193.65,184ZM232,93.37A40.81,40.81,0,0,1,210.63,72H232ZM45.37,72A40.81,40.81,0,0,1,24,93.37V72ZM24,162.63A40.81,40.81,0,0,1,45.37,184H24ZM210.63,184A40.81,40.81,0,0,1,232,162.63V184Z"></path>
+                </svg>
+              }
+              iconBg="bg-emerald-50"
+              iconColor="text-blue-600"
+              // badge="+2.4%"
+              label="Ingresos"
+              value={`S/${centsToDecimal(totals.income)}`}
+              // progress={{ value: 70, label: '70%' }}
+            />
+
+            <StatCard
+              icon={
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="22"
+                  height="22"
+                  fill="#FBBF24"
+                  viewBox="0 0 256 256"
+                >
+                  <path d="M224,200h-8V40a8,8,0,0,0-8-8H152a8,8,0,0,0-8,8V80H96a8,8,0,0,0-8,8v40H48a8,8,0,0,0-8,8v64H32a8,8,0,0,0,0,16H224a8,8,0,0,0,0-16ZM160,48h40V200H160ZM104,96h40V200H104ZM56,144H88v56H56Z"></path>
+                </svg>
+              }
+              iconBg="bg-amber-100"
+              iconColor="text-amber-600"
+              label="Ahorros & Inversiones"
+              value={`S/${centsToDecimal(totals.investments + totals.savings)}`}
+              progress={{ value: 70, label: '70%' }}
+            />
+            <HighlightStatCard
+              icon="savings"
+              label="Gastos"
+              value={`S/${centsToDecimal(totals.expenses)}`}
+              // footnote="Monthly target: $1,000.00"
+              progress={{ value: 70, label: '70%' }}
+            />
+          </div>
+        </section>
+
         {/* MAIN ANALYTICS */}
-        <section className="grid grid-cols-2 gap-3 mb-8">
+        {/* <section className="grid grid-cols-2 gap-3 mb-4">
           <div className="flex flex-col gap-2">
-            <div className="p-3 bg-white border border-border-subtle rounded-xl flex flex-col justify-between">
+            <div className="p-3 bg-white rounded-2xl flex flex-col justify-between">
               <p className="text-[9px] text-text-muted uppercase tracking-wider font-bold mb-2">
                 Ingresos
               </p>
-              <p className="text-xl font-bold text-text-main">
+              <p className="text-xl font-bold text-black">
                 {`S/${centsToDecimal(totals.income)}`}
               </p>
             </div>
-            <div className="p-3 bg-primary border border-border-subtle rounded-xl flex flex-col justify-between">
+            <div className="p-3 bg-primary  rounded-2xl flex flex-col justify-between">
               <p className="text-[9px] text-white uppercase tracking-wider font-bold mb-2">
                 Gastos
               </p>
@@ -301,32 +353,32 @@ export default function MyExpensesPage() {
             </div>
           </div>
           <div className="flex flex-col gap-2">
-            <div className="p-3 bg-white border border-border-subtle rounded-xl flex flex-col justify-between">
+            <div className="p-3 bg-white rounded-2xl flex flex-col justify-between">
               <p className="text-[9px] text-text-muted uppercase tracking-wider font-bold mb-2">
                 Ahorros
               </p>
-              <p className="text-xl font-bold text-text-accent">{`S/${centsToDecimal(totals.savings)}`}</p>
+              <p className="text-xl font-bold  text-primary">{`S/${centsToDecimal(totals.savings)}`}</p>
             </div>
-            <div className="p-3 bg-white border border-border-subtle rounded-xl flex flex-col justify-between">
-              <p className="text-[9px] text-text-muted uppercase tracking-wider font-bold mb-2">
+            <div className="p-3 bg-white  rounded-2xl flex flex-col justify-between">
+              <p className="text-[9px] text-text-muted  uppercase tracking-wider font-bold mb-2">
                 Inversiones
               </p>
-              <p className="text-xl font-bold text-text-accent">{`S/${centsToDecimal(totals.investments)}`}</p>
+              <p className="text-xl font-bold  text-primary">{`S/${centsToDecimal(totals.investments)}`}</p>
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* GRAPH */}
         {/* <section>Cuadro</section> */}
 
         {/* FILTERS */}
-        <section className="flex items-center gap-3 mb-6 ">
+        <section className="flex items-center gap-3 mb-4 ">
           <div className="relative inline-block">
             <button
               className="flex items-center gap-2 px-4 py-2 bg-white border border-border-subtle rounded-full whitespace-nowrap"
               onClick={() => setIsMonthMenuOpen((prev) => !prev)}
             >
-              <span className="text-xs font-semibold text-text-main">
+              <span className="text-xs font-semibold text-[#111121]">
                 {MONTHS[selectedMonth].name}
               </span>
 
@@ -374,7 +426,7 @@ export default function MyExpensesPage() {
                 </div>
                 <div className="grid grid-cols-3 gap-3">
                   <div>Abr</div>
-                  <div>May</div>
+                  <div>Mays</div>
                   <div>Jun</div>
                 </div>
                 <div className="grid grid-cols-3 gap-3">
@@ -391,7 +443,7 @@ export default function MyExpensesPage() {
             )}
           </div>
           <button className="flex items-center gap-2 px-4 py-2 bg-white border border-border-subtle rounded-full whitespace-nowrap">
-            <span className="text-xs font-semibold text-text-main">
+            <span className="text-xs font-semibold text-[#111121]">
               Categorías
             </span>
 
@@ -417,7 +469,7 @@ export default function MyExpensesPage() {
         </section>
       </div>
       {/* INPUT BAR */}
-      <section className="fixed bottom-0 sm:bottom-6 md:left-[11.6rem] w-[100vw] md:w-[calc(100vw)]  md:w-[calc(100vw-11.6rem)] text-sm shadow-short sm:bg-transparent bg-white ">
+      <section className="fixed bottom-2 sm:bottom-6 md:left-[11.6rem] w-[100vw] md:w-[calc(100vw)]  md:w-[calc(100vw-11.6rem)] text-sm shadow-short sm:bg-transparent bg-transparent  ">
         <TransactionInputBar
           transactionForm={transactionForm}
           onFormChange={handleExpenseFormInputChange}

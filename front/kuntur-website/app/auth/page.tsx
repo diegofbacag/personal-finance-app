@@ -11,7 +11,7 @@ export default function AuthPage() {
   const [authMode, setAuthMode] = useState<AuthMode>('home')
 
   return (
-    <div className="flex min-h-screen items-center justify-center font-sans relative overflow-hidden premium-bg bg-primary">
+    <div className="flex min-h-screen items-center justify-center font-sans relative overflow-hidden premium-bg bg-primary/55">
       {/* Blobs */}
       <div className="blob blob1"></div>
       <div className="blob blob2"></div>
@@ -77,7 +77,7 @@ export default function AuthPage() {
         .blob1 {
           width: 340px;
           height: 340px;
-          background: #00c187;
+          background: #1919e6;
           top: -40px;
           left: -50px;
           animation: float1 12s ease-in-out infinite;
@@ -86,7 +86,7 @@ export default function AuthPage() {
         .blob2 {
           width: 290px;
           height: 290px;
-          background: #04a66b;
+          background: #1919e6;
           bottom: -60px;
           right: -40px;
           animation: float2 11s ease-in-out infinite;
@@ -95,7 +95,7 @@ export default function AuthPage() {
         .blob3 {
           width: 240px;
           height: 240px;
-          background: #059e63;
+          background: #1919e6;
           bottom: 28%;
           left: 22%;
           animation: float3 14s ease-in-out infinite;

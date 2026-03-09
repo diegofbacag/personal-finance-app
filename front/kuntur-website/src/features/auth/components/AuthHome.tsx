@@ -3,6 +3,7 @@ import { ContinueWithGoogleButton } from './ContinueWithGoogleButton'
 import { Button } from '@/src/components/ui/Button'
 import { Logo } from '@/src/components/ui/Logo'
 import Link from 'next/link'
+import { LogoIcon } from '@/src/components/ui/LogoIcon'
 
 interface AuthHomeProps {
   onSignIn?: () => void
@@ -12,13 +13,14 @@ interface AuthHomeProps {
 export const AuthHome = ({ onSignIn, onSignUp }: AuthHomeProps) => {
   return (
     <>
-      <div>
-        <Logo height={60} width={60} />
+      <div className="flex flex-col items-center h-34">
+        <LogoIcon height={50} width={50} />
+        <Logo height={50} width={100} />
       </div>
-      <div className="flex flex-col items-center justify-center gap-4">
-        <p className="text-[#1F3B2E] font-sans text-4xl leading-none font-bold">
+      <div className="flex flex-col items-center justify-center gap-2">
+        {/* <p className="text-primary font-sans text-4xl leading-none font-bold">
           Kuntur
-        </p>
+        </p> */}
         <p className="text-[#5c5c5c] font-alfa text-md">
           Organiza tu dinero. Diseña tu futuro.
         </p>

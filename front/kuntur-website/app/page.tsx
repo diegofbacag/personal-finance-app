@@ -1,6 +1,7 @@
 'use client'
 import { Button } from '@/src/components/ui/Button'
 import { Logo } from '@/src/components/ui/Logo'
+import { LogoIcon } from '@/src/components/ui/LogoIcon'
 import Image from 'next/image'
 import Link from 'next/link'
 export default function Home() {
@@ -8,14 +9,15 @@ export default function Home() {
     <main className="font-display bg-background-light dark:bg-background-dark text-[#0e0e1b] dark:text-white antialiased">
       {/* <!-- Top Navigation Bar --> */}
       <header className="sticky top-0 z-50 w-full bg-background-white/80 backdrop-blur-md border-b border-[#e7e7f3] dark:border-[#2a2a3c]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-16">
+        <div className="max-w-7xl mx-auto px-6 lg:px-0 flex items-center justify-between h-16">
           <div className="flex items-center gap-0">
-            <div className="text-primary size-8 flex items-center justify-center">
-              <Logo height={60} width={60} />
+            <div className="flex gap-1 text-primary size-22 flex items-center justify-center">
+              <LogoIcon height={100} width={100} />
+              <Logo height={150} width={150} />
             </div>
-            <span className="text-[#1F3B2E] font-sans text-2xl leading-none font-bold">
+            {/* <span className="text-[#1F3B2E] font-sans text-2xl leading-none font-bold">
               untur
-            </span>
+            </span> */}
           </div>
           <nav className="hidden md:flex items-center gap-8">
             {/* <a
@@ -114,7 +116,7 @@ export default function Home() {
                         xmlns="http://www.w3.org/2000/svg"
                         width="28"
                         height="28"
-                        fill="#0E9053"
+                        fill="#1919e6"
                         viewBox="0 0 256 256"
                       >
                         <path d="M232,208a8,8,0,0,1-8,8H32a8,8,0,0,1,0-16h8V136a8,8,0,0,1,8-8H72a8,8,0,0,1,8,8v64H96V88a8,8,0,0,1,8-8h32a8,8,0,0,1,8,8V200h16V40a8,8,0,0,1,8-8h40a8,8,0,0,1,8,8V200h8A8,8,0,0,1,232,208Z"></path>
@@ -496,7 +498,7 @@ export default function Home() {
           </div>
         </div> */}
         <p className="text-xs text-gray-400">
-          © 2024 Kuntur Inc. Todos los derechos reservados.
+          © 2026 Flou Inc. Todos los derechos reservados.
         </p>
         {/* <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-[#e7e7f3] dark:border-[#2a2a3c] flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2"></div>

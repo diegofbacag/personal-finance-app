@@ -1,9 +1,10 @@
 import Image from 'next/image'
+import { ReactNode } from 'react'
 
 interface SidebarItemProps {
   text: string
   active?: boolean
-  iconSrc?: string | null
+  iconSrc?: ReactNode
 }
 
 export const SidebarItem = ({
@@ -11,23 +12,15 @@ export const SidebarItem = ({
   active = false,
   iconSrc = null,
 }: SidebarItemProps) => {
-  return (
-    <div
-      className={`flex items-center gap-2 font-medium text-xs text-[#5c5c5c] gap-1 rounded-lg py-2 px-2 ${
-        active && 'bg-[#e6e6e6]'
-      }`}
-    >
-      {iconSrc && (
-        <Image
-          src={iconSrc}
-          height={18}
-          width={18}
-          alt="expeses icon"
-          className=""
-        />
-      )}
+  const base =
+    'flex items-center justify-start gap-1 px-2 py-2 text-sm rounded-lg font-alfa font-medium'
 
-      <p className="">{text}</p>
+  const state = active ? 'bg-neutral-soft text-primary/80' : 'text-text-muted'
+
+  return (
+    <div className={`${base} ${state}`}>
+      {iconSrc && iconSrc}
+      <p>{text}</p>
     </div>
   )
 }

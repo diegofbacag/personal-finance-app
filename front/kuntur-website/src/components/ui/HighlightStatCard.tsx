@@ -1,3 +1,20 @@
+import { ReactNode } from 'react'
+
+interface ProgressProps {
+  value: number
+  label: string
+}
+
+interface HighlightStatCardProps {
+  icon?: ReactNode
+  label: string
+  value: string | number
+  footnote?: string
+  progress?: ProgressProps
+  bg?: string
+  shadow?: string
+}
+
 export const HighlightStatCard = ({
   icon,
   label,
@@ -6,7 +23,7 @@ export const HighlightStatCard = ({
   progress,
   bg = 'bg-primary',
   shadow = 'shadow-primary/30',
-}) => {
+}: HighlightStatCardProps) => {
   return (
     <div
       className={`${bg} rounded-2xl p-6 shadow-xl ${shadow} text-white relative overflow-hidden`}

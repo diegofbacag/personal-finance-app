@@ -18,6 +18,8 @@ import { CreateTransactionDto } from '@/src/features/transactions/types/transact
 import { signOut, useSession } from 'next-auth/react'
 import { StatCard } from '@/src/components/ui/StatCard'
 import { HighlightStatCard } from '@/src/components/ui/HighlightStatCard'
+import { LogoIcon } from '@/src/components/ui/LogoIcon'
+import { Logo } from '@/src/components/ui/Logo'
 
 const MONTHS = [
   { label: 'Ene', value: 0, name: 'Enero' },
@@ -244,11 +246,8 @@ export default function MyExpensesPage() {
   return (
     <main className="flex flex-col bg-[#f6f6f8] min-h-screen h-full items-center">
       <div className="flex items-center justify-between md:hidden bg-white w-full h-10 px-3 border-b-[1px] border-[#00000014]">
-        <Link href="/">
-          <p className="font-alpha font-bold text-[#1F3B2E] text-md tracking-wide ">
-            Kuntur
-          </p>
-        </Link>
+        <LogoIcon height={30} width={30} />
+        <Logo height={30} width={30} />
         <div>
           <div
             className="flex flex-row items-center justify-center gap-1 py-4 cursor-pointer border-t-[1px] border-[#00000014] w-full"

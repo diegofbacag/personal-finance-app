@@ -6,12 +6,12 @@ interface LogoProps {
   width: number
 }
 
-export const Logo = ({ height, width }: LogoProps) => {
+export const LogoIcon = ({ height, width }: LogoProps) => {
   return (
     <Link href={'/'}>
       <Image
-        src="/brand/FLOU-07.svg"
-        alt="flou logo"
+        src="/brand/logo-icon-blue.png"
+        alt="flou icon"
         height={height}
         width={width}
       />

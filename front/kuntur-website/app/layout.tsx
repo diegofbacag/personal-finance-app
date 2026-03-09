@@ -49,7 +49,7 @@ const lora = Lora({
 })
 
 export const metadata: Metadata = {
-  title: 'Flou',
+  title: 'flou',
   description: 'Personal finance app',
 }
 

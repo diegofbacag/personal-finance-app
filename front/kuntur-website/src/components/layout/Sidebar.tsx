@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { signOut, useSession } from 'next-auth/react'
+import { Logo } from '../ui/Logo'
+import { LogoIcon } from '../ui/LogoIcon'
 
 interface SidebarProps {
   isOpen: boolean
@@ -39,16 +41,12 @@ export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
   }
   return (
     <aside className="hidden md:flex sticky top-0 h-screen font-sans flex-col justify-between w-50 bg-white border-r-[1.5px] border-[#00000014]">
-      <div className="pt-3 ">
-        <div className="flex items-center pb-3 px-4">
-          <Link href="/">
-            <Image
-              src="/img/flou-logo2.png"
-              alt="logo image"
-              height={80}
-              width={60}
-            />
-          </Link>
+      <div className=" ">
+        <div className="flex items-center justify-start pl-5">
+          <div className="flex gap-1 text-primary size-18 flex items-center justify-center">
+            <LogoIcon height={100} width={100} />
+            <Logo height={150} width={150} />
+          </div>
 
           {/* <button className="cursor-pointer" onClick={toggleSidebar}>
             <Image

@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 import axios, { AxiosError } from 'axios'
 import { PassThrough } from 'stream'
 import { Logo } from '@/src/components/ui/Logo'
+import { LogoIcon } from '@/src/components/ui/LogoIcon'
 
 interface SignUpFormProps {
   onBack: () => void
@@ -115,8 +116,9 @@ export const SignUpForm = ({ onBack }: SignUpFormProps) => {
           className="cursor-pointer"
         />
       </div>
-      <div>
-        <Logo height={80} width={80} />
+      <div className="flex flex-col items-center h-34">
+        <LogoIcon height={50} width={50} />
+        <Logo height={100} width={100} />
       </div>
       <div className="flex flex-col items-center justify-center gap-1">
         <p className="text-[#5c5c5c] font-alfa text-xl leading-none">

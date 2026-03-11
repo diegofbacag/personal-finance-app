@@ -102,6 +102,7 @@ export const TransactionInputBar = ({
             <input
               name="amount"
               type="number"
+              value={transactionForm.amount}
               step="0.01"
               min="0.01"
               placeholder="0.00"
@@ -114,6 +115,7 @@ export const TransactionInputBar = ({
           <div className="flex-[3] bg-gray-50 rounded-xl px-4 py-2 flex items-center h-[40px]">
             <input
               name="description"
+              value={transactionForm.description}
               type="text"
               placeholder="¿En qué usaste tu dinero?"
               className={`bg-transparent border-none focus:ring-0 p-0 text-sm font-bold w-full placeholder:font-light text-[#0e0e1b] ${inputClass}`}

@@ -148,10 +148,10 @@ export default function MyExpensesPage() {
   }
 
   const submitTransactionForm = async () => {
-    // if (!isLoggedIn) {
-    //   alert('Debes iniciar sesión para registrar un movimiento.')
-    //   return
-    // }
+    if (!session?.user) {
+      alert('Debes iniciar sesión para registrar un movimiento.')
+      return
+    }
 
     const dto: CreateTransactionDto = {
       amount: decimalToCents(transactionForm.amount),
@@ -167,9 +167,14 @@ export default function MyExpensesPage() {
       const response = await createTransaction(dto)
       const savedTransaction: Transaction = response
 
-      console.log('saved expense', savedTransaction)
-
       setTransactionHistory((prev) => [...prev, savedTransaction])
+
+      setTransactionForm((prev) => ({
+        ...prev,
+        amount: '',
+        description: '',
+        date: transactionForm.date,
+      }))
 
       // setTransactionHistory((prev) =>
       //   prev.map((e) => (e.id === newTransaction.id ? savedTransaction : e)),

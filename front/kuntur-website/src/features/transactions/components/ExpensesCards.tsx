@@ -69,8 +69,25 @@ export const ExpensesCards = ({
                 </div>
               </div>
               <div className="flex flex-row items-center text-sm font-bold text-text-main gap-0">
-                <div>
-                  <span>-</span>
+                <div
+                  className={`${
+                    e.category_id === 'INVESTING' || e.category_id === 'SAVINGS'
+                      ? 'text-[#FBBF24]'
+                      : e.category_id === 'FIXED_EXPENSES' ||
+                          e.category_id === 'VARIABLE_EXPENSES'
+                        ? ''
+                        : 'text-[#10B981]'
+                  }`}
+                >
+                  <span>
+                    {e.category_id === 'INVESTING' ||
+                    e.category_id === 'SAVINGS'
+                      ? ''
+                      : e.category_id === 'FIXED_EXPENSES' ||
+                          e.category_id === 'VARIABLE_EXPENSES'
+                        ? '- '
+                        : '+ '}
+                  </span>
                   {`S/ ${centsToDecimal(e.amount)}`}
                 </div>
                 <button

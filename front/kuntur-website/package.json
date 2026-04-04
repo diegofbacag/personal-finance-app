@@ -11,8 +11,11 @@
   },
   "dependencies": {
     "@next/font": "^14.2.15",
+    "@phosphor-icons/react": "^2.1.10",
     "@prisma/adapter-pg": "^7.4.1",
     "@prisma/client": "^7.4.1",
+    "@supabase/ssr": "^0.10.0",
+    "@supabase/supabase-js": "^2.101.1",
     "@tanstack/react-table": "^8.21.3",
     "axios": "^1.13.2",
     "bcrypt": "^6.0.0",

@@ -1,4 +1,39 @@
+'use client'
+
+import { supabase } from '@/lib/supabase'
+import { useEffect, useState } from 'react'
+import { CheckCircleIcon, TrendUpIcon } from '@phosphor-icons/react'
+
 export default function HomePage() {
+  const [tasks, setTasks] = useState([])
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const { data, error } = await supabase
+        .from('task_instances')
+        .select('*, tasks!inner(title)')
+
+      if (error) {
+        console.error(error)
+        return
+      }
+      console.log('data', data)
+      setTasks(data)
+    }
+
+    fetchTasks()
+  }, [tasks])
+
+  const handleCompletedTask = async (taskId) => {
+    const { data, error } = await supabase
+      .from('task_instances')
+      .update({ completed_at: new Date().toISOString() })
+      .eq('id', taskId)
+      .select()
+
+    console.log(data)
+  }
+
   return (
     <main className="flex flex-col bg-[#f6f6f8] min-h-screen h-full items-center">
       <div className="relative flex flex-col w-[95vw] md:w-[80vw] gap-2 px-4 py-4">
@@ -16,7 +51,7 @@ export default function HomePage() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-              Financial Action Center
+              Este mes
             </h3>
             <p className="text-xs text-slate-400 font-medium mt-1">
               Assignments and goals for this month
@@ -41,63 +76,34 @@ export default function HomePage() {
 
             <div className="space-y-3">
               {/* Invest */}
-              <div className="flex items-center gap-4 p-4 rounded-xl border border-slate-50 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all">
-                <div className="size-10 rounded-full bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center text-emerald-600 shrink-0">
-                  {/* <TrendingUp size={20} weight="bold" /> */}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-bold text-slate-900 dark:text-white">
-                    Invest 10% of my income
-                  </p>
-                  <p className="text-[10px] font-bold text-emerald-600 uppercase mt-0.5">
-                    High Priority
-                  </p>
-                </div>
-                <button className="px-4 py-1.5 bg-primary text-white text-xs font-bold rounded-lg shadow-sm hover:opacity-90 transition-opacity shrink-0">
-                  Invest Now
-                </button>
-              </div>
-
-              {/* Emergency Fund */}
-              <div className="flex items-center gap-4 p-4 rounded-xl border border-slate-50 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all">
-                <div className="size-10 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600 shrink-0">
-                  {/* <PiggyBank size={20} weight="bold" /> */}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-bold text-slate-900 dark:text-white">
-                    Save for emergency fund
-                  </p>
-                  <div className="flex items-center gap-2 mt-1">
-                    <div className="h-1 flex-1 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                      <div className="h-full bg-blue-500 rounded-full w-[90%]" />
-                    </div>
-                    <p className="text-[10px] font-bold text-slate-400 shrink-0">
-                      10% remaining
+              {tasks.map((t) => (
+                <div
+                  key={t.id}
+                  className="flex items-center gap-4 p-4 rounded-xl border border-slate-50 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all"
+                >
+                  <div className="size-10 rounded-full bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center text-emerald-600 shrink-0">
+                    <TrendUpIcon size={20} weight="bold" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-bold text-slate-900 dark:text-white">
+                      {t.tasks.title}
+                    </p>
+                    <p className="text-[10px] font-bold text-emerald-600 uppercase mt-0.5">
+                      High Priority
                     </p>
                   </div>
+                  {t.completed_at === null ? (
+                    <button
+                      className="px-4 py-1.5 bg-primary text-white text-xs font-bold rounded-lg shadow-sm hover:opacity-90 transition-opacity shrink-0 cursor-pointer"
+                      onClick={() => handleCompletedTask(t.id)}
+                    >
+                      Completar
+                    </button>
+                  ) : (
+                    <div className="flex text-emeral-600">Completado</div>
+                  )}
                 </div>
-                <button className="px-4 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white text-xs font-bold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors shrink-0">
-                  Deposit
-                </button>
-              </div>
-
-              {/* Check Expenses */}
-              <div className="flex items-center gap-4 p-4 rounded-xl border border-slate-50 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all">
-                <div className="size-10 rounded-full bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center text-purple-600 shrink-0">
-                  {/* <Eye size={20} weight="bold" /> */}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-bold text-slate-900 dark:text-white">
-                    Check last month expenses
-                  </p>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase mt-0.5">
-                    Pending Review
-                  </p>
-                </div>
-                <button className="px-4 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white text-xs font-bold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors shrink-0">
-                  View Report
-                </button>
-              </div>
+              ))}
             </div>
           </div>
 

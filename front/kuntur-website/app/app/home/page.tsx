@@ -3,6 +3,7 @@
 import { supabase } from '@/lib/supabase'
 import { useEffect, useState } from 'react'
 import { CheckCircleIcon, TrendUpIcon } from '@phosphor-icons/react'
+import { Button } from '@/src/components/ui/Button'
 
 export default function HomePage() {
   const [tasks, setTasks] = useState([])
@@ -45,7 +46,85 @@ export default function HomePage() {
             Inicio
           </h1>
         </header>
+        {/* Este mes */}
+        <section className="flex flex-col gap-6 w-full">
+          <div className="flex flex-col justify-start">
+            <h3 className="text-lg font-bold text-slate-900">Este mes</h3>
+            <p className="text-xs text-slate-400 font-medium mt-1">
+              Acciones recomendadas para optimizar tus finanzas
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Card */}
+            <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between transition-all duration-300 gap-4">
+              <div className="flex items-start justify-between mb-2">
+                <div className="size-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                  <TrendUpIcon className="text-2xl" />
+                </div>
+              </div>
+              <div className="space-y-1 mb-2">
+                <h4 className="text-base font-bold text-slate-900 dark:text-white">
+                  Invertir 10% de mis ingresos
+                </h4>
+                <p className="text-xs text-slate-500">
+                  Aumenta tu patrimonio a largo plazo.
+                </p>
+              </div>
+              <div className="space-y-2">
+                <div className="flex justify-between text-[10px] font-bold text-slate-400 uppercase">
+                  <span>Progreso</span>
+                  <span>0%</span>
+                </div>
+                <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                  <div className="bg-primary h-full w-[0%]"></div>
+                </div>
+              </div>
+              <button className="w-full py-2.5 bg-primary text-white text-sm font-bold rounded-2xl shadow-lg shadow-primary/20 hover:opacity-90 transition-all cursor-pointer">
+                Completar
+              </button>
+            </div>
+            {/* Card */}
+            <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between transition-all duration-300 gap-4">
+              <div className="flex items-start justify-between mb-2">
+                <div className="size-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                  <TrendUpIcon className="text-2xl" />
+                </div>
+              </div>
+              <div>
+                <h4 className="text-base font-bold text-slate-900 dark:text-white">
+                  Invertir 10% de mis ingresos
+                </h4>
+                <p className="text-xs text-slate-500 mt-1">
+                  Aumenta tu patrimonio a largo plazo.
+                </p>
+              </div>
+              <button className="w-full py-2.5 bg-primary text-white text-sm font-bold rounded-xl shadow-lg shadow-primary/20 hover:opacity-90 transition-all cursor-pointer">
+                Completar
+              </button>
+            </div>
+            {/* Card */}
+            <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between transition-all duration-300 gap-4">
+              <div className="flex items-start justify-between mb-2">
+                <div className="size-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                  <TrendUpIcon className="text-2xl" />
+                </div>
+              </div>
+              <div>
+                <h4 className="text-base font-bold text-slate-900 dark:text-white">
+                  Invertir 10% de mis ingresos
+                </h4>
+                <p className="text-xs text-slate-500 mt-1">
+                  Aumenta tu patrimonio a largo plazo.
+                </p>
+              </div>
+              <button className="w-full py-2.5 bg-primary text-white text-sm font-bold rounded-xl shadow-lg shadow-primary/20 hover:opacity-90 transition-all cursor-pointer">
+                Completar
+              </button>
+            </div>
+          </div>
+        </section>
       </div>
+
       <section className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-6 shadow-sm">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">

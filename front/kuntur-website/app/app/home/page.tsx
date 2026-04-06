@@ -30,15 +30,17 @@ export default function HomePage() {
     loadMonthlyReviewActions()
   }, [refresh])
 
-  // const handleCompletedTask = async (taskId) => {
-  //   const { data, error } = await supabase
-  //     .from('task_instances')
-  //     .update({ completed_at: new Date().toISOString() })
-  //     .eq('id', taskId)
-  //     .select()
+  const handleCompletedAction = async (id: string) => {
+    const { data, error } = await supabase
+      .from('review_action_instances')
+      .update({ completed_at: new Date().toISOString() })
+      .eq('id', id)
+      .select()
 
-  //   console.log(data)
-  // }
+    console.log(data)
+
+    setRefresh((prev) => prev + 1)
+  }
 
   return (
     <main className="flex flex-col bg-[#f6f6f8] min-h-screen h-full items-center">
@@ -67,8 +69,11 @@ export default function HomePage() {
               return (
                 <RevisionCard
                   key={a.id}
+                  id={a.id}
                   title={a.title}
                   description={a.description}
+                  is_completed={a.completed_at}
+                  handleCompletedAction={handleCompletedAction}
                 />
               )
             })}

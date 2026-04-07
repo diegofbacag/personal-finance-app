@@ -7,6 +7,7 @@ import { Button } from '@/src/components/ui/Button'
 import { RevisionCard } from '@/src/features/monthly-review/RevisionCard'
 import { Timestamp } from 'next/dist/server/lib/cache-handlers/types'
 import { fetchMonthlyReviewActions } from '@/src/features/monthly-review/services/monthly-review.service'
+import { signOut, useSession } from 'next-auth/react'
 
 interface ReviewActionInstance {
   id: string
@@ -16,14 +17,15 @@ interface ReviewActionInstance {
 }
 
 export default function HomePage() {
-  const [refresh, setRefresh] = useState(0)
   const [monthlyReviewActions, setMonthlyReviewActions] = useState<
     ReviewActionInstance[]
   >([])
+  const [refresh, setRefresh] = useState(0)
+  const { data: session } = useSession()
 
   useEffect(() => {
     const loadMonthlyReviewActions = async () => {
-      const data = await fetchMonthlyReviewActions()
+      const data = await fetchMonthlyReviewActions(session?.user.id)
       setMonthlyReviewActions(data)
     }
 
@@ -36,8 +38,6 @@ export default function HomePage() {
       .update({ completed_at: new Date().toISOString() })
       .eq('id', id)
       .select()
-
-    console.log(data)
 
     setRefresh((prev) => prev + 1)
   }

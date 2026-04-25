@@ -25,6 +25,7 @@ export default function HomePage() {
 
   useEffect(() => {
     const loadMonthlyReviewActions = async () => {
+      console.log(session?.user.id)
       const data = await fetchMonthlyReviewActions(session?.user.id)
       setMonthlyReviewActions(data)
     }

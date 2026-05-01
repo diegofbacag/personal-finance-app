@@ -15,7 +15,7 @@ interface SidebarProps {
 
 export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
   const { data: session, status } = useSession()
-  const [activeTab, setActiveTab] = useState()
+  const [activeTab, setActiveTab] = useState<string>('')
 
   const router = useRouter()
   const handleLogout = () => {

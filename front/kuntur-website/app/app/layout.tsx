@@ -1,7 +1,7 @@
 'use client'
 
 import { Sidebar } from '@/src/components/layout/Sidebar'
-import { TransactionInputBar } from '@/src/features/transactions/components/expense-input/TransactionInputBar'
+
 import { useState } from 'react'
 
 export default function ExpensesLayout({

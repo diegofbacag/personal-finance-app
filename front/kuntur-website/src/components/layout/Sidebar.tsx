@@ -15,6 +15,7 @@ interface SidebarProps {
 
 export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
   const { data: session, status } = useSession()
+  const [activeTab, setActiveTab] = useState()
 
   const router = useRouter()
   const handleLogout = () => {
@@ -74,7 +75,12 @@ export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
 
             <div className="flex flex-col gap-1 p-2">
               <SidebarItem
-                text="Dashboard"
+                text="Inicio"
+                onClick={() => {
+                  setActiveTab('home')
+                  router.push('/app/home')
+                }}
+                active={activeTab === 'home'}
                 iconSrc={
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -89,7 +95,11 @@ export const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
               />
               <SidebarItem
                 text="Mis movimientos"
-                active={true}
+                onClick={() => {
+                  setActiveTab('transactions')
+                  router.push('/app/transactions')
+                }}
+                active={activeTab === 'transactions'}
                 iconSrc={
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

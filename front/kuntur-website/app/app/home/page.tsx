@@ -7,7 +7,6 @@ import { Button } from '@/src/components/ui/Button'
 import { RevisionCard } from '@/src/features/monthly-review/RevisionCard'
 import { Timestamp } from 'next/dist/server/lib/cache-handlers/types'
 import { fetchMonthlyReviewActions } from '@/src/features/monthly-review/services/monthly-review.service'
-import { signOut, useSession } from 'next-auth/react'
 
 interface ReviewActionInstance {
   id: string
@@ -21,12 +20,10 @@ export default function HomePage() {
     ReviewActionInstance[]
   >([])
   const [refresh, setRefresh] = useState(0)
-  const { data: session } = useSession()
 
   useEffect(() => {
     const loadMonthlyReviewActions = async () => {
-      console.log(session?.user.id)
-      const data = await fetchMonthlyReviewActions(session?.user.id)
+      const data = await fetchMonthlyReviewActions()
       setMonthlyReviewActions(data)
     }
 
